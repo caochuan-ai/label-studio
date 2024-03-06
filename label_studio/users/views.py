@@ -1,6 +1,7 @@
 """This file and its contents are licensed under the Apache License 2.0. Please see the included NOTICE for copyright information and LICENSE for a copy of the license.
 """
 import logging
+import requests
 
 from core.feature_flags import flag_set
 from core.middleware import enforce_csrf_checks
@@ -11,11 +12,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, reverse
 from django.utils.http import is_safe_url
+from django.http import HttpResponseRedirect
 from organizations.forms import OrganizationSignupForm
 from organizations.models import Organization
 from rest_framework.authtoken.models import Token
 from users import forms
 from users.functions import login, proceed_registration
+from users.models import User
 
 logger = logging.getLogger()
 
@@ -88,6 +91,75 @@ def user_signup(request):
             'token': token,
         },
     )
+
+
+@enforce_csrf_checks
+def casdoor_login(request):
+    """Casdoor Login page"""
+    return HttpResponseRedirect(
+        f"{settings.CASDOOR_PATH}&redirect_uri={settings.CALL_BACK_PATH}&scope=read&state=xxx")
+
+
+def is_email_registered(email):
+    # 查询是否存在匹配指定邮箱的用户
+    return User.objects.filter(email=email).exists()
+
+
+def get_profile(tokens):
+    headers = {'Content-Type': 'application/json'}  # Set the content type to application/json
+    user_auth_body = {
+        "token": f"{tokens[0]}.{tokens[1]}.{tokens[2]}",
+        "app_name": "labelstudio",
+        "org_name": "ccai"
+    }
+    response = requests.post(settings.CCAI_PROFILE_PATH, json=user_auth_body, headers=headers)
+    return response.json()
+
+
+@enforce_csrf_checks
+def casdoor_callback(request):
+    organization_form = OrganizationSignupForm()
+
+    if request.method == 'GET':
+        auth_code = request.GET.get('code')
+        user_auth_body = {
+            "code": auth_code,
+            "application_name": "labelstudio",
+            "org_name": "ccai"
+        }
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(settings.CCAI_LOGIN_PATH, json=user_auth_body, headers=headers)
+
+        if response.status_code == 200:
+            resp = response.json()
+            token1, token2, token3 = resp.get('token').split(".")
+            user_profile = get_profile([token1, token2, token3])
+
+            email = user_profile.get('user').get("email")
+            if not is_email_registered(email):
+                # auto register user and login
+                user_form = forms.UserSignupForm()
+                user_form.cleaned_data = {}
+                user_form.cleaned_data['email'] = email
+                user_form.cleaned_data['password'] = token1[:forms.PASS_MAX_LENGTH]
+
+                redirect_response = proceed_registration(request, user_form, organization_form,
+                                                         reverse('projects:project-index'))
+                return redirect_response
+            else:
+                # update password and login
+                user = User.objects.get(email=email)
+                new_password = token1[:forms.PASS_MAX_LENGTH]
+                user.set_password(new_password)
+                user.save()
+
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                return redirect(reverse('projects:project-index'))
+
+        else:
+            return render(request, 'users/user_login.html')
+
+    return render(request, 'users/user_login.html')
 
 
 @enforce_csrf_checks

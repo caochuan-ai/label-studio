@@ -16,7 +16,9 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     # Authentication
     path('user/login/', views.user_login, name='user-login'),
-    path('user/signup/', views.user_signup, name='user-signup'),
+    path('user/casdoor/', views.casdoor_login, name='casdoor-login'),
+    path('user/casdoor_callback/', views.casdoor_callback, name='casdoor-callback'),
+    # path('user/signup/', views.user_signup, name='user-signup'),
     path('user/account/', views.user_account, name='user-account'),
     url(r'^logout/?$', views.logout, name='logout'),
     # Token
