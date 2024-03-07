@@ -172,7 +172,9 @@ class ExportAPI(generics.RetrieveAPIView):
         )
         only_finished = not query_serializer.validated_data['download_all_tasks']
         download_resources = query_serializer.validated_data['download_resources']
-        interpolate_key_frames = query_serializer.validated_data['interpolate_key_frames']
+        # interpolate_key_frames = query_serializer.validated_data['interpolate_key_frames']
+        # export auto-tracking frames between key frames
+        interpolate_key_frames = True
 
         tasks_ids = request.GET.getlist('ids[]')
 
