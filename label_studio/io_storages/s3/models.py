@@ -159,6 +159,17 @@ class S3ImportStorageBase(S3StorageMixin, ImportStorage):
         uri = f'{self.url_scheme}://{self.bucket}/{key}'
         if self.use_blob_urls:
             data_key = settings.DATA_UNDEFINED_NAME
+            video_path = key.split('/')[-1]
+            if self.url_scheme in ["s3"]:
+                import os
+                import cv2
+                bucket_name, object_key = self.bucket, key
+                s3 = boto3.client('s3')
+                s3.download_file(bucket_name, object_key, video_path)
+                cap = cv2.VideoCapture(video_path)
+                fps = int(cap.get(cv2.CAP_PROP_FPS))
+                os.remove(video_path)
+                return {data_key: uri, 'fps': fps}
             return {data_key: uri}
 
         # read task json from bucket and validate it
