@@ -147,9 +147,14 @@ class ProjectListAPI(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         fields = serializer.validated_data.get('include')
         filter = serializer.validated_data.get('filter')
-        projects = Project.objects.filter(organization=self.request.user.active_organization).order_by(
-            F('pinned_at').desc(nulls_last=True), '-created_at'
-        )
+        if 'bodeng' in self.request.user.email.lower():
+            projects = Project.objects.filter(organization=self.request.user.active_organization).filter(title__icontains='bodeng').order_by(
+                F('pinned_at').desc(nulls_last=True), '-created_at'
+            )
+        else:
+            projects = Project.objects.filter(organization=self.request.user.active_organization).order_by(
+                F('pinned_at').desc(nulls_last=True), '-created_at'
+            )
         if filter in ['pinned_only', 'exclude_pinned']:
             projects = projects.filter(pinned_at__isnull=filter == 'exclude_pinned')
         return ProjectManager.with_counts_annotate(projects, fields=fields).prefetch_related('members', 'created_by')
