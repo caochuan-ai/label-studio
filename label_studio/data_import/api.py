@@ -389,7 +389,7 @@ class ReImportAPI(ImportAPI):
                 cap = cv2.VideoCapture(video_path)
                 if cap is None:
                     continue
-                fps = int(cap.get(cv2.CAP_PROP_FPS))
+                fps = cap.get(cv2.CAP_PROP_FPS)
                 # get fps by video
                 old_task_json['fps'] = fps
                 task["data"] = old_task_json
