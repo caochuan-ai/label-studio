@@ -167,7 +167,7 @@ class S3ImportStorageBase(S3StorageMixin, ImportStorage):
                 s3 = boto3.client('s3')
                 s3.download_file(bucket_name, object_key, video_path)
                 cap = cv2.VideoCapture(video_path)
-                fps = int(cap.get(cv2.CAP_PROP_FPS))
+                fps = cap.get(cv2.CAP_PROP_FPS)
                 os.remove(video_path)
                 return {data_key: uri, 'fps': fps}
             return {data_key: uri}
