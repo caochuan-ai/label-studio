@@ -385,14 +385,15 @@ class ReImportAPI(ImportAPI):
             import os
             for task in tasks:
                 old_task_json = task.get("data")
-                video_path = os.path.join(settings.MEDIA_ROOT, old_task_json.get(settings.DATA_UNDEFINED_NAME).split(settings.MEDIA_URL)[1])
-                cap = cv2.VideoCapture(video_path)
-                if cap is None:
-                    continue
-                fps = cap.get(cv2.CAP_PROP_FPS)
-                # get fps by video
-                old_task_json['fps'] = fps
-                task["data"] = old_task_json
+                if old_task_json.get(settings.DATA_UNDEFINED_NAME) is not None:
+                    video_path = os.path.join(settings.MEDIA_ROOT, old_task_json.get(settings.DATA_UNDEFINED_NAME).split(settings.MEDIA_URL)[1])
+                    cap = cv2.VideoCapture(video_path)
+                    if cap is None:
+                        continue
+                    fps = cap.get(cv2.CAP_PROP_FPS)
+                    # get fps by video
+                    old_task_json['fps'] = fps
+                    task["data"] = old_task_json
             tasks, serializer = self._save(tasks)
         duration = time.time() - start
 
