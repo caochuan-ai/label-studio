@@ -155,7 +155,7 @@ DATABASES_ALL = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': DATABASE_NAME,
         'OPTIONS': {
-            # 'timeout': 20,
+            'timeout': 20,
         },
     },
 }
@@ -542,6 +542,7 @@ TASK_SERIALIZER_BULK = 'tasks.serializers.BaseTaskSerializerBulk'
 PREPROCESS_FIELD_NAME = 'data_manager.functions.preprocess_field_name'
 INTERACTIVE_DATA_SERIALIZER = 'data_export.serializers.BaseExportDataSerializerForInteractive'
 DELETE_TASKS_ANNOTATIONS_POSTPROCESS = None
+
 
 
 def project_delete(project):
