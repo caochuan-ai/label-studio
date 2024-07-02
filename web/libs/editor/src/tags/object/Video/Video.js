@@ -115,16 +115,16 @@ const Model = types
 
     /**
      * Wrapper to always send important data
-     * @param {string} event 
-     * @param {any} data 
+     * @param {string} event
+     * @param {any} data
      */
     triggerSync(event, data) {
       if (!self.ref.current) return;
 
       self.syncSend({
-        playing: self.ref.current.playing,
-        time: self.ref.current.currentTime,
-        ...data,
+          playing: self.ref.current.playing,
+          time: self.ref.current.currentTime,
+          ...data,
       }, event);
     },
 
@@ -190,7 +190,8 @@ const Model = types
       setFrame(frame) {
         if (self.frame !== frame && self.framerate) {
           self.frame = frame;
-          self.ref.current.currentTime = frame / self.framerate;
+          // currentTime 精度截断 在此加上0.000001保证拿到下一帧
+          self.ref.current.currentTime = frame / self.framerate + CUSTOM_OFFSET;
         }
       },
 
