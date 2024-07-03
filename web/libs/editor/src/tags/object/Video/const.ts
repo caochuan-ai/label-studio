@@ -1,1 +1,1 @@
-export const CUSTOM_OFFSET = 0.000001;
+export const CUSTOM_OFFSET = 0.00001;
