@@ -189,7 +189,6 @@ const Model = types
       },
 
       setFrame(frame) {
-        // debugger
         if (self.frame !== frame && self.framerate) {
           self.frame = frame;
           // currentTime 精度截断 在此加上0.000001保证拿到下一帧
