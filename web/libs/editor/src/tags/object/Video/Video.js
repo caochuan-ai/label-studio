@@ -7,6 +7,7 @@ import ProcessAttrsMixin from '../../../mixins/ProcessAttrs';
 import { SyncableMixin } from '../../../mixins/Syncable';
 import { parseValue } from '../../../utils/data';
 import ObjectBase from '../Base';
+import { CUSTOM_OFFSET } from './const';
 
 /**
  * Video tag plays a simple video file. Use for video annotation tasks such as classification and transcription.
@@ -188,6 +189,7 @@ const Model = types
       },
 
       setFrame(frame) {
+        // debugger
         if (self.frame !== frame && self.framerate) {
           self.frame = frame;
           // currentTime 精度截断 在此加上0.000001保证拿到下一帧
