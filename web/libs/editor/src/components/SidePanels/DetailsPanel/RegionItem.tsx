@@ -1,13 +1,15 @@
 import chroma from 'chroma-js';
 import { observer } from 'mobx-react';
 import { FC, useMemo, useState } from 'react';
-import { IconLink, IconPlusAlt, IconTrash, IconWarning } from '../../../assets/icons';
+import { IconLink, IconList, IconPlusAlt, IconTrash, IconWarning } from '../../../assets/icons';
 import { IconEyeClosed, IconEyeOpened } from '../../../assets/icons/timeline';
 import { Button, ButtonProps } from '../../../common/Button/Button';
 import { Block, Elem } from '../../../utils/bem';
 import { NodeIcon } from '../../Node/Node';
 import { LockButton } from '../Components/LockButton';
 import { RegionLabels } from './RegionLabels';
+import { Dropdown } from '../../../common/Dropdown/Dropdown';
+import { Menu } from '../../../common/Menu/Menu';
 
 interface RegionItemProps {
   region: any;
@@ -40,51 +42,116 @@ export const RegionItem: FC<RegionItemProps> = observer(({
     return chroma(bgColor).alpha(1);
   }, [region.background, region.style]);
 
-  return (
-    <Block name="detailed-region" mod={{ compact }}>
-      <Elem name="head" style={{ color: color.css() }}>
-        <Elem name="title">
-          <Elem name="icon"><NodeIcon node={region}/></Elem>
-          <RegionLabels region={region} />
+    const onMerge = (targets: any[]) => {
+      const targetPoint = targets[0];
+      const fromPoint = targets[1];
+      if (!fromPoint || !targetPoint) {
+        return;
+      }
+      const targetSequence = targetPoint.sequence;
+      const fromSequence = fromPoint.sequence;
+      const targetMap = new Map(targetSequence.map((item) => [item.frame, item]));
+      fromSequence.forEach((item) => {
+        if (!targetMap.has(item.frame)) {
+          targetPoint.mergePoint(item.frame, fromPoint);
+        }
+      });
+
+      const newTargetSequence = targetPoint.sequence;
+      for (let i = 0; i < newTargetSequence.length - 1; i++) {
+        if (!targetPoint.isInLifespan(newTargetSequence[i].frame + 1)) {
+          targetPoint.toggleLifespan(newTargetSequence[i].frame);
+        }
+      }
+      annotation.deleteRegion(fromPoint);
+    };
+
+    return (
+      <Block name="detailed-region" mod={{ compact }}>
+        <Elem name="head" style={{ color: color.css() }}>
+          <Elem name="title">
+            <Elem name="icon">
+              <NodeIcon node={region} />
+            </Elem>
+            <RegionLabels region={region} />
+          </Elem>
+          {withIds && <span>{region.cleanId}</span>}
         </Elem>
-        {withIds && <span>{region.cleanId}</span>}
-      </Elem>
-      {MainDetails && <Elem name="content"><MainDetails region={region}/></Elem>}
-      {region?.isDrawing && (
-        <Elem name="warning">
-          <IconWarning />
-          <Elem name="warning-text">Incomplete {region.type.replace('region', '')}</Elem>
-        </Elem>
-      )}
-      {withActions && (
-        <RegionAction
-          region={region}
-          editMode={editMode}
-          annotation={annotation}
-          hasEditableRegions={hasEditableRegions}
-          onEditModeChange={setEditMode}
-        />
-      )}
-      {MetaDetails && (
-        <Elem name="content">
-          <MetaDetails
+        {MainDetails && (
+          <Elem name="content">
+            <MainDetails region={region} />
+          </Elem>
+        )}
+        {region?.isDrawing && (
+          <Elem name="warning">
+            <IconWarning />
+            <Elem name="warning-text">Incomplete {region.type.replace('region', '')}</Elem>
+          </Elem>
+        )}
+        {withActions && (
+          <RegionAction
             region={region}
             editMode={editMode}
-            enterEditMode={() => setEditMode(true)}
-            cancelEditMode={() => setEditMode(false)}
+            annotation={annotation}
+            hasEditableRegions={hasEditableRegions}
+            onEditModeChange={setEditMode}
+            onMerge={onMerge}
           />
-        </Elem>
-      )}
-    </Block>
+        )}
+        {MetaDetails && (
+          <Elem name="content">
+            <MetaDetails
+              region={region}
+              editMode={editMode}
+              enterEditMode={() => setEditMode(true)}
+              cancelEditMode={() => setEditMode(false)}
+            />
+          </Elem>
+        )}
+      </Block>
+    );
+  },
+);
+
+interface MergeDropDownProps {
+  region: any;
+  onMerge: (targets: any[]) => void;
+}
+
+const MergeDropDown: FC<MergeDropDownProps> = observer(({ region, onMerge }) => {
+  const { annotation } = region;
+  const { selectedRegions: nodes } = annotation;
+
+  const dropdownContent = useMemo(() => {
+    return (
+      <Menu
+        size="medium"
+        style={{
+          width: 200,
+          minWidth: 200,
+        }}
+      >
+        {nodes
+          .filter((item) => item.id !== region.id)
+          ?.map((item) => {
+            return (
+              <Menu.Item name={item} key={item.id} onClick={() => onMerge([region, item])}>
+                {`${item.cleanId} - ${item.labels?.[0]}`}
+              </Menu.Item>
+            );
+          })}
+      </Menu>
+    );
+  }, [nodes]);
+
+  return (
+    <Dropdown.Trigger alignment="bottom-right" content={dropdownContent} style={{ width: 200 }}>
+      <Button look="alt" style={{ padding: 0 }} key="merge" icon={<IconList />} tooltip="Merge" />
+    </Dropdown.Trigger>
   );
 });
 
-const RegionAction: FC<any> = observer(({
-  region,
-  annotation,
-  editMode,
-  onEditModeChange,
-}) => {
+const RegionAction: FC<any> = observer(({ region, annotation, editMode, onEditModeChange, onMerge }) => {
   const entityButtons: JSX.Element[] = [];
 
   entityButtons.push((
@@ -106,16 +173,18 @@ const RegionAction: FC<any> = observer(({
     />
   ));
 
-  entityButtons.push((
+  entityButtons.push(
     <RegionActionButton
       key="meta"
-      icon={<IconPlusAlt/>}
+      icon={<IconPlusAlt />}
       primary={editMode}
       onClick={() => onEditModeChange(!editMode)}
       hotkey="region:meta"
       aria-label="Edit region's meta"
-    />
-  ));
+    />,
+  );
+
+  entityButtons.push(<MergeDropDown region={region} onMerge={onMerge} />);
 
   return (
     <Block name="region-actions">
