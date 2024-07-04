@@ -88,17 +88,29 @@ const Model = types
       }
     },
 
-    addKeypoint(frame) {
+    addKeypoint(frame, copiedPoint) {
       const sequence = Array.from(self.sequence);
       const closestKeypoint = self.closestKeypoint(frame);
-      const newKeypoint = {
-        ...(self.getShape(frame) ?? closestKeypoint ?? {
-          x: 0,
-          y: 0,
-        }),
+      let newKeypoint = {
+        ...(self.getShape(frame) ??
+          closestKeypoint ?? {
+            x: 0,
+            y: 0,
+          }),
         enabled: closestKeypoint?.enabled ?? true,
         frame,
       };
+      if (copiedPoint) {
+        newKeypoint = {
+          ...(copiedPoint.getShape(frame) ??
+            closestKeypoint ?? {
+              x: 0,
+              y: 0,
+            }),
+          enabled: closestKeypoint?.enabled ?? true,
+          frame,
+        };
+      }
 
       sequence.push(newKeypoint);
 
@@ -140,6 +152,10 @@ const Model = types
       }
 
       return result;
+    },
+
+    mergePoint(frame, sourcePoint) {
+      self.addKeypoint(frame, sourcePoint);
     },
   }));
 
