@@ -52,6 +52,16 @@ from webhooks.utils import api_webhook, api_webhook_for_delete, emit_webhooks_fo
 
 logger = logging.getLogger(__name__)
 
+od_config = [
+    {
+        "project_name_keyword": "bodeng",
+        "account_name_keyword": "bodeng",
+    },
+    {
+        "project_name_keyword": "njjjx",
+        "account_name_keyword": "njjjx",
+    },
+]
 
 _result_schema = openapi.Schema(
     title='Labeling result',
@@ -147,14 +157,14 @@ class ProjectListAPI(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         fields = serializer.validated_data.get('include')
         filter = serializer.validated_data.get('filter')
-        if 'bodeng' in self.request.user.email.lower():
-            projects = Project.objects.filter(organization=self.request.user.active_organization).filter(title__icontains='bodeng').order_by(
-                F('pinned_at').desc(nulls_last=True), '-created_at'
-            )
-        else:
-            projects = Project.objects.filter(organization=self.request.user.active_organization).order_by(
-                F('pinned_at').desc(nulls_last=True), '-created_at'
-            )
+        projects = Project.objects.filter(organization=self.request.user.active_organization).order_by(
+            F('pinned_at').desc(nulls_last=True), '-created_at'
+        )
+        for od in od_config:
+            if od.get("project_name_keyword") in self.request.user.email.lower():
+                projects = Project.objects.filter(organization=self.request.user.active_organization).filter(title__icontains=od.get("account_name_keyword")).order_by(
+                    F('pinned_at').desc(nulls_last=True), '-created_at'
+                )
         if filter in ['pinned_only', 'exclude_pinned']:
             projects = projects.filter(pinned_at__isnull=filter == 'exclude_pinned')
         return ProjectManager.with_counts_annotate(projects, fields=fields).prefetch_related('members', 'created_by')
