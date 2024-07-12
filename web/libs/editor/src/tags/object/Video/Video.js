@@ -191,14 +191,14 @@ const Model = types
       setFrame(frame) {
         if (self.frame !== frame && self.framerate) {
           self.frame = frame;
-          // currentTime 精度截断 在此加上0.000001保证拿到下一帧
+          // currentTime 精度截断 在此加上CUSTOM_OFFSET保证拿到下一帧
           self.ref.current.currentTime = frame / self.framerate + CUSTOM_OFFSET;
         }
       },
 
-      addRegion(data) {
+      addRegion(data, tagName) {
+        // data 为百分比数据
         const control = self.videoControl() ?? self.control();
-
         const sequence = [
           {
             frame: self.frame,
@@ -217,7 +217,7 @@ const Model = types
 
         // add labels
         self.activeStates().forEach(state => {
-          area.setValue(state);
+          area.setValue(state, tagName);
         });
 
         return area;

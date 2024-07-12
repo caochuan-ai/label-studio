@@ -46,6 +46,7 @@ export interface TimelineProps<D extends ViewTypes = 'frames'> {
   onFullscreenToggle?: (fullscreen: boolean) => void;
   onSpeedChange?: (speed: number) => void;
   formatPosition?: (options: TimelineControlsFormatterOptions) => string;
+  onCallModel?: () => string;
 }
 
 export interface TimelineViewProps {
@@ -178,6 +179,7 @@ export interface TimelineControlsProps {
   onZoom: TimelineProps['onZoom'];
   onAmpChange: (amp: number) => void;
   toggleVisibility?: (layerName: string, isVisible: boolean) => void;
+  onCallModel?: () => void
 }
 
 export interface TimelineCustomControls {

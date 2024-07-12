@@ -189,9 +189,10 @@ export const AreaMixinBase = types
       if (!self.results.length) self.annotation.deleteArea(self);
     },
 
-    setValue(tag) {
+    setValue(tag, tagName) {
       const result = self.results.find(r => r.from_name === tag);
-      const values = tag.selectedValues();
+      // values = ['Others'] label名称
+      const values = tagName ? [tagName] : tag.selectedValues();
 
       if (result) {
         if (tag.holdsState) result.setValue(values);

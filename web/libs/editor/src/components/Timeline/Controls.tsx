@@ -4,11 +4,13 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCollapse,
+  IconCross,
   IconExpand,
   IconFastForward,
   IconForward,
   IconFullscreen,
   IconFullscreenExit,
+  IconInterpolationAdd,
   IconNext,
   IconPause,
   IconPlay,
@@ -34,6 +36,7 @@ import { FF_DEV_2715, isFF } from '../../utils/feature-flags';
 import { AudioControl } from './Controls/AudioControl';
 import { ConfigControl } from './Controls/ConfigControl';
 import { TimeDurationControl } from '../TimeDurationControl/TimeDurationControl';
+import { IconRectangleTool, LsPlus } from '../../assets/icons';
 
 const positionFromTime = ({ time, fps }: TimelineControlsFormatterOptions) => {
   const roundedFps = Math.round(fps).toString();
@@ -61,6 +64,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   onForward,
   onPlay,
   onPause,
+  onCallModel,
   onFullScreenToggle,
   onStepBackward,
   onPositionChange,
@@ -304,6 +308,13 @@ export const Controls: FC<TimelineControlsProps> = memo(({
               )}
             </ControlButton>
           )}
+          <ControlButton
+            tooltip="Call Model"
+            onClick={() => onCallModel?.()}
+          >
+            <IconRectangleTool />
+            <LsPlus />
+          </ControlButton>
         </Elem>
       </Elem>
 

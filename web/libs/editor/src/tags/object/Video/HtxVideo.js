@@ -18,6 +18,10 @@ import ResizeObserver from '../../../utils/resize-observer';
 import { clamp, isDefined } from '../../../utils/utilities';
 import './Video.styl';
 import { VideoRegions } from './VideoRegions';
+import { extractProjectIdFromPath } from './utils';
+import { CallModel } from './api';
+import { CALL_MODEL_PATH } from './const';
+import { message } from 'antd';
 
 const isFFDev2715 = isFF(FF_DEV_2715);
 
@@ -101,6 +105,7 @@ function useZoom(videoDimensions, canvasDimentions, shouldClampPan) {
 
 const HtxVideoView = ({ item, store }) => {
   if (!item._value) return null;
+  console.log('store ====', store)
 
   const limitCanvasDrawingBoundaries = !store.settings.videoDrawOutside;
   const videoBlockRef = useRef();
@@ -402,6 +407,55 @@ const HtxVideoView = ({ item, store }) => {
     }
   }, [item, position]);
 
+  
+  const handelCallModel = async () => {
+    // const allRegions = item.allRegs;
+    // allRegions.forEach(reg => item.deleteRegion(reg.cleanId));
+    // return
+    console.log('project=====', item.project)
+    console.log('videoRef=====', item.ref)
+    
+    const projectId = store?.project?.id || extractProjectIdFromPath(location.href);
+    const videoImg = await item.ref?.current?.getCurrentImg();
+    const { width: waWidth, height: waHeight } = videoDimensions;
+    if (!projectId || !videoImg) {
+      message.error('Call Model Params Error');
+      return
+    }
+    console.log(videoImg.width, videoImg.height)
+    console.log(videoImg, projectId, item)
+    const res = await CallModel(
+      `${CALL_MODEL_PATH}${7}`,
+      videoImg,
+    );
+    const targetFrameBBoxes = res.dets_nms;
+    console.log('targetFrameBBoxes', targetFrameBBoxes)
+    
+    const children = store.annotationStore?.root?.children;
+    const labels = children?.find(node => {
+      return node.identifier === 'videoLabels' || node.name === 'videoLabels'
+    })
+    const bboxes = targetFrameBBoxes.map(item => 
+      {
+        const targetLabel = labels.children?.[item[5]];
+        const labelValue = targetLabel?.value;
+        return {
+          x: item[0] / waWidth * 100,
+          y: item[1] / waHeight * 100,
+          width: (item[2] - item[0]) / waWidth * 100,
+          height: (item[3] - item[1]) / waHeight * 100,
+          label: labelValue
+        }
+      }
+    )
+    bboxes.forEach(box => {
+      console.log(box.label)
+      // todo select area
+      item.addRegion(box, box.label);
+      // region.addPredictedPoint(sequence[0].frame, sequence[0])
+    })
+  }
+
   useEffect(() => () => {
     item.ref.current = null;
   }, []);
@@ -525,6 +579,7 @@ const HtxVideoView = ({ item, store }) => {
             onFullscreenToggle={handleFullscreenToggle}
             onSelectRegion={handleSelectRegion}
             onAction={handleAction}
+            onCallModel={handelCallModel}
           />
         )}
       </Block>
