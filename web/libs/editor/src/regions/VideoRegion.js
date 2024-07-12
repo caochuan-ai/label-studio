@@ -88,15 +88,21 @@ const Model = types
       }
     },
 
-    addKeypoint(frame, copiedPoint) {
+    addKeypoint(frame, copiedPoint, customShape) {
       const sequence = Array.from(self.sequence);
       const closestKeypoint = self.closestKeypoint(frame);
+
+      let newShape = (self.getShape(frame) ??
+        closestKeypoint ?? {
+          x: 0,
+          y: 0,
+        })
+      if (customShape) {
+        newShape = customShape;
+      }
+      
       let newKeypoint = {
-        ...(self.getShape(frame) ??
-          closestKeypoint ?? {
-            x: 0,
-            y: 0,
-          }),
+        ...newShape,
         enabled: closestKeypoint?.enabled ?? true,
         frame,
       };
@@ -156,6 +162,15 @@ const Model = types
 
     mergePoint(frame, sourcePoint) {
       self.addKeypoint(frame, sourcePoint);
+    },
+
+    addPredictedPoint(frame, sourcePointSequence) {
+      const sourceShape = {
+        ...sourcePointSequence
+      }
+
+      const sequence = Array.from(self.sequence);
+      console.log('videoRegion sequence===', sequence) 
     },
   }));
 

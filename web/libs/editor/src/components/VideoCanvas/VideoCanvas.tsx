@@ -86,6 +86,7 @@ export interface VideoRef {
   setZoom: (value: number) => void;
   setPan: (x: number, y: number) => void;
   adjustPan: (x: number, y: number) => PanOptions;
+  getCurrentImg: () => Promise<Blob>;
 }
 
 export const VideoCanvas = memo(forwardRef<VideoRef, VideoProps>((props, ref) => {
@@ -419,6 +420,14 @@ export const VideoCanvas = memo(forwardRef<VideoRef, VideoProps>((props, ref) =>
         this.currentTime = frameClamped / framerate;
         requestAnimationFrame(() => drawVideo());
       },
+      getCurrentImg() {
+        return new Promise((resolve) => {
+          canvasRef.current?.toBlob((blob => {
+            console.log(canvasRef.current?.width, canvasRef.current?.height)
+            resolve(blob)
+          }))
+        });
+      }
     };
 
     if (ref instanceof Function) {

@@ -147,6 +147,7 @@ const TimelineComponent: FC<TimelineProps> = ({
         onPositionChange={setInternalPosition} 
         onToggleCollapsed={setViewCollapsed}
         formatPosition={formatPosition}
+        onCallModel={props.onCallModel}
         extraControls={View.Controls && !disableView ? (
           <View.Controls
             onAction={(e, action, data) => {
@@ -174,6 +175,8 @@ const TimelineComponent: FC<TimelineProps> = ({
       )}
     </Elem>
   );
+
+  console.log(regions)
 
   const view = !viewCollapsed && !disableView && (
     <Elem name="view">
