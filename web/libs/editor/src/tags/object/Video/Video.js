@@ -216,9 +216,17 @@ const Model = types
         const area = self.annotation.createResult({ sequence }, {}, control, self);
 
         // add labels
-        self.activeStates().forEach(state => {
-          area.setValue(state, tagName);
-        });
+        if (tagName) {
+          const allStates = self.states();
+          allStates.forEach(state => {
+            area.setValue(state, tagName);
+          });
+        } else {
+          const actives = self.activeStates();
+          actives.forEach(state => {
+            area.setValue(state);
+          });
+        }
 
         return area;
       },
