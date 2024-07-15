@@ -163,15 +163,6 @@ const Model = types
     mergePoint(frame, sourcePoint) {
       self.addKeypoint(frame, sourcePoint);
     },
-
-    addPredictedPoint(frame, sourcePointSequence) {
-      const sourceShape = {
-        ...sourcePointSequence
-      }
-
-      const sequence = Array.from(self.sequence);
-      console.log('videoRegion sequence===', sequence) 
-    },
   }));
 
 const VideoRegion = types.compose(
