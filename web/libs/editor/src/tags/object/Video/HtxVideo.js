@@ -407,37 +407,29 @@ const HtxVideoView = ({ item, store }) => {
     }
   }, [item, position]);
 
-  
+  /** 单帧图片 */
   const handelCallModel = async () => {
-    // const allRegions = item.allRegs;
-    // allRegions.forEach(reg => item.deleteRegion(reg.cleanId));
-    // return
-    console.log('project=====', item.project)
-    console.log('videoRef=====', item.ref)
-    
     const projectId = store?.project?.id || extractProjectIdFromPath(location.href);
-    const videoImg = await item.ref?.current?.getCurrentImg();
-    const { width: waWidth, height: waHeight } = videoDimensions;
+    const { blob: videoImg, size } = await item.ref?.current?.getCurrentImg();
+    const { width: waWidth, height: waHeight } = size;
     if (!projectId || !videoImg) {
       message.error('Call Model Params Error');
       return
     }
-    console.log(videoImg.width, videoImg.height)
-    console.log(videoImg, projectId, item)
     const res = await CallModel(
-      `${CALL_MODEL_PATH}${7}`,
+      `${CALL_MODEL_PATH}${projectId}`,
       videoImg,
     );
     const targetFrameBBoxes = res.dets_nms;
-    console.log('targetFrameBBoxes', targetFrameBBoxes)
     
     const children = store.annotationStore?.root?.children;
     const labels = children?.find(node => {
       return node.identifier === 'videoLabels' || node.name === 'videoLabels'
     })
+    const noEmptys = labels.children.filter(label => label?.value !== null);
     const bboxes = targetFrameBBoxes.map(item => 
       {
-        const targetLabel = labels.children?.[item[5]];
+        const targetLabel = noEmptys?.[item[5]];
         const labelValue = targetLabel?.value;
         return {
           x: item[0] / waWidth * 100,
@@ -449,10 +441,7 @@ const HtxVideoView = ({ item, store }) => {
       }
     )
     bboxes.forEach(box => {
-      console.log(box.label)
-      // todo select area
       item.addRegion(box, box.label);
-      // region.addPredictedPoint(sequence[0].frame, sequence[0])
     })
   }
 
