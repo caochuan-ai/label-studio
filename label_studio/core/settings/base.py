@@ -250,11 +250,6 @@ REST_FRAMEWORK = {
 }
 SILENCED_SYSTEM_CHECKS += ['rest_framework.W001']
 
-CALL_BACK_PATH = "http://localhost:8080/user/casdoor_callback"
-CASDOOR_PATH = "http://52.83.42.87:7000/login/oauth/authorize?client_id=e3d01b8ebed2a1511052&response_type=code"
-CCAI_LOGIN_PATH = "https://api.caochuan.cc/auth_server/user/login"
-CCAI_PROFILE_PATH = "https://api.caochuan.cc/auth_server/user/profile"
-
 # CORS & Host settings
 INTERNAL_IPS = [  # django debug toolbar for django==2.2 requirement
     '127.0.0.1',

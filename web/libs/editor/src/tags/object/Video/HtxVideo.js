@@ -105,7 +105,6 @@ function useZoom(videoDimensions, canvasDimentions, shouldClampPan) {
 
 const HtxVideoView = ({ item, store }) => {
   if (!item._value) return null;
-  console.log('store ====', store)
 
   const limitCanvasDrawingBoundaries = !store.settings.videoDrawOutside;
   const videoBlockRef = useRef();
