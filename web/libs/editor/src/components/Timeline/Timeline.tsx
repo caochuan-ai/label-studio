@@ -176,8 +176,6 @@ const TimelineComponent: FC<TimelineProps> = ({
     </Elem>
   );
 
-  console.log(regions)
-
   const view = !viewCollapsed && !disableView && (
     <Elem name="view">
       <View.View
