@@ -37,6 +37,8 @@ import { AudioControl } from './Controls/AudioControl';
 import { ConfigControl } from './Controls/ConfigControl';
 import { TimeDurationControl } from '../TimeDurationControl/TimeDurationControl';
 import { IconRectangleTool, LsPlus } from '../../assets/icons';
+import { Dropdown } from '../../common/Dropdown/Dropdown';
+import { Menu } from '../../common/Menu/Menu';
 
 const positionFromTime = ({ time, fps }: TimelineControlsFormatterOptions) => {
   const roundedFps = Math.round(fps).toString();
@@ -170,6 +172,34 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   const onTimeUpdateChange = (value: number) => {
     onPositionChange(value);
   };
+  console.log('props', props)
+
+  const dropdownContent = useMemo(() => {
+    // const children = store.annotationStore?.root?.children;
+    // const labels = children?.find(node => {
+    //   return node.identifier === 'videoLabels' || node.name === 'videoLabels'
+    // })
+    // const noEmptys = labels.children.filter(label => label?.value !== null);
+    return (
+      <Menu
+        size="medium"
+        style={{
+          width: 200,
+          minWidth: 200,
+        }}
+      >
+        {/* {nodes
+          .filter((item) => item.id !== region.id)
+          ?.map((item) => {
+            return (
+              <Menu.Item name={item} key={item.id} onClick={() => onMerge([region, item])}>
+                {`${item.cleanId} - ${item.labels?.[0]}`}
+              </Menu.Item>
+            );
+          })} */}
+      </Menu>
+    );
+  }, []);
 
   return (
     <Block name="timeline-controls" tag={Space} spread style={{ gridAutoColumns: 'auto' }}>
@@ -308,13 +338,16 @@ export const Controls: FC<TimelineControlsProps> = memo(({
               )}
             </ControlButton>
           )}
-          <ControlButton
-            tooltip="Call Model"
-            onClick={() => onCallModel?.()}
-          >
-            <IconRectangleTool />
-            <LsPlus />
-          </ControlButton>
+          <Dropdown.Trigger alignment="bottom-right" content={dropdownContent} style={{ width: 200 }}>
+            <ControlButton
+              tooltip="Call Model"
+              onClick={() => onCallModel?.()}
+            >
+              <IconRectangleTool />
+              <LsPlus />
+            </ControlButton>
+          </Dropdown.Trigger>
+          
         </Elem>
       </Elem>
 

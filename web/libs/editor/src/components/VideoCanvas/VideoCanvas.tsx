@@ -86,7 +86,7 @@ export interface VideoRef {
   setZoom: (value: number) => void;
   setPan: (x: number, y: number) => void;
   adjustPan: (x: number, y: number) => PanOptions;
-  getCurrentImg: () => Promise<{ blob: Blob | null, size: { width?: number; height?: number }}>;
+  getCurrentImg: () => Promise<{ blob: Blob | null, size: { width?: number; height?: number; offset?: { left: number; top: number } }}>;
 }
 
 export const VideoCanvas = memo(forwardRef<VideoRef, VideoProps>((props, ref) => {
@@ -422,9 +422,28 @@ export const VideoCanvas = memo(forwardRef<VideoRef, VideoProps>((props, ref) =>
       },
       getCurrentImg() {
         return new Promise((resolve) => {
-          canvasRef.current?.toBlob((blob => {
-            resolve({ blob, size: { width: canvasRef.current?.width, height: canvasRef.current?.height } });
-          }))
+          const { width, height } = videoDimensions;
+
+          if (width === 0 && height === 0) return;
+
+          const resultWidth = width * zoom;
+          const resultHeight = height * zoom;
+
+          const offsetLeft = ((canvasWidth - resultWidth) / 2) + pan.x;
+          const offsetTop = ((canvasHeight - resultHeight) / 2) + pan.y;
+          canvasRef.current?.toBlob((blob) => {
+            resolve({
+              blob,
+              size: {
+                width: videoDimensions.width * videoDimensions.ratio,
+                height: videoDimensions.height * videoDimensions.ratio,
+                offset: {
+                  top: offsetTop,
+                  left: offsetLeft,
+                },
+              },
+            });
+          });
         });
       }
     };

@@ -410,29 +410,30 @@ const HtxVideoView = ({ item, store }) => {
   const handelCallModel = async () => {
     const projectId = store?.project?.id || extractProjectIdFromPath(location.href);
     const { blob: videoImg, size } = await item.ref?.current?.getCurrentImg();
-    const { width: waWidth, height: waHeight } = size;
+    const { width: waWidth, height: waHeight, offset } = size;
     if (!projectId || !videoImg) {
       message.error('Call Model Params Error');
       return
     }
     const res = await CallModel(
-      `${CALL_MODEL_PATH}${projectId}`,
+      `${CALL_MODEL_PATH}${7}`,
+      // `${CALL_MODEL_PATH}${projectId}`,
       videoImg,
     );
     const targetFrameBBoxes = res.dets_nms;
     
-    const children = store.annotationStore?.root?.children;
-    const labels = children?.find(node => {
-      return node.identifier === 'videoLabels' || node.name === 'videoLabels'
-    })
-    const noEmptys = labels.children.filter(label => label?.value !== null);
+    // const children = store.annotationStore?.root?.children;
+    // const labels = children?.find(node => {
+    //   return node.identifier === 'videoLabels' || node.name === 'videoLabels'
+    // })
+    // const noEmptys = labels.children.filter(label => label?.value !== null);
     const bboxes = targetFrameBBoxes.map(item => 
       {
-        const targetLabel = noEmptys?.[item[5]];
+        const targetLabel = item[5];
         const labelValue = targetLabel?.value;
         return {
-          x: item[0] / waWidth * 100,
-          y: item[1] / waHeight * 100,
+          x: (item[0] - offset.left) / waWidth * 100 ,
+          y: (item[1] - offset.top) / waHeight * 100,
           width: (item[2] - item[0]) / waWidth * 100,
           height: (item[3] - item[1]) / waHeight * 100,
           label: labelValue
@@ -440,7 +441,8 @@ const HtxVideoView = ({ item, store }) => {
       }
     )
     bboxes.forEach(box => {
-      item.addRegion(box, box.label);
+      const area = item.addRegion(box, box.label);
+      area.toggleLifespan(position);
     })
   }
 
