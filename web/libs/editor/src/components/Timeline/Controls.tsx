@@ -4,7 +4,6 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconCollapse,
-  IconCross,
   IconExpand,
   IconFastForward,
   IconForward,
@@ -36,7 +35,7 @@ import { FF_DEV_2715, isFF } from '../../utils/feature-flags';
 import { AudioControl } from './Controls/AudioControl';
 import { ConfigControl } from './Controls/ConfigControl';
 import { TimeDurationControl } from '../TimeDurationControl/TimeDurationControl';
-import { IconRectangleTool, LsPlus } from '../../assets/icons';
+import { IconMenu, IconRectangleTool, LsCollapse, LsPlus } from '../../assets/icons';
 import { Dropdown } from '../../common/Dropdown/Dropdown';
 import { Menu } from '../../common/Menu/Menu';
 
@@ -50,6 +49,8 @@ const positionFromTime = ({ time, fps }: TimelineControlsFormatterOptions) => {
 };
 
 export const Controls: FC<TimelineControlsProps> = memo(({
+  regions,
+  labels,
   length = 1000,
   position,
   frameRate = 1024,
@@ -83,6 +84,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   const [altControlsMode, setAltControlsMode] = useState(false);
   const [configModal, setConfigModal] = useState(false);
   const [audioModal, setAudioModal] = useState(false);
+  const [curCallModelLabel, setCurCallModelLabel] = useState('');
   const [startReached, endReached] = [position === 1, position === length];
 
   const durationFormatted = useMemo(() => {
@@ -169,17 +171,24 @@ export const Controls: FC<TimelineControlsProps> = memo(({
     };
   }, [altControlsMode]);
 
+  useEffect(() => {
+    const keyboardHandler = (e: KeyboardEvent) => {
+      if (e.metaKey && (e.key === 'M' || e.key === 'm')) {
+        onCallModel?.(curCallModelLabel);
+      }
+    };
+
+    document.addEventListener('keydown', keyboardHandler);
+    return () => {
+      document.removeEventListener('keydown', keyboardHandler);
+    };
+  }, [curCallModelLabel]);
+
   const onTimeUpdateChange = (value: number) => {
     onPositionChange(value);
   };
-  console.log('props', props)
 
   const dropdownContent = useMemo(() => {
-    // const children = store.annotationStore?.root?.children;
-    // const labels = children?.find(node => {
-    //   return node.identifier === 'videoLabels' || node.name === 'videoLabels'
-    // })
-    // const noEmptys = labels.children.filter(label => label?.value !== null);
     return (
       <Menu
         size="medium"
@@ -187,19 +196,21 @@ export const Controls: FC<TimelineControlsProps> = memo(({
           width: 200,
           minWidth: 200,
         }}
+        selectedKeys={[curCallModelLabel]}
       >
-        {/* {nodes
-          .filter((item) => item.id !== region.id)
+        {labels
           ?.map((item) => {
             return (
-              <Menu.Item name={item} key={item.id} onClick={() => onMerge([region, item])}>
-                {`${item.cleanId} - ${item.labels?.[0]}`}
+              <Menu.Item name={item.value} key={item.value} onClick={() => {
+                setCurCallModelLabel(item.value);
+              }}>
+                {item.value}
               </Menu.Item>
             );
-          })} */}
+          })}
       </Menu>
     );
-  }, []);
+  }, [labels, curCallModelLabel]);
 
   return (
     <Block name="timeline-controls" tag={Space} spread style={{ gridAutoColumns: 'auto' }}>
@@ -338,16 +349,28 @@ export const Controls: FC<TimelineControlsProps> = memo(({
               )}
             </ControlButton>
           )}
-          <Dropdown.Trigger alignment="bottom-right" content={dropdownContent} style={{ width: 200 }}>
-            <ControlButton
-              tooltip="Call Model"
-              onClick={() => onCallModel?.()}
+          <Button
+            tooltip="Call Model"
+            type="text"
+            style={{ width: 36, height: 36, padding: 0 }}
+            onClick={() => onCallModel?.()}
+          >
+            <IconRectangleTool />
+            <LsPlus />
+          </Button>
+          <Dropdown.Trigger
+            alignment="bottom-right"
+            content={dropdownContent}
+            style={{ width: 200 }}
+          >
+            <Button
+              tooltip="Call Model Labels"
+              type="text"
+              style={{ width: 50, height: 36, padding: 0 }}
             >
-              <IconRectangleTool />
-              <LsPlus />
-            </ControlButton>
+              {curCallModelLabel ?  <div>{curCallModelLabel}</div>  : <IconMenu />}
+            </Button>
           </Dropdown.Trigger>
-          
         </Elem>
       </Elem>
 
@@ -376,7 +399,6 @@ export const Controls: FC<TimelineControlsProps> = memo(({
               framerate={frameRate}
               formatPosition={formatPosition}
             />
-
           </>
         )}
       </Elem>

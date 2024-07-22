@@ -407,26 +407,20 @@ const HtxVideoView = ({ item, store }) => {
   }, [item, position]);
 
   /** 单帧图片 */
-  const handelCallModel = async () => {
+  const handelCallModel = async (label) => {
     const projectId = store?.project?.id || extractProjectIdFromPath(location.href);
     const { blob: videoImg, size } = await item.ref?.current?.getCurrentImg();
     const { width: waWidth, height: waHeight, offset } = size;
     if (!projectId || !videoImg) {
       message.error('Call Model Params Error');
-      return
+      return;
     }
     const res = await CallModel(
-      `${CALL_MODEL_PATH}${7}`,
-      // `${CALL_MODEL_PATH}${projectId}`,
+      // `${CALL_MODEL_PATH}${7}`,
+      `${CALL_MODEL_PATH}${projectId}`,
       videoImg,
     );
     const targetFrameBBoxes = res.dets_nms;
-    
-    // const children = store.annotationStore?.root?.children;
-    // const labels = children?.find(node => {
-    //   return node.identifier === 'videoLabels' || node.name === 'videoLabels'
-    // })
-    // const noEmptys = labels.children.filter(label => label?.value !== null);
     const bboxes = targetFrameBBoxes.map(item => 
       {
         const targetLabel = item[5];
@@ -441,8 +435,13 @@ const HtxVideoView = ({ item, store }) => {
       }
     )
     bboxes.forEach(box => {
+      if (label && box.label !== label) {
+        return;
+      }
       const area = item.addRegion(box, box.label);
-      area.toggleLifespan(position);
+      if (area.isInLifespan(position + 1)) {
+        area.toggleLifespan(position);
+      }
     })
   }
 
@@ -467,6 +466,15 @@ const HtxVideoView = ({ item, store }) => {
       sequence,
     };
   });
+
+  const getLabels = () => {
+    const children = store.annotationStore?.root?.children;
+    const labels = children?.find((node) => {
+      return node.identifier === 'videoLabels' || node.name === 'videoLabels';
+    });
+    const noEmptys = labels.children.filter((label) => label?.value !== null);
+    return noEmptys;
+  };
 
   return (
     <ObjectTag item={item}>
@@ -533,6 +541,7 @@ const HtxVideoView = ({ item, store }) => {
             length={videoLength}
             position={position}
             regions={regions}
+            labels={getLabels()}
             altHopSize={store.settings.videoHopSize}
             allowFullscreen={false}
             fullscreen={isFullScreen}

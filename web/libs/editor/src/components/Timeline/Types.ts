@@ -9,6 +9,7 @@ export type TimelineControls = Partial<Record<keyof typeof Controls, boolean>> &
 
 export interface TimelineProps<D extends ViewTypes = 'frames'> {
   regions: any[];
+  labels: any[];
   length: number;
   position: number;
   mode: D;
@@ -120,6 +121,7 @@ export type TimelineSettings = {
   skipToEnd?: string,
   hopBackward?: string,
   hopForward?: string,
+  callModel?: string,
   fastTravelSize?: TimelineStepFunction,
   stepSize?: TimelineStepFunction,
   leftOffset?: number,
@@ -144,6 +146,8 @@ export type TimelineControlsStepHandler = (
 ) => void;
 
 export interface TimelineControlsProps {
+  regions: any;
+  labels: any[];
   length: number;
   position: number;
   frameRate: number;
@@ -179,7 +183,7 @@ export interface TimelineControlsProps {
   onZoom: TimelineProps['onZoom'];
   onAmpChange: (amp: number) => void;
   toggleVisibility?: (layerName: string, isVisible: boolean) => void;
-  onCallModel?: () => void
+  onCallModel?: (label?: string) => void
 }
 
 export interface TimelineCustomControls {
