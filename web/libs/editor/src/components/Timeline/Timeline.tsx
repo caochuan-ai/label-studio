@@ -13,6 +13,7 @@ import { default as Views } from './Views';
 
 const TimelineComponent: FC<TimelineProps> = ({
   regions,
+  labels,
   zoom = 1,
   mode = 'frames',
   length = 1024,
@@ -123,6 +124,7 @@ const TimelineComponent: FC<TimelineProps> = ({
   const controls = (
     <Elem name="topbar">
       <Controls
+        labels={labels}
         length={length}
         position={currentPosition}
         frameRate={framerate}
