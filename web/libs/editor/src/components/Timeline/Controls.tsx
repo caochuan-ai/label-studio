@@ -353,7 +353,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
             tooltip="Call Model"
             type="text"
             style={{ width: 36, height: 36, padding: 0 }}
-            onClick={() => onCallModel?.()}
+            onClick={() => onCallModel?.(curCallModelLabel)}
           >
             <IconRectangleTool />
             <LsPlus />
