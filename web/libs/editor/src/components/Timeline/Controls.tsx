@@ -182,7 +182,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
     return () => {
       document.removeEventListener('keydown', keyboardHandler);
     };
-  }, [curCallModelLabel]);
+  }, [curCallModelLabel, position]);
 
   const onTimeUpdateChange = (value: number) => {
     onPositionChange(value);
