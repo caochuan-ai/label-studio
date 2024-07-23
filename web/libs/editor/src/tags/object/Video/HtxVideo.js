@@ -432,16 +432,23 @@ const HtxVideoView = ({ item, store }) => {
           label: targetLabel
         }
       }
-    )
+    );
+    let added = false;
     bboxes.forEach(box => {
       if ((label && label !== 'All' && box.label !== label) || !box.label) {
         return;
       }
       const area = item.addRegion(box, box.label);
+      added = true;
       if (area.isInLifespan(position + 1)) {
         area.toggleLifespan(position);
       }
-    })
+    });
+    if (added) {
+      message.success('标注完成');
+    } else {
+      message.error('此帧未检测出目标Label');
+    }
   }
 
   useEffect(() => () => {

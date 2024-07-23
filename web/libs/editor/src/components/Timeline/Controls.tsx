@@ -84,6 +84,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   const [altControlsMode, setAltControlsMode] = useState(false);
   const [configModal, setConfigModal] = useState(false);
   const [audioModal, setAudioModal] = useState(false);
+  const [callModelLoading, setCallModelLoading] = useState(false);
   const [curCallModelLabel, setCurCallModelLabel] = useState('All');
   const [startReached, endReached] = [position === 1, position === length];
 
@@ -172,9 +173,11 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   }, [altControlsMode]);
 
   useEffect(() => {
-    const keyboardHandler = (e: KeyboardEvent) => {
+    const keyboardHandler = async (e: KeyboardEvent) => {
       if (e.metaKey && (e.key === 'M' || e.key === 'm')) {
-        onCallModel?.(curCallModelLabel);
+        setCallModelLoading(true);
+        await onCallModel?.(curCallModelLabel);
+        setCallModelLoading(false);
       }
     };
 
@@ -182,7 +185,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
     return () => {
       document.removeEventListener('keydown', keyboardHandler);
     };
-  }, [curCallModelLabel, position]);
+  }, [curCallModelLabel, position, callModelLoading]);
 
   const onTimeUpdateChange = (value: number) => {
     onPositionChange(value);
@@ -359,8 +362,13 @@ export const Controls: FC<TimelineControlsProps> = memo(({
           <Button
             tooltip="Call Model"
             type="text"
+            waiting={callModelLoading}
             style={{ width: 36, height: 36, padding: 0 }}
-            onClick={() => onCallModel?.(curCallModelLabel)}
+            onClick={async () => {
+              setCallModelLoading(true);
+              await onCallModel?.(curCallModelLabel);
+              setCallModelLoading(false);
+            }}
           >
             <IconRectangleTool />
             <LsPlus />
