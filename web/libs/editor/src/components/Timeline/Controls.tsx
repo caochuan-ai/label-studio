@@ -381,7 +381,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
             <Button
               tooltip="Call Model Labels"
               type="text"
-              style={{ width: 50, height: 36, padding: 0 }}
+              style={{ width: '100%', height: 36, padding: 10 }}
             >
               {curCallModelLabel ?  <div>{curCallModelLabel}</div>  : <IconMenu />}
             </Button>
