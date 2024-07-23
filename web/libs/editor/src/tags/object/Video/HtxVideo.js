@@ -424,18 +424,17 @@ const HtxVideoView = ({ item, store }) => {
     const bboxes = targetFrameBBoxes.map(item => 
       {
         const targetLabel = item[5];
-        const labelValue = targetLabel?.value;
         return {
           x: (item[0] - offset.left) / waWidth * 100 ,
           y: (item[1] - offset.top) / waHeight * 100,
           width: (item[2] - item[0]) / waWidth * 100,
           height: (item[3] - item[1]) / waHeight * 100,
-          label: labelValue
+          label: targetLabel
         }
       }
     )
     bboxes.forEach(box => {
-      if (label && box.label !== label) {
+      if ((label && box.label !== label) || !box.label) {
         return;
       }
       const area = item.addRegion(box, box.label);
