@@ -122,6 +122,8 @@ const MergeDropDown: FC<MergeDropDownProps> = observer(({ region, onMerge }) => 
   const { annotation } = region;
   const { selectedRegions: nodes } = annotation;
 
+  const others = nodes?.filter((item) => item.id !== region.id)
+
   const dropdownContent = useMemo(() => {
     return (
       <Menu
@@ -131,9 +133,7 @@ const MergeDropDown: FC<MergeDropDownProps> = observer(({ region, onMerge }) => 
           minWidth: 200,
         }}
       >
-        {nodes
-          .filter((item) => item.id !== region.id)
-          ?.map((item) => {
+        {others?.map((item) => {
             return (
               <Menu.Item name={item} key={item.id} onClick={() => onMerge([region, item])}>
                 {`${item.cleanId} - ${item.labels?.[0]}`}
@@ -143,6 +143,19 @@ const MergeDropDown: FC<MergeDropDownProps> = observer(({ region, onMerge }) => 
       </Menu>
     );
   }, [nodes]);
+
+  const is2SameLabels = nodes?.length === 2 && others?.length === 1 && region?.labelName === others?.[0]?.labelName;
+  if (is2SameLabels) {
+    return (
+      <Button 
+        look="alt" 
+        style={{ padding: 0 }} 
+        key="merge" 
+        icon={<IconList />} 
+        tooltip="Merge" 
+        onClick={() => onMerge([region, others?.[0]])} 
+    />);
+  }
 
   return (
     <Dropdown.Trigger alignment="bottom-right" content={dropdownContent} style={{ width: 200 }}>
