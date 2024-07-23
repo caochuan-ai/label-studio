@@ -38,6 +38,7 @@ import { TimeDurationControl } from '../TimeDurationControl/TimeDurationControl'
 import { IconMenu, IconRectangleTool, LsCollapse, LsPlus } from '../../assets/icons';
 import { Dropdown } from '../../common/Dropdown/Dropdown';
 import { Menu } from '../../common/Menu/Menu';
+import { message } from 'antd';
 
 const positionFromTime = ({ time, fps }: TimelineControlsFormatterOptions) => {
   const roundedFps = Math.round(fps).toString();
@@ -85,7 +86,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   const [configModal, setConfigModal] = useState(false);
   const [audioModal, setAudioModal] = useState(false);
   const [callModelLoading, setCallModelLoading] = useState(false);
-  const [curCallModelLabel, setCurCallModelLabel] = useState('All');
+  const [curCallModelLabel, setCurCallModelLabel] = useState('');
   const [startReached, endReached] = [position === 1, position === length];
 
   const durationFormatted = useMemo(() => {
@@ -174,7 +175,11 @@ export const Controls: FC<TimelineControlsProps> = memo(({
 
   useEffect(() => {
     const keyboardHandler = async (e: KeyboardEvent) => {
-      if (e.metaKey && (e.key === 'M' || e.key === 'm')) {
+      if ((e.metaKey || e.altKey) && (e.code === 'KeyM')) {
+        if (!curCallModelLabel) {
+          message.error('请选择与标注目标label');
+          return;
+        }
         setCallModelLoading(true);
         await onCallModel?.(curCallModelLabel);
         setCallModelLoading(false);
@@ -192,13 +197,6 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   };
 
   const dropdownContent = useMemo(() => {
-    const allLabels = [
-      {
-        value: '',
-        name: 'All'
-      },
-      ...labels
-    ];
     return (
       <Menu
         size="medium"
@@ -208,7 +206,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
         }}
         selectedKeys={[curCallModelLabel]}
       >
-        {allLabels
+        {labels
           ?.map((item) => {
             return (
               <Menu.Item name={item.value || item.name} key={item.value || item.name} onClick={() => {
@@ -362,6 +360,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
           <Button
             tooltip="Call Model"
             type="text"
+            disabled={!curCallModelLabel}
             waiting={callModelLoading}
             style={{ width: 36, height: 36, padding: 0 }}
             onClick={async () => {
