@@ -84,7 +84,7 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   const [altControlsMode, setAltControlsMode] = useState(false);
   const [configModal, setConfigModal] = useState(false);
   const [audioModal, setAudioModal] = useState(false);
-  const [curCallModelLabel, setCurCallModelLabel] = useState('');
+  const [curCallModelLabel, setCurCallModelLabel] = useState('All');
   const [startReached, endReached] = [position === 1, position === length];
 
   const durationFormatted = useMemo(() => {
@@ -189,6 +189,13 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   };
 
   const dropdownContent = useMemo(() => {
+    const allLabels = [
+      {
+        value: '',
+        name: 'All'
+      },
+      ...labels
+    ];
     return (
       <Menu
         size="medium"
@@ -198,13 +205,13 @@ export const Controls: FC<TimelineControlsProps> = memo(({
         }}
         selectedKeys={[curCallModelLabel]}
       >
-        {labels
+        {allLabels
           ?.map((item) => {
             return (
-              <Menu.Item name={item.value} key={item.value} onClick={() => {
-                setCurCallModelLabel(item.value);
+              <Menu.Item name={item.value || item.name} key={item.value || item.name} onClick={() => {
+                setCurCallModelLabel(item.value || item.name);
               }}>
-                {item.value}
+                {item.value || item.name}
               </Menu.Item>
             );
           })}
