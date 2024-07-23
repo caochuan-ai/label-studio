@@ -434,7 +434,7 @@ const HtxVideoView = ({ item, store }) => {
       }
     )
     bboxes.forEach(box => {
-      if ((label && box.label !== label) || !box.label) {
+      if ((label && label !== 'All' && box.label !== label) || !box.label) {
         return;
       }
       const area = item.addRegion(box, box.label);
