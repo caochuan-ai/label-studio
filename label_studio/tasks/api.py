@@ -302,6 +302,27 @@ class AnnotationAPI(generics.RetrieveUpdateDestroyAPIView):
         task.update_is_labeled()
         task.save()  # refresh task metrics
 
+        # 校验 request.data 中的 result 数据
+        if 'result' in request.data:
+            result_data = request.data['result']
+            # 过滤掉 x, y, width, height 为 null 的无效数据
+            filtered_result = []
+            for item in result_data:
+                if 'value' in item and 'sequence' in item['value']:
+                    # 过滤 sequence 中无效的帧数据
+                    valid_sequence = [
+                        frame for frame in item['value']['sequence']
+                        if frame.get('x') is not None
+                           and frame.get('y') is not None
+                           and frame.get('width') is not None
+                           and frame.get('height') is not None
+                    ]
+                    if valid_sequence:  # 如果 sequence 中还有有效数据
+                        item['value']['sequence'] = valid_sequence
+                        filtered_result.append(item)
+            # 更新 request.data 中的 result
+            request.data['result'] = filtered_result
+
         result = super(AnnotationAPI, self).update(request, *args, **kwargs)
 
         task.update_is_labeled()
