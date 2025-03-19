@@ -61,6 +61,10 @@ od_config = [
         "project_name_keyword": "njjjx",
         "account_name_keyword": "njjjx",
     },
+    {
+        "project_name_keyword": "shenzhou",
+        "account_name_keyword": "shenzhou",
+    }
 ]
 
 _result_schema = openapi.Schema(
