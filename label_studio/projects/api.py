@@ -64,6 +64,10 @@ od_config = [
     {
         "project_name_keyword": "shenzhou",
         "account_name_keyword": "shenzhou",
+    },
+    {
+        "project_name_keyword": "ykz",
+        "account_name_keyword": "ykz",
     }
 ]
 
