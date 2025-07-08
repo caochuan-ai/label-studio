@@ -69,6 +69,7 @@ export const Controls: FC<TimelineExtraControls<Actions, DataType>> = ({
         onClick={onKeypointToggle}
         disabled={!hasSelectedRegion}
         tooltip="Toggle Keypoint"
+        hotkey="video:toggle-keypoint"
       >
         {keypointIcon}
       </ControlButton>

@@ -174,5 +174,10 @@
   "image:next": {
     "key": "ctrl+d",
     "description": "Next Image"
+  },
+  "video:toggle-keypoint": {
+    "key": "alt+k",
+    "mac": "command+k",
+    "description": "Toggle keypoint"
   }
 }
