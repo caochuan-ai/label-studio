@@ -160,11 +160,11 @@ class S3ImportStorageBase(S3StorageMixin, ImportStorage):
         if self.use_blob_urls:
             data_key = settings.DATA_UNDEFINED_NAME
             video_path = key.split('/')[-1]
-            if self.url_scheme in ["s3"]:
+            if self.url_scheme in ["s3"] and video_path.split('.')[-1] in ["mp4"]:
                 import os
                 import cv2
                 bucket_name, object_key = self.bucket, key
-                s3 = boto3.client('s3')
+                _, s3 = self.get_client_and_resource()
                 s3.download_file(bucket_name, object_key, video_path)
                 cap = cv2.VideoCapture(video_path)
                 fps = cap.get(cv2.CAP_PROP_FPS)
