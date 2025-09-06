@@ -1,12 +1,17 @@
 """This file and its contents are licensed under the Apache License 2.0. Please see the included NOTICE for copyright information and LICENSE for a copy of the license.
 """
+import json
 import logging
 
 import drf_yasg.openapi as openapi
+from django.http import JsonResponse, HttpResponseServerError
+from django.views.decorators.http import require_http_methods
+
 from core.feature_flags import flag_set
+from core.middleware import enforce_csrf_checks
 from core.mixins import GetParentObjectMixin
 from core.permissions import ViewClassPermission, all_permissions
-from core.utils.common import DjangoFilterDescriptionInspector
+from core.utils.common import DjangoFilterDescriptionInspector, db_is_not_sqlite, conditional_atomic, safe_float
 from core.utils.params import bool_from_request
 from data_manager.api import TaskListAPI as DMTaskListAPI
 from data_manager.functions import evaluate_predictions
@@ -32,6 +37,7 @@ from tasks.serializers import (
     TaskSerializer,
     TaskSimpleSerializer,
 )
+from users.models import User
 from webhooks.models import WebhookAction
 from webhooks.utils import (
     api_webhook,
@@ -248,6 +254,54 @@ class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
     @swagger_auto_schema(auto_schema=None)
     def put(self, request, *args, **kwargs):
         return super(TaskAPI, self).put(request, *args, **kwargs)
+
+
+# @enforce_csrf_checks
+@require_http_methods(['POST'])
+def ml_predict_callback(request):
+    # label_studio/ml/models.py line 179
+    ml_api_result = json.loads(request.body)
+    from django.contrib.auth.models import AnonymousUser
+    if isinstance(request.user, AnonymousUser):
+        # use first user as updater
+        request.user = User.objects.order_by("id").first()
+
+    r = ml_api_result.get('result')
+    task_id = ml_api_result['task_id']
+    model_version = ml_api_result.get('model_version')
+    score = ml_api_result.get('score')
+    if r is None:
+        logger.error(f'ML backend returned empty prediction')
+        return HttpResponseServerError("ML backend returned empty prediction")
+
+    logger.info("receive predict callback, task_id %s", task_id)
+
+    task = Task.objects.get(id=task_id)
+    if task is None:
+        logger.error("task %s not exists.", task_id)
+        return HttpResponseServerError("task %s not exists." % task_id)
+
+    if task.is_labeled:
+        logger.warning("task %s is labelled, predict cancel.", task_id)
+        return HttpResponseServerError("task %s is labelled, predict cancel." % task_id)
+    if task.total_predictions > 0:
+        logger.error("task %s is predicted.", task_id)
+        return HttpResponseServerError("task %s is predicted." % task_id)
+
+    prediction = (
+        {
+            'task': task_id,
+            'result': r,
+            'score': score,
+            'model_version': model_version,
+        }
+    )
+    with conditional_atomic(predicate=db_is_not_sqlite):
+        prediction_ser = PredictionSerializer(data=[prediction], many=True)
+        prediction_ser.is_valid(raise_exception=True)
+        prediction_ser.save()
+    logger.info("save prediction for task %s successfully, model_version %s", task_id, model_version)
+    return JsonResponse({"message": "success"})
 
 
 @method_decorator(

@@ -21,6 +21,8 @@ _api_urlpatterns = [
         api.AnnotationDraftListAPI.as_view(),
         name='task-annotations-drafts',
     ),
+    path('ml_predict_callback', api.ml_predict_callback, name='ml-predict-callback'),
+
 ]
 
 _api_annotations_urlpatterns = [
