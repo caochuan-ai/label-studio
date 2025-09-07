@@ -164,8 +164,8 @@ class S3ImportStorageBase(S3StorageMixin, ImportStorage):
                 import os
                 import cv2
                 bucket_name, object_key = self.bucket, key
-                _, s3 = self.get_client_and_resource()
-                s3.download_file(bucket_name, object_key, video_path)
+                client, _ = self.get_client_and_resource()
+                client.download_file(bucket_name, object_key, video_path)
                 cap = cv2.VideoCapture(video_path)
                 fps = cap.get(cv2.CAP_PROP_FPS)
                 os.remove(video_path)
