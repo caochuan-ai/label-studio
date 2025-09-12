@@ -123,20 +123,20 @@ export const PeoplePage = () => {
         </Space>
       </Elem>
       <Elem name="content">
-//        <PeopleList
-//          selectedUser={selectedUser}
-//          defaultSelected={defaultSelected}
-//          onSelect={(user) => selectUser(user)}
-//        />
-//
-//        {selectedUser ? (
-//          <SelectedUser
-//            user={selectedUser}
-//            onClose={() => selectUser(null)}
-//          />
-//        ) : isFF(FF_LSDV_E_297) && (
-//          <HeidiTips collection="organizationPage" />
-//        )}
+        {/*<PeopleList*/}
+        {/*  selectedUser={selectedUser}*/}
+        {/*  defaultSelected={defaultSelected}*/}
+        {/*  onSelect={(user) => selectUser(user)}*/}
+        {/*/>*/}
+
+        {/*{selectedUser ? (*/}
+        {/*  <SelectedUser*/}
+        {/*    user={selectedUser}*/}
+        {/*    onClose={() => selectUser(null)}*/}
+        {/*  />*/}
+        {/*) : isFF(FF_LSDV_E_297) && (*/}
+        {/*  <HeidiTips collection="organizationPage" />*/}
+        {/*)}*/}
       </Elem>
     </Block>
   );
