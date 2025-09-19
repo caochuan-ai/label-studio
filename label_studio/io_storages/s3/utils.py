@@ -35,8 +35,12 @@ def get_client_and_resource(
     s3_endpoint = s3_endpoint or get_env('S3_ENDPOINT')
     if s3_endpoint:
         settings['endpoint_url'] = s3_endpoint
-    client = session.client('s3', config=boto3.session.Config(signature_version='s3v4'), **settings)
-    resource = session.resource('s3', config=boto3.session.Config(signature_version='s3v4'), **settings)
+    if "myhuaweicloud.com" in s3_endpoint:
+        config = boto3.session.Config(s3={'addressing_style': 'virtual'})
+    else:
+        config = boto3.session.Config(signature_version='s3v4')
+    client = session.client('s3', config=config, **settings)
+    resource = session.resource('s3', config=config, **settings)
     return client, resource
 
 
