@@ -48,6 +48,8 @@ RUN set -eux; \
     curl -sSL https://nginx.org/keys/nginx_signing.key | apt-key add - && \
     echo "deb https://nginx.org/packages/mainline/ubuntu/ $(lsb_release -cs) nginx" >> /etc/apt/sources.list && \
     apt-get update && apt-get install -y nginx && \
+    # for opencv
+    apt-get install -y --no-install-recommends libgl1 libglib2.0-0 && \
     apt-get purge --assume-yes --auto-remove --option APT::AutoRemove::RecommendsImportant=false \
      --option APT::AutoRemove::SuggestsImportant=false && rm -rf /var/lib/apt/lists/* /tmp/* && \
     nginx -v
@@ -68,7 +70,8 @@ COPY --chown=1001:0 label_studio/__init__.py ./label_studio/__init__.py
 # the system python. This includes label-studio itself. For caching purposes,
 # do this before copying the rest of the source code.
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR \
-    poetry check --lock && POETRY_VIRTUALENVS_CREATE=false poetry install
+    poetry check --lock && POETRY_VIRTUALENVS_CREATE=false poetry install && \
+    pip3 install opencv-python==4.6.0.66-i https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY --chown=1001:0 . .
 
