@@ -72,6 +72,10 @@ od_config = [
     {
         "project_name_keyword": "cixi",
         "account_name_keyword": "cixi",
+    },
+    {
+        "project_name_keyword": "aimeite",
+        "account_name_keyword": "aimeite",
     }
 ]
 
