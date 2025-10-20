@@ -71,7 +71,7 @@ COPY --chown=1001:0 label_studio/__init__.py ./label_studio/__init__.py
 # do this before copying the rest of the source code.
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR \
     poetry check --lock && POETRY_VIRTUALENVS_CREATE=false poetry install && \
-    pip3 install opencv-python==4.6.0.66-i https://pypi.tuna.tsinghua.edu.cn/simple
+    pip3 install opencv-python==4.6.0.66 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 COPY --chown=1001:0 . .
 
