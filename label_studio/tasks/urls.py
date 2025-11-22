@@ -22,6 +22,10 @@ _api_urlpatterns = [
         name='task-annotations-drafts',
     ),
     path('ml_predict_callback', api.ml_predict_callback, name='ml-predict-callback'),
+    path('video_sam_predict', api.video_sam_predict, name='video-sam-predict'),
+    path('video_sam_predict_single', api.video_sam_predict_single, name='video-sam-predict-single'),
+    path('video_sam_clean_cache', api.video_sam_clean_cache, name='video-sam-clean-cache'),
+    path('video_sam_predict_result', api.video_sam_predict_result, name='video-sam-predict-result'),
 
 ]
 

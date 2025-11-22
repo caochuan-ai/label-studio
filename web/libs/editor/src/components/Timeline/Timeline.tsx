@@ -124,6 +124,7 @@ const TimelineComponent: FC<TimelineProps> = ({
   const controls = (
     <Elem name="topbar">
       <Controls
+        regions={regions}
         labels={labels}
         length={length}
         position={currentPosition}
@@ -146,7 +147,7 @@ const TimelineComponent: FC<TimelineProps> = ({
         onStepForward={increasePosition}
         onRewind={(steps) => setInternalPosition(isDefined(steps) ? currentPosition - steps : 0)}
         onForward={(steps) => setInternalPosition(isDefined(steps) ? currentPosition + steps : length)}
-        onPositionChange={setInternalPosition} 
+        onPositionChange={setInternalPosition}
         onToggleCollapsed={setViewCollapsed}
         formatPosition={formatPosition}
         onCallModel={props.onCallModel}

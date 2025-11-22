@@ -585,6 +585,7 @@ const HtxVideoView = ({ item, store }) => {
             onSelectRegion={handleSelectRegion}
             onAction={handleAction}
             onCallModel={handelCallModel}
+            data={{ item }}
           />
         )}
       </Block>

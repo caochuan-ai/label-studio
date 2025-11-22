@@ -4,6 +4,7 @@ import json
 import logging
 
 import drf_yasg.openapi as openapi
+import requests
 from django.http import JsonResponse, HttpResponseServerError
 from django.views.decorators.http import require_http_methods
 
@@ -302,6 +303,144 @@ def ml_predict_callback(request):
         prediction_ser.save()
     logger.info("save prediction for task %s successfully, model_version %s", task_id, model_version)
     return JsonResponse({"message": "success"})
+
+
+@require_http_methods(['POST'])
+def video_sam_predict(request):
+    # label_studio/ml/models.py line 179
+    data = json.loads(request.body)
+    from django.contrib.auth.models import AnonymousUser
+    if isinstance(request.user, AnonymousUser):
+        # use first user as updater
+        request.user = User.objects.order_by("id").first()
+
+    task_id = data["task_id"]
+
+    task = Task.objects.get(id=task_id)
+    if task is None:
+        logger.error("task %s not exists.", task_id)
+        return HttpResponseServerError("task %s not exists." % task_id)
+    ml_backends = task.project.get_active_ml_backends()
+    if len(ml_backends) == 0:
+        logger.error("ml backends not exists.")
+        return HttpResponseServerError("No avaliable ml backend.")
+    ml_backend_url = ml_backends[0].url
+
+    req_ml_data = {
+        "task": TaskSimpleSerializer(task, many=False).data,
+        "label_config": task.project.label_config,
+        "prompt_frame_index": data["prompt_frame_index"],
+        "prompts": data["prompts"],
+        "predict_frame_length": data["predict_frame_length"]
+    }
+    resp = requests.post(f"{ml_backend_url}/video_sam_predict", json=req_ml_data)
+    logger.info(
+        "request ml_back %s to start saming video, task_id %s, resp: %s",
+        ml_backend_url, task_id, resp.content
+    )
+    resp_data = json.loads(resp.content)
+
+    return JsonResponse({"message": "success", "data": resp_data})
+
+
+@require_http_methods(['POST'])
+def video_sam_predict_single(request):
+    # label_studio/ml/models.py line 179
+    data = json.loads(request.body)
+    from django.contrib.auth.models import AnonymousUser
+    if isinstance(request.user, AnonymousUser):
+        # use first user as updater
+        request.user = User.objects.order_by("id").first()
+
+    task_id = data["task_id"]
+
+    task = Task.objects.get(id=task_id)
+    if task is None:
+        logger.error("task %s not exists.", task_id)
+        return HttpResponseServerError("task %s not exists." % task_id)
+    ml_backends = task.project.get_active_ml_backends()
+    if len(ml_backends) == 0:
+        logger.error("ml backends not exists.")
+        return HttpResponseServerError("No avaliable ml backend.")
+    ml_backend_url = ml_backends[0].url
+
+    req_ml_data = {
+        "task": TaskSimpleSerializer(task, many=False).data,
+        "label_config": task.project.label_config,
+        "prompt_frame_index": data["prompt_frame_index"],
+        "prompts": data["prompts"],
+        "is_single_predict": data.get("is_single_predict", False),
+        "predict_frame_length": data["predict_frame_length"]
+    }
+    resp = requests.post(f"{ml_backend_url}/video_sam_predict", json=req_ml_data)
+    logger.info(
+        "request ml_back %s to start saming video, task_id %s, resp: %s",
+        ml_backend_url, task_id, resp.content
+    )
+    resp_data = json.loads(resp.content)
+
+    return JsonResponse({"message": "success", "data": resp_data})
+
+
+@require_http_methods(['POST'])
+def video_sam_clean_cache(request):
+    # label_studio/ml/models.py line 179
+    data = json.loads(request.body)
+    from django.contrib.auth.models import AnonymousUser
+    if isinstance(request.user, AnonymousUser):
+        # use first user as updater
+        request.user = User.objects.order_by("id").first()
+
+    task_id = data["task_id"]
+
+    task = Task.objects.get(id=task_id)
+    if task is None:
+        logger.error("task %s not exists.", task_id)
+        return HttpResponseServerError("task %s not exists." % task_id)
+    ml_backends = task.project.get_active_ml_backends()
+    if len(ml_backends) == 0:
+        logger.error("ml backends not exists.")
+        return HttpResponseServerError("No avaliable ml backend.")
+    ml_backend_url = ml_backends[0].url
+
+    req_ml_data = {
+        "task_id": task_id,
+        "project_id": task.project.id,
+        "obj_id": data.get("obj_id"),
+    }
+    resp = requests.post(f"{ml_backend_url}/video_sam_clean_cache", json=req_ml_data)
+    logger.info(
+        "request ml_back %s to clean sam cache, task_id %s, resp: %s",
+        ml_backend_url, task_id, resp.content
+    )
+    resp_data = json.loads(resp.content)
+
+    return JsonResponse({"message": "success", "data": resp_data})
+
+
+@require_http_methods(['POST'])
+def video_sam_predict_result(request):
+    data = json.loads(request.body)
+    from django.contrib.auth.models import AnonymousUser
+    if isinstance(request.user, AnonymousUser):
+        # use first user as updater
+        request.user = User.objects.order_by("id").first()
+
+    task_id = data["task_id"]
+
+    task = Task.objects.get(id=task_id)
+    if task is None:
+        logger.error("task %s not exists.", task_id)
+        return HttpResponseServerError("task %s not exists." % task_id)
+    ml_backends = task.project.get_active_ml_backends()
+    if len(ml_backends) == 0:
+        logger.error("ml backends not exists.")
+        return HttpResponseServerError("No avaliable ml backend.")
+    ml_backend_url = ml_backends[0].url
+
+    resp = requests.post(f"{ml_backend_url}/video_sam_predict_result", json=data)
+    result = resp.json()
+    return JsonResponse({"message": "success", "data": result})
 
 
 @method_decorator(

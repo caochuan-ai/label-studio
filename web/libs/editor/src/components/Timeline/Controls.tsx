@@ -38,7 +38,7 @@ import { TimeDurationControl } from '../TimeDurationControl/TimeDurationControl'
 import { IconMenu, IconRectangleTool, LsCollapse, LsPlus } from '../../assets/icons';
 import { Dropdown } from '../../common/Dropdown/Dropdown';
 import { Menu } from '../../common/Menu/Menu';
-import { message } from 'antd';
+import {InputNumber, message} from 'antd';
 
 const positionFromTime = ({ time, fps }: TimelineControlsFormatterOptions) => {
   const roundedFps = Math.round(fps).toString();
@@ -81,12 +81,14 @@ export const Controls: FC<TimelineControlsProps> = memo(({
   mediaType,
   ...props
 }) => {
-  const { settings } = useContext(TimelineContext);
+  const { settings, data: timelineData } = useContext(TimelineContext);
   const [altControlsMode, setAltControlsMode] = useState(false);
   const [configModal, setConfigModal] = useState(false);
   const [audioModal, setAudioModal] = useState(false);
   const [callModelLoading, setCallModelLoading] = useState(false);
+  const [callCleanSamCacheLoading, setCallCleanSamCacheLoading] = useState(false);
   const [curCallModelLabel, setCurCallModelLabel] = useState('');
+  const [samFrameLength, setSamFrameLength] = useState(100);
   const [startReached, endReached] = [position === 1, position === length];
 
   const durationFormatted = useMemo(() => {
@@ -144,6 +146,381 @@ export const Controls: FC<TimelineControlsProps> = memo(({
       </Elem>
     );
   };
+
+  /**
+   * 获取当前画布中所有绘制的标注box
+   * @param {number} frame - 帧位置，默认为当前position
+   * @returns {Array} 返回所有标注box的数组，每个box包含 {x, y, width, height, rotation, id, labels, ...}
+   */
+  const getAllAnnotationBoxes = useCallback((frame?: number) => {
+    const videoItem = timelineData?.item;
+    const currentFrame = frame ?? position;
+
+    if (!videoItem || !videoItem.regs) {
+      return [];
+    }
+
+    const boxes = [];
+
+    // 遍历所有区域
+    for (const region of videoItem.regs) {
+      // 检查区域是否隐藏
+      if (region.hidden) {
+        continue;
+      }
+
+      // 检查区域是否在当前帧的生命周期内
+      if (typeof region.isInLifespan === 'function' && !region.isInLifespan(currentFrame)) {
+        continue;
+      }
+
+      // 获取当前帧的box形状
+      if (typeof region.getShape !== 'function') {
+        continue;
+      }
+
+      const shape = region.getShape(currentFrame);
+
+      if (shape) {
+        boxes.push({
+          id: region.cleanId || region.id,
+          ...shape, // x, y, width, height, rotation
+          labels: region.labels || [],
+          selected: region.selected || region.inSelection || false,
+          region: region, // 保留原始region引用，方便后续操作
+        });
+      }
+    }
+
+    return boxes;
+  }, [timelineData, position]);
+
+  const callSamModel = useCallback(async () => {
+
+    const prompts = getAllAnnotationBoxes()
+    const videoItem = timelineData?.item;
+
+    if (!videoItem) {
+      message.error('无法访问视频对象');
+      return;
+    }
+
+    if (!videoItem.ref?.current) {
+      message.error('视频未加载');
+      return;
+    }
+
+    try {
+      setCallModelLoading(true);
+
+      // start sam inference
+      const startSamResp = await fetch("/api/tasks/video_sam_predict", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          prompt_frame_index: position,
+          prompts: prompts,
+          predict_frame_length: samFrameLength
+        }),
+      })
+      if (startSamResp.status !== 200) {
+        message.error("failed to call sam predict")
+        return
+      }
+      const startSamRet = await startSamResp.json()
+      const data = startSamRet["data"]
+      message.success("SAM成功，开始标注结果")
+
+      const startFrame = position;
+      const endFrame = Math.min(startFrame + samFrameLength - 1, length);
+      const totalFrames = endFrame - startFrame + 1;
+
+      message.info(`正在处理 ${totalFrames} 帧 (${startFrame} - ${endFrame})`);
+
+      // 保存原始帧位置，处理完成后恢复
+      const originalFrame = videoItem.frame;
+
+      // 存储每一帧检测到的对象，用于跟踪跨帧的对象
+      // 格式: Map<objectId, { area: VideoRegion, label: string }>
+      const objectMap = new Map<string, object>();
+      let totalRegionsAdded = 0;
+
+      // 删除已有label
+      const toRemoveRegions: string[] = []
+      videoItem.regs.forEach(region => {
+        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+          // label开始于当前帧之后，需要删除防止与sam结果冲突
+          toRemoveRegions.push(region.cleanId)
+        }
+      })
+      toRemoveRegions.forEach(id => videoItem.deleteRegion(id))
+
+      // 循环处理每一帧
+      for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
+        const currentFrame = startFrame + frameIndex + 1;
+
+        // 设置视频到指定帧
+        videoItem.setFrame(currentFrame);
+
+        // 等待视频帧加载完成（给视频一点时间 seek 到正确位置）
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        // 获取当前帧的图片
+        const { blob: videoImg, size } = await videoItem.ref.current.getCurrentImg();
+        const { width: waWidth, height: waHeight, offset } = size;
+
+        if (!videoImg) {
+          console.warn(`无法获取第 ${currentFrame} 帧图片，跳过`);
+          continue;
+        }
+
+        // 示例：假设 SAM 模型返回多个区域的边界框
+        // 格式: [{ x, y, width, height, label, objectId? }, ...]
+        // objectId 用于跟踪同一对象在不同帧中的位置
+        const samResults: Array<{
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+          label?: string;
+          object_id?: string; // 可选的，用于跟踪同一对象
+        }> = data[frameIndex]
+
+        // 为当前帧的每个检测结果处理
+        for (const box of samResults) {
+          // 将像素坐标转换为百分比
+          let regionData = {x: box.x, y: box.y, width: box.width, height: box.height}
+          if (!box.object_id) {
+            continue
+          }
+          let area = videoItem.findRegion(box.object_id)
+          if (area) {
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame)
+            area.addKeypoint(currentFrame, null, regionData);
+          } else if (objectMap.has(box.object_id)){
+            // get from object map
+            area = objectMap.get(box.object_id)
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame)
+            area.addKeypoint(currentFrame, null, regionData);
+          } else {
+            // 创建新的 region
+            area = videoItem.addRegion(regionData, box.label);
+            area.interpolation = false;
+          }
+          objectMap.set(box.object_id, area)
+        }
+
+        // 更新进度提示
+        if ((frameIndex + 1) % 10 === 0 || frameIndex === totalFrames - 1) {
+          message.info(`已处理 ${frameIndex + 1}/${totalFrames} 帧`);
+        }
+      }
+      objectMap.forEach((area) => {
+        const sequence = area?.sequence
+        sequence[sequence.length - 1].enabled = false
+      });
+      // 恢复原始帧位置
+      videoItem.setFrame(originalFrame);
+
+      message.success("SAM成功")
+    } catch (error) {
+      console.error('SAM 模型调用失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      message.error('SAM 模型调用失败: ' + errorMessage);
+    } finally {
+      setCallModelLoading(false);
+    }
+  }, [timelineData, position, samFrameLength, length, setCallModelLoading]);
+
+  const callSamModelSingle = useCallback(async () => {
+
+    const videoItem = timelineData?.item;
+
+    if (!videoItem) {
+      message.error('无法访问视频对象');
+      return;
+    }
+    if (!videoItem.ref?.current) {
+      message.error('视频未加载');
+      return;
+    }
+
+    // get selected region
+    const selectedRegions = videoItem.regs.filter((reg: { inSelection: boolean; }) => reg.inSelection)
+    if (selectedRegions.length != 1) {
+      message.error('请选择一个需要SAM的label');
+      return;
+    }
+    const selectedRegionId = selectedRegions[0].cleanId
+    const prompts = getAllAnnotationBoxes().filter(prompt => prompt.id === selectedRegionId)
+
+    try {
+      setCallModelLoading(true);
+
+      // start sam inference
+      const startSamResp = await fetch("/api/tasks/video_sam_predict_single", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          prompt_frame_index: position,
+          prompts: prompts,
+          is_single_predict: true,
+          predict_frame_length: samFrameLength
+        }),
+      })
+      if (startSamResp.status !== 200) {
+        message.error("failed to call sam predict")
+        return
+      }
+      const startSamRet = await startSamResp.json()
+      const data = startSamRet["data"]
+      message.success("SAM成功，开始标注结果")
+
+      const startFrame = position;
+      const endFrame = Math.min(startFrame + samFrameLength - 1, length);
+      const totalFrames = endFrame - startFrame + 1;
+
+      message.info(`正在处理 ${totalFrames} 帧 (${startFrame} - ${endFrame})`);
+
+      // 保存原始帧位置，处理完成后恢复
+      const originalFrame = videoItem.frame;
+
+      // 存储每一帧检测到的对象，用于跟踪跨帧的对象
+      // 格式: Map<objectId, { area: VideoRegion, label: string }>
+      const objectMap = new Map<string, object>();
+      let totalRegionsAdded = 0;
+
+      // 删除已有label
+      const toRemoveRegions: string[] = []
+      videoItem.regs.forEach(region => {
+        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+          // label开始于当前帧之后，需要删除防止与sam结果冲突
+          toRemoveRegions.push(region.cleanId)
+        }
+      })
+      toRemoveRegions.forEach(id => videoItem.deleteRegion(id))
+
+      // 循环处理每一帧
+      for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
+        const currentFrame = startFrame + frameIndex + 1;
+
+        // 设置视频到指定帧
+        videoItem.setFrame(currentFrame);
+
+        // 等待视频帧加载完成（给视频一点时间 seek 到正确位置）
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        // 获取当前帧的图片
+        const { blob: videoImg, size } = await videoItem.ref.current.getCurrentImg();
+        const { width: waWidth, height: waHeight, offset } = size;
+
+        if (!videoImg) {
+          console.warn(`无法获取第 ${currentFrame} 帧图片，跳过`);
+          continue;
+        }
+
+        // 示例：假设 SAM 模型返回多个区域的边界框
+        // 格式: [{ x, y, width, height, label, objectId? }, ...]
+        // objectId 用于跟踪同一对象在不同帧中的位置
+        const samResults: Array<{
+          x: number;
+          y: number;
+          width: number;
+          height: number;
+          label?: string;
+          object_id?: string; // 可选的，用于跟踪同一对象
+        }> = data[frameIndex]
+
+        // 为当前帧的每个检测结果处理
+        for (const box of samResults) {
+          // 将像素坐标转换为百分比
+          let regionData = {x: box.x, y: box.y, width: box.width, height: box.height, rotation: 0}
+          if (!box.object_id) {
+            continue
+          }
+          let area = videoItem.findRegion(box.object_id)
+          if (area) {
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame)
+            area.addKeypoint(currentFrame, null, regionData);
+          } else if (objectMap.has(box.object_id)){
+            // get from object map
+            area = objectMap.get(box.object_id)
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame)
+            area.addKeypoint(currentFrame, null, regionData);
+          } else {
+            // 创建新的 region
+            area = videoItem.addRegion(regionData, box.label);
+            area.interpolation = false;
+          }
+          objectMap.set(box.object_id, area)
+        }
+
+        // 更新进度提示
+        if ((frameIndex + 1) % 10 === 0 || frameIndex === totalFrames - 1) {
+          message.info(`已处理 ${frameIndex + 1}/${totalFrames} 帧`);
+        }
+      }
+      objectMap.forEach((area) => {
+        const sequence = area?.sequence
+        sequence[sequence.length - 1].enabled = false
+      });
+      // 恢复原始帧位置
+      videoItem.setFrame(originalFrame);
+
+      message.success("SAM成功")
+    } catch (error) {
+      console.error('SAM 模型调用失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      message.error('SAM 模型调用失败: ' + errorMessage);
+    } finally {
+      setCallModelLoading(false);
+    }
+  }, [timelineData, position, samFrameLength, length, setCallModelLoading]);
+
+  const callCleanSamCache = useCallback(async () => {
+    const videoItem = timelineData?.item;
+    if (!videoItem) {
+      message.error('无法访问视频对象');
+      return;
+    }
+    if (!videoItem.ref?.current) {
+      message.error('视频未加载');
+      return;
+    }
+
+    // get selected region
+    const selectedRegions = videoItem.regs.filter((reg: { inSelection: boolean; }) => reg.inSelection)
+    if (selectedRegions.length != 1) {
+      message.error('请选择一个需要clean的label');
+      return;
+    }
+    const selectedRegionId = selectedRegions[0].cleanId
+    try {
+      setCallCleanSamCacheLoading(true)
+      const startSamResp = await fetch("/api/tasks/video_sam_clean_cache", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          obj_id: selectedRegionId,
+        }),
+      })
+      if (startSamResp.status !== 200) {
+        message.error("failed to clean sam cache")
+        return
+      }
+      const startSamRet = await startSamResp.json()
+      message.success("清除当前label的缓存成功")
+    } finally {
+      setCallCleanSamCacheLoading(false)
+    }
+  }, [timelineData, position, samFrameLength, length, setCallCleanSamCacheLoading]);
 
   const closeModalHandler = () => {
     setConfigModal(false);
@@ -357,35 +734,57 @@ export const Controls: FC<TimelineControlsProps> = memo(({
               )}
             </ControlButton>
           )}
-          <Button
-            tooltip="Call Model"
-            type="text"
-            disabled={!curCallModelLabel}
-            waiting={callModelLoading}
-            style={{ width: 36, height: 36, padding: 0 }}
-            onClick={async () => {
-              setCallModelLoading(true);
-              await onCallModel?.(curCallModelLabel);
-              setCallModelLoading(false);
-            }}
-          >
-            <IconRectangleTool />
-            <LsPlus />
-          </Button>
-          <Dropdown.Trigger
-            alignment="bottom-right"
-            content={dropdownContent}
-            style={{ width: 200 }}
-          >
+          <Elem name="group" tag={Space} collapsed>
             <Button
-              tooltip="Call Model Labels"
-              type="text"
-              style={{ width: '100%', height: 36, padding: 10 }}
-            >
-              {curCallModelLabel ?  <div>{curCallModelLabel}</div>  : <IconMenu />}
-            </Button>
-          </Dropdown.Trigger>
+              tooltip={"call Segment Anything Model"}
+              size={'small'}
+              waiting={callModelLoading}
+              onClick={callSamModelSingle}
+            >sam</Button>
+            <InputNumber
+              size={'small'}
+              addonAfter="帧"
+              style={{width: "100px"}}
+              value={samFrameLength}
+              onChange={(v) => setSamFrameLength(v??0)}
+            />
+            <Button
+              tooltip={"clean SAM cache"}
+              size={'small'}
+              waiting={callCleanSamCacheLoading}
+              onClick={callCleanSamCache}
+            >clean</Button>
+          </Elem>
+          {/*<Button*/}
+          {/*  tooltip="Call Model"*/}
+          {/*  type="text"*/}
+          {/*  disabled={!curCallModelLabel}*/}
+          {/*  waiting={callModelLoading}*/}
+          {/*  style={{ width: 36, height: 36, padding: 0 }}*/}
+          {/*  onClick={async () => {*/}
+          {/*    setCallModelLoading(true);*/}
+          {/*    await onCallModel?.(curCallModelLabel);*/}
+          {/*    setCallModelLoading(false);*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <IconRectangleTool />*/}
+          {/*  <LsPlus />*/}
+          {/*</Button>*/}
+          {/*<Dropdown.Trigger*/}
+          {/*  alignment="bottom-right"*/}
+          {/*  content={dropdownContent}*/}
+          {/*  style={{ width: 200 }}*/}
+          {/*>*/}
+          {/*  <Button*/}
+          {/*    tooltip="Call Model Labels"*/}
+          {/*    type="text"*/}
+          {/*    style={{ width: '100%', height: 36, padding: 10 }}*/}
+          {/*  >*/}
+          {/*    {curCallModelLabel ?  <div>{curCallModelLabel}</div>  : <IconMenu />}*/}
+          {/*  </Button>*/}
+          {/*</Dropdown.Trigger>*/}
         </Elem>
+
       </Elem>
 
       <Elem name="group" tag={Space} size="small">

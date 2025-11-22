@@ -2535,6 +2535,19 @@ exports["default"] = StarFilled;
 
 /***/ }),
 
+/***/ "../../node_modules/@ant-design/icons-svg/lib/asn/UpOutlined.js":
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+// This icon file is generated automatically.
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var UpOutlined = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z" } }] }, "name": "up", "theme": "outlined" };
+exports["default"] = UpOutlined;
+
+
+/***/ }),
+
 /***/ "../../node_modules/@ant-design/icons-svg/lib/asn/WarningFilled.js":
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -3283,6 +3296,26 @@ exports["default"] = WarningFilled;
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
   
   var _default = _StarFilled;
+  exports["default"] = _default;
+  module.exports = _default;
+
+/***/ }),
+
+/***/ "../../node_modules/@ant-design/icons/UpOutlined.js":
+/***/ ((module, exports, __webpack_require__) => {
+
+"use strict";
+
+  Object.defineProperty(exports, "__esModule", ({
+    value: true
+  }));
+  exports["default"] = void 0;
+  
+  var _UpOutlined = _interopRequireDefault(__webpack_require__("../../node_modules/@ant-design/icons/lib/icons/UpOutlined.js"));
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+  
+  var _default = _UpOutlined;
   exports["default"] = _default;
   module.exports = _default;
 
@@ -5793,6 +5826,39 @@ var StarFilled = function StarFilled(props, ref) {
 };
 StarFilled.displayName = 'StarFilled';
 var _default = /*#__PURE__*/React.forwardRef(StarFilled);
+exports["default"] = _default;
+
+/***/ }),
+
+/***/ "../../node_modules/@ant-design/icons/lib/icons/UpOutlined.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__("../../node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+var _typeof = __webpack_require__("../../node_modules/@babel/runtime/helpers/typeof.js");
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _objectSpread2 = _interopRequireDefault(__webpack_require__("../../node_modules/@babel/runtime/helpers/objectSpread2.js"));
+var React = _interopRequireWildcard(__webpack_require__("../../node_modules/react/index.js"));
+var _UpOutlined = _interopRequireDefault(__webpack_require__("../../node_modules/@ant-design/icons-svg/lib/asn/UpOutlined.js"));
+var _AntdIcon = _interopRequireDefault(__webpack_require__("../../node_modules/@ant-design/icons/lib/components/AntdIcon.js"));
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+// GENERATE BY ./scripts/generate.ts
+// DON NOT EDIT IT MANUALLY
+
+var UpOutlined = function UpOutlined(props, ref) {
+  return /*#__PURE__*/React.createElement(_AntdIcon.default, (0, _objectSpread2.default)((0, _objectSpread2.default)({}, props), {}, {
+    ref: ref,
+    icon: _UpOutlined.default
+  }));
+};
+UpOutlined.displayName = 'UpOutlined';
+var _default = /*#__PURE__*/React.forwardRef(UpOutlined);
 exports["default"] = _default;
 
 /***/ }),
@@ -15558,6 +15624,169 @@ if (true) {
   Row.displayName = 'Row';
 }
 var _default = exports["default"] = Row;
+
+/***/ }),
+
+/***/ "../../node_modules/antd/lib/input-number/index.js":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireWildcard = (__webpack_require__("../../node_modules/@babel/runtime/helpers/interopRequireWildcard.js")["default"]);
+var _interopRequireDefault = (__webpack_require__("../../node_modules/@babel/runtime/helpers/interopRequireDefault.js")["default"]);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+var _extends2 = _interopRequireDefault(__webpack_require__("../../node_modules/@babel/runtime/helpers/extends.js"));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__("../../node_modules/@babel/runtime/helpers/defineProperty.js"));
+var _typeof2 = _interopRequireDefault(__webpack_require__("../../node_modules/@babel/runtime/helpers/typeof.js"));
+var _slicedToArray2 = _interopRequireDefault(__webpack_require__("../../node_modules/@babel/runtime/helpers/slicedToArray.js"));
+var _DownOutlined = _interopRequireDefault(__webpack_require__("../../node_modules/@ant-design/icons/DownOutlined.js"));
+var _UpOutlined = _interopRequireDefault(__webpack_require__("../../node_modules/@ant-design/icons/UpOutlined.js"));
+var _classnames = _interopRequireDefault(__webpack_require__("../../node_modules/classnames/index.js"));
+var _rcInputNumber = _interopRequireDefault(__webpack_require__("../../node_modules/rc-input-number/es/index.js"));
+var _react = _interopRequireWildcard(__webpack_require__("../../node_modules/react/index.js"));
+var React = _react;
+var _configProvider = __webpack_require__("../../node_modules/antd/lib/config-provider/index.js");
+var _DisabledContext = _interopRequireDefault(__webpack_require__("../../node_modules/antd/lib/config-provider/DisabledContext.js"));
+var _SizeContext = _interopRequireDefault(__webpack_require__("../../node_modules/antd/lib/config-provider/SizeContext.js"));
+var _context = __webpack_require__("../../node_modules/antd/lib/form/context.js");
+var _Compact = __webpack_require__("../../node_modules/antd/lib/space/Compact.js");
+var _reactNode = __webpack_require__("../../node_modules/antd/lib/_util/reactNode.js");
+var _statusUtils = __webpack_require__("../../node_modules/antd/lib/_util/statusUtils.js");
+var __rest = void 0 && (void 0).__rest || function (s, e) {
+  var t = {};
+  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+var InputNumber = /*#__PURE__*/React.forwardRef(function (props, ref) {
+  var _React$useContext = React.useContext(_configProvider.ConfigContext),
+    getPrefixCls = _React$useContext.getPrefixCls,
+    direction = _React$useContext.direction;
+  var size = React.useContext(_SizeContext["default"]);
+  var _React$useState = React.useState(false),
+    _React$useState2 = (0, _slicedToArray2["default"])(_React$useState, 2),
+    focused = _React$useState2[0],
+    setFocus = _React$useState2[1];
+  var inputRef = React.useRef(null);
+  React.useImperativeHandle(ref, function () {
+    return inputRef.current;
+  });
+  var className = props.className,
+    customizeSize = props.size,
+    customDisabled = props.disabled,
+    customizePrefixCls = props.prefixCls,
+    addonBefore = props.addonBefore,
+    addonAfter = props.addonAfter,
+    prefix = props.prefix,
+    _props$bordered = props.bordered,
+    bordered = _props$bordered === void 0 ? true : _props$bordered,
+    readOnly = props.readOnly,
+    customStatus = props.status,
+    controls = props.controls,
+    others = __rest(props, ["className", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "bordered", "readOnly", "status", "controls"]);
+  var prefixCls = getPrefixCls('input-number', customizePrefixCls);
+  var _useCompactItemContex = (0, _Compact.useCompactItemContext)(prefixCls, direction),
+    compactSize = _useCompactItemContex.compactSize,
+    compactItemClassnames = _useCompactItemContex.compactItemClassnames;
+  var upIcon = /*#__PURE__*/React.createElement(_UpOutlined["default"], {
+    className: "".concat(prefixCls, "-handler-up-inner")
+  });
+  var downIcon = /*#__PURE__*/React.createElement(_DownOutlined["default"], {
+    className: "".concat(prefixCls, "-handler-down-inner")
+  });
+  var controlsTemp = typeof controls === 'boolean' ? controls : undefined;
+  if ((0, _typeof2["default"])(controls) === 'object') {
+    upIcon = typeof controls.upIcon === 'undefined' ? upIcon : ( /*#__PURE__*/React.createElement("span", {
+      className: "".concat(prefixCls, "-handler-up-inner")
+    }, controls.upIcon));
+    downIcon = typeof controls.downIcon === 'undefined' ? downIcon : ( /*#__PURE__*/React.createElement("span", {
+      className: "".concat(prefixCls, "-handler-down-inner")
+    }, controls.downIcon));
+  }
+  var _useContext = (0, _react.useContext)(_context.FormItemInputContext),
+    hasFeedback = _useContext.hasFeedback,
+    contextStatus = _useContext.status,
+    isFormItemInput = _useContext.isFormItemInput,
+    feedbackIcon = _useContext.feedbackIcon;
+  var mergedStatus = (0, _statusUtils.getMergedStatus)(contextStatus, customStatus);
+  var mergeSize = compactSize || customizeSize || size;
+  // ===================== Disabled =====================
+  var disabled = React.useContext(_DisabledContext["default"]);
+  var mergedDisabled = customDisabled !== null && customDisabled !== void 0 ? customDisabled : disabled;
+  var inputNumberClass = (0, _classnames["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])({}, "".concat(prefixCls, "-lg"), mergeSize === 'large'), "".concat(prefixCls, "-sm"), mergeSize === 'small'), "".concat(prefixCls, "-rtl"), direction === 'rtl'), "".concat(prefixCls, "-borderless"), !bordered), "".concat(prefixCls, "-in-form-item"), isFormItemInput), (0, _statusUtils.getStatusClassNames)(prefixCls, mergedStatus), compactItemClassnames, className);
+  var element = /*#__PURE__*/React.createElement(_rcInputNumber["default"], (0, _extends2["default"])({
+    ref: inputRef,
+    disabled: mergedDisabled,
+    className: inputNumberClass,
+    upHandler: upIcon,
+    downHandler: downIcon,
+    prefixCls: prefixCls,
+    readOnly: readOnly,
+    controls: controlsTemp
+  }, others));
+  if (prefix != null || hasFeedback) {
+    var affixWrapperCls = (0, _classnames["default"])("".concat(prefixCls, "-affix-wrapper"), (0, _statusUtils.getStatusClassNames)("".concat(prefixCls, "-affix-wrapper"), mergedStatus, hasFeedback), (0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])({}, "".concat(prefixCls, "-affix-wrapper-focused"), focused), "".concat(prefixCls, "-affix-wrapper-disabled"), props.disabled), "".concat(prefixCls, "-affix-wrapper-sm"), size === 'small'), "".concat(prefixCls, "-affix-wrapper-lg"), size === 'large'), "".concat(prefixCls, "-affix-wrapper-rtl"), direction === 'rtl'), "".concat(prefixCls, "-affix-wrapper-readonly"), readOnly), "".concat(prefixCls, "-affix-wrapper-borderless"), !bordered), "".concat(className), !(addonBefore || addonAfter) && className));
+    element = /*#__PURE__*/React.createElement("div", {
+      className: affixWrapperCls,
+      style: props.style,
+      onMouseUp: function onMouseUp() {
+        return inputRef.current.focus();
+      }
+    }, prefix && /*#__PURE__*/React.createElement("span", {
+      className: "".concat(prefixCls, "-prefix")
+    }, prefix), (0, _reactNode.cloneElement)(element, {
+      style: null,
+      value: props.value,
+      onFocus: function onFocus(event) {
+        var _a;
+        setFocus(true);
+        (_a = props.onFocus) === null || _a === void 0 ? void 0 : _a.call(props, event);
+      },
+      onBlur: function onBlur(event) {
+        var _a;
+        setFocus(false);
+        (_a = props.onBlur) === null || _a === void 0 ? void 0 : _a.call(props, event);
+      }
+    }), hasFeedback && /*#__PURE__*/React.createElement("span", {
+      className: "".concat(prefixCls, "-suffix")
+    }, feedbackIcon));
+  }
+  if (addonBefore != null || addonAfter != null) {
+    var wrapperClassName = "".concat(prefixCls, "-group");
+    var addonClassName = "".concat(wrapperClassName, "-addon");
+    var addonBeforeNode = addonBefore ? ( /*#__PURE__*/React.createElement("div", {
+      className: addonClassName
+    }, addonBefore)) : null;
+    var addonAfterNode = addonAfter ? /*#__PURE__*/React.createElement("div", {
+      className: addonClassName
+    }, addonAfter) : null;
+    var mergedWrapperClassName = (0, _classnames["default"])("".concat(prefixCls, "-wrapper"), wrapperClassName, (0, _defineProperty2["default"])({}, "".concat(wrapperClassName, "-rtl"), direction === 'rtl'));
+    var mergedGroupClassName = (0, _classnames["default"])("".concat(prefixCls, "-group-wrapper"), (0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])({}, "".concat(prefixCls, "-group-wrapper-sm"), size === 'small'), "".concat(prefixCls, "-group-wrapper-lg"), size === 'large'), "".concat(prefixCls, "-group-wrapper-rtl"), direction === 'rtl'), (0, _statusUtils.getStatusClassNames)("".concat(prefixCls, "-group-wrapper"), mergedStatus, hasFeedback), className);
+    element = /*#__PURE__*/React.createElement("div", {
+      className: mergedGroupClassName,
+      style: props.style
+    }, /*#__PURE__*/React.createElement("div", {
+      className: mergedWrapperClassName
+    }, addonBeforeNode && ( /*#__PURE__*/React.createElement(_Compact.NoCompactStyle, null, /*#__PURE__*/React.createElement(_context.NoFormStyle, {
+      status: true,
+      override: true
+    }, addonBeforeNode))), (0, _reactNode.cloneElement)(element, {
+      style: null,
+      disabled: mergedDisabled
+    }), addonAfterNode && ( /*#__PURE__*/React.createElement(_Compact.NoCompactStyle, null, /*#__PURE__*/React.createElement(_context.NoFormStyle, {
+      status: true,
+      override: true
+    }, addonAfterNode)))));
+  }
+  return element;
+});
+var _default = exports["default"] = InputNumber;
 
 /***/ }),
 
@@ -31351,7 +31580,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING === 'undefined') {
       if (errors.every(function (e) {
@@ -118753,7 +118982,7 @@ function warnError(msg) {
  */
 function isTypeCheckingEnabled() {
     return (devMode() ||
-        (typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}) && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}).ENABLE_TYPE_CHECK === "true"));
+        (typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).ENABLE_TYPE_CHECK === "true"));
 }
 /**
  * @internal
@@ -122365,7 +122594,7 @@ function createDecoratorForEnhancer(enhancer) {
     });
     var res = 
     // Extra process checks, as this happens during module initialization
-    typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}) && "development" !== "production"
+    typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && "development" !== "production"
         ? function observableDecorator() {
             // This wrapper function is just to detect illegal decorator invocations, deprecate in a next version
             // and simply return the created prop decorator
@@ -126582,7 +126811,7 @@ catch (e) {
     function testCodeMinification() { }
     if (testCodeMinification.name !== "testCodeMinification" &&
         "development" !== "production" &&
-        typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}).IGNORE_MOBX_MINIFY_WARNING !== "true") {
+        typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).IGNORE_MOBX_MINIFY_WARNING !== "true") {
         // trick so it doesn't get replaced
         var varName = ["process", "env", "NODE_ENV"].join(".");
         console.warn("[mobx] you are running a minified build, but '" + varName + "' was not set to 'production' in your bundler. This results in an unnecessarily large and slow bundle");
@@ -130373,7 +130602,7 @@ postcss.plugin = function plugin(name, initializer) {
           ': postcss.plugin was deprecated. Migration guide:\n' +
           'https://evilmartians.com/chronicles/postcss-8-plugin-migration'
       )
-      if (({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}).LANG && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}).LANG.startsWith('cn')) {
+      if (({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).LANG && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).LANG.startsWith('cn')) {
         /* c8 ignore next 7 */
         // eslint-disable-next-line no-console
         console.warn(
@@ -137330,6 +137559,1121 @@ function move(array, moveIndex, toIndex) {
     return [].concat((0,_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(array.slice(0, moveIndex)), (0,_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(array.slice(moveIndex + 1, toIndex + 1)), [item], (0,_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(array.slice(toIndex + 1, length)));
   }
   return array;
+}
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/InputNumber.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("../../node_modules/react/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("../../node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var rc_util_es_KeyCode__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("../../node_modules/rc-util/es/KeyCode.js");
+/* harmony import */ var rc_util_es_hooks_useLayoutEffect__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("../../node_modules/rc-util/es/hooks/useLayoutEffect.js");
+/* harmony import */ var rc_util_es_ref__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("../../node_modules/rc-util/es/ref.js");
+/* harmony import */ var _utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("../../node_modules/rc-input-number/es/utils/MiniDecimal.js");
+/* harmony import */ var _StepHandler__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("../../node_modules/rc-input-number/es/StepHandler.js");
+/* harmony import */ var _utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("../../node_modules/rc-input-number/es/utils/numberUtil.js");
+/* harmony import */ var _hooks_useCursor__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("../../node_modules/rc-input-number/es/hooks/useCursor.js");
+/* harmony import */ var _hooks_useFrame__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("../../node_modules/rc-input-number/es/hooks/useFrame.js");
+
+
+
+
+
+var _excluded = ["prefixCls", "className", "style", "min", "max", "step", "defaultValue", "value", "disabled", "readOnly", "upHandler", "downHandler", "keyboard", "controls", "stringMode", "parser", "formatter", "precision", "decimalSeparator", "onChange", "onInput", "onPressEnter", "onStep"];
+
+
+
+
+
+
+
+
+
+
+/**
+ * We support `stringMode` which need handle correct type when user call in onChange
+ * format max or min value
+ * 1. if isInvalid return null
+ * 2. if precision is undefined, return decimal
+ * 3. format with precision
+ *    I. if max > 0, round down with precision. Example: max= 3.5, precision=0  afterFormat: 3
+ *    II. if max < 0, round up with precision. Example: max= -3.5, precision=0  afterFormat: -4
+ *    III. if min > 0, round up with precision. Example: min= 3.5, precision=0  afterFormat: 4
+ *    IV. if min < 0, round down with precision. Example: max= -3.5, precision=0  afterFormat: -3
+ */
+var getDecimalValue = function getDecimalValue(stringMode, decimalValue) {
+  if (stringMode || decimalValue.isEmpty()) {
+    return decimalValue.toString();
+  }
+  return decimalValue.toNumber();
+};
+var getDecimalIfValidate = function getDecimalIfValidate(value) {
+  var decimal = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(value);
+  return decimal.isInvalidate() ? null : decimal;
+};
+var InputNumber = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.forwardRef(function (props, ref) {
+  var _classNames;
+  var _props$prefixCls = props.prefixCls,
+    prefixCls = _props$prefixCls === void 0 ? 'rc-input-number' : _props$prefixCls,
+    className = props.className,
+    style = props.style,
+    min = props.min,
+    max = props.max,
+    _props$step = props.step,
+    step = _props$step === void 0 ? 1 : _props$step,
+    defaultValue = props.defaultValue,
+    value = props.value,
+    disabled = props.disabled,
+    readOnly = props.readOnly,
+    upHandler = props.upHandler,
+    downHandler = props.downHandler,
+    keyboard = props.keyboard,
+    _props$controls = props.controls,
+    controls = _props$controls === void 0 ? true : _props$controls,
+    stringMode = props.stringMode,
+    parser = props.parser,
+    formatter = props.formatter,
+    precision = props.precision,
+    decimalSeparator = props.decimalSeparator,
+    onChange = props.onChange,
+    onInput = props.onInput,
+    onPressEnter = props.onPressEnter,
+    onStep = props.onStep,
+    inputProps = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_4__["default"])(props, _excluded);
+  var inputClassName = "".concat(prefixCls, "-input");
+  var inputRef = react__WEBPACK_IMPORTED_MODULE_5__.useRef(null);
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_5__.useState(false),
+    _React$useState2 = (0,_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_React$useState, 2),
+    focus = _React$useState2[0],
+    setFocus = _React$useState2[1];
+  var userTypingRef = react__WEBPACK_IMPORTED_MODULE_5__.useRef(false);
+  var compositionRef = react__WEBPACK_IMPORTED_MODULE_5__.useRef(false);
+  var shiftKeyRef = react__WEBPACK_IMPORTED_MODULE_5__.useRef(false);
+  // ============================ Value =============================
+  // Real value control
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_5__.useState(function () {
+      return (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(value !== null && value !== void 0 ? value : defaultValue);
+    }),
+    _React$useState4 = (0,_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_React$useState3, 2),
+    decimalValue = _React$useState4[0],
+    setDecimalValue = _React$useState4[1];
+  function setUncontrolledDecimalValue(newDecimal) {
+    if (value === undefined) {
+      setDecimalValue(newDecimal);
+    }
+  }
+  // ====================== Parser & Formatter ======================
+  /**
+   * `precision` is used for formatter & onChange.
+   * It will auto generate by `value` & `step`.
+   * But it will not block user typing.
+   *
+   * Note: Auto generate `precision` is used for legacy logic.
+   * We should remove this since we already support high precision with BigInt.
+   *
+   * @param number  Provide which number should calculate precision
+   * @param userTyping  Change by user typing
+   */
+  var getPrecision = react__WEBPACK_IMPORTED_MODULE_5__.useCallback(function (numStr, userTyping) {
+    if (userTyping) {
+      return undefined;
+    }
+    if (precision >= 0) {
+      return precision;
+    }
+    return Math.max((0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.getNumberPrecision)(numStr), (0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.getNumberPrecision)(step));
+  }, [precision, step]);
+  // >>> Parser
+  var mergedParser = react__WEBPACK_IMPORTED_MODULE_5__.useCallback(function (num) {
+    var numStr = String(num);
+    if (parser) {
+      return parser(numStr);
+    }
+    var parsedStr = numStr;
+    if (decimalSeparator) {
+      parsedStr = parsedStr.replace(decimalSeparator, '.');
+    }
+    // [Legacy] We still support auto convert `$ 123,456` to `123456`
+    return parsedStr.replace(/[^\w.-]+/g, '');
+  }, [parser, decimalSeparator]);
+  // >>> Formatter
+  var inputValueRef = react__WEBPACK_IMPORTED_MODULE_5__.useRef('');
+  var mergedFormatter = react__WEBPACK_IMPORTED_MODULE_5__.useCallback(function (number, userTyping) {
+    if (formatter) {
+      return formatter(number, {
+        userTyping: userTyping,
+        input: String(inputValueRef.current)
+      });
+    }
+    var str = typeof number === 'number' ? (0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.num2str)(number) : number;
+    // User typing will not auto format with precision directly
+    if (!userTyping) {
+      var mergedPrecision = getPrecision(str, userTyping);
+      if ((0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.validateNumber)(str) && (decimalSeparator || mergedPrecision >= 0)) {
+        // Separator
+        var separatorStr = decimalSeparator || '.';
+        str = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__.toFixed)(str, separatorStr, mergedPrecision);
+      }
+    }
+    return str;
+  }, [formatter, getPrecision, decimalSeparator]);
+  // ========================== InputValue ==========================
+  /**
+   * Input text value control
+   *
+   * User can not update input content directly. It update with follow rules by priority:
+   *  1. controlled `value` changed
+   *    * [SPECIAL] Typing like `1.` should not immediately convert to `1`
+   *  2. User typing with format (not precision)
+   *  3. Blur or Enter trigger revalidate
+   */
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_5__.useState(function () {
+      var initValue = defaultValue !== null && defaultValue !== void 0 ? defaultValue : value;
+      if (decimalValue.isInvalidate() && ['string', 'number'].includes((0,_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_2__["default"])(initValue))) {
+        return Number.isNaN(initValue) ? '' : initValue;
+      }
+      return mergedFormatter(decimalValue.toString(), false);
+    }),
+    _React$useState6 = (0,_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_React$useState5, 2),
+    inputValue = _React$useState6[0],
+    setInternalInputValue = _React$useState6[1];
+  inputValueRef.current = inputValue;
+  // Should always be string
+  function setInputValue(newValue, userTyping) {
+    setInternalInputValue(mergedFormatter(
+    // Invalidate number is sometime passed by external control, we should let it go
+    // Otherwise is controlled by internal interactive logic which check by userTyping
+    // You can ref 'show limited value when input is not focused' test for more info.
+    newValue.isInvalidate() ? newValue.toString(false) : newValue.toString(!userTyping), userTyping));
+  }
+  // >>> Max & Min limit
+  var maxDecimal = react__WEBPACK_IMPORTED_MODULE_5__.useMemo(function () {
+    return getDecimalIfValidate(max);
+  }, [max, precision]);
+  var minDecimal = react__WEBPACK_IMPORTED_MODULE_5__.useMemo(function () {
+    return getDecimalIfValidate(min);
+  }, [min, precision]);
+  var upDisabled = react__WEBPACK_IMPORTED_MODULE_5__.useMemo(function () {
+    if (!maxDecimal || !decimalValue || decimalValue.isInvalidate()) {
+      return false;
+    }
+    return maxDecimal.lessEquals(decimalValue);
+  }, [maxDecimal, decimalValue]);
+  var downDisabled = react__WEBPACK_IMPORTED_MODULE_5__.useMemo(function () {
+    if (!minDecimal || !decimalValue || decimalValue.isInvalidate()) {
+      return false;
+    }
+    return decimalValue.lessEquals(minDecimal);
+  }, [minDecimal, decimalValue]);
+  // Cursor controller
+  var _useCursor = (0,_hooks_useCursor__WEBPACK_IMPORTED_MODULE_13__["default"])(inputRef.current, focus),
+    _useCursor2 = (0,_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useCursor, 2),
+    recordCursor = _useCursor2[0],
+    restoreCursor = _useCursor2[1];
+  // ============================= Data =============================
+  /**
+   * Find target value closet within range.
+   * e.g. [11, 28]:
+   *    3  => 11
+   *    23 => 23
+   *    99 => 28
+   */
+  var getRangeValue = function getRangeValue(target) {
+    // target > max
+    if (maxDecimal && !target.lessEquals(maxDecimal)) {
+      return maxDecimal;
+    }
+    // target < min
+    if (minDecimal && !minDecimal.lessEquals(target)) {
+      return minDecimal;
+    }
+    return null;
+  };
+  /**
+   * Check value is in [min, max] range
+   */
+  var isInRange = function isInRange(target) {
+    return !getRangeValue(target);
+  };
+  /**
+   * Trigger `onChange` if value validated and not equals of origin.
+   * Return the value that re-align in range.
+   */
+  var triggerValueUpdate = function triggerValueUpdate(newValue, userTyping) {
+    var updateValue = newValue;
+    var isRangeValidate = isInRange(updateValue) || updateValue.isEmpty();
+    // Skip align value when trigger value is empty.
+    // We just trigger onChange(null)
+    // This should not block user typing
+    if (!updateValue.isEmpty() && !userTyping) {
+      // Revert value in range if needed
+      updateValue = getRangeValue(updateValue) || updateValue;
+      isRangeValidate = true;
+    }
+    if (!readOnly && !disabled && isRangeValidate) {
+      var numStr = updateValue.toString();
+      var mergedPrecision = getPrecision(numStr, userTyping);
+      if (mergedPrecision >= 0) {
+        updateValue = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])((0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__.toFixed)(numStr, '.', mergedPrecision));
+        // When to fixed. The value may out of min & max range.
+        // 4 in [0, 3.8] => 3.8 => 4 (toFixed)
+        if (!isInRange(updateValue)) {
+          updateValue = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])((0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__.toFixed)(numStr, '.', mergedPrecision, true));
+        }
+      }
+      // Trigger event
+      if (!updateValue.equals(decimalValue)) {
+        setUncontrolledDecimalValue(updateValue);
+        onChange === null || onChange === void 0 ? void 0 : onChange(updateValue.isEmpty() ? null : getDecimalValue(stringMode, updateValue));
+        // Reformat input if value is not controlled
+        if (value === undefined) {
+          setInputValue(updateValue, userTyping);
+        }
+      }
+      return updateValue;
+    }
+    return decimalValue;
+  };
+  // ========================== User Input ==========================
+  var onNextPromise = (0,_hooks_useFrame__WEBPACK_IMPORTED_MODULE_14__["default"])();
+  // >>> Collect input value
+  var collectInputValue = function collectInputValue(inputStr) {
+    recordCursor();
+    // Update inputValue incase input can not parse as number
+    setInternalInputValue(inputStr);
+    // Parse number
+    if (!compositionRef.current) {
+      var finalValue = mergedParser(inputStr);
+      var finalDecimal = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(finalValue);
+      if (!finalDecimal.isNaN()) {
+        triggerValueUpdate(finalDecimal, true);
+      }
+    }
+    // Trigger onInput later to let user customize value if they want do handle something after onChange
+    onInput === null || onInput === void 0 ? void 0 : onInput(inputStr);
+    // optimize for chinese input experience
+    // https://github.com/ant-design/ant-design/issues/8196
+    onNextPromise(function () {
+      var nextInputStr = inputStr;
+      if (!parser) {
+        nextInputStr = inputStr.replace(/。/g, '.');
+      }
+      if (nextInputStr !== inputStr) {
+        collectInputValue(nextInputStr);
+      }
+    });
+  };
+  // >>> Composition
+  var onCompositionStart = function onCompositionStart() {
+    compositionRef.current = true;
+  };
+  var onCompositionEnd = function onCompositionEnd() {
+    compositionRef.current = false;
+    collectInputValue(inputRef.current.value);
+  };
+  // >>> Input
+  var onInternalInput = function onInternalInput(e) {
+    collectInputValue(e.target.value);
+  };
+  // ============================= Step =============================
+  var onInternalStep = function onInternalStep(up) {
+    var _inputRef$current;
+    // Ignore step since out of range
+    if (up && upDisabled || !up && downDisabled) {
+      return;
+    }
+    // Clear typing status since it may caused by up & down key.
+    // We should sync with input value.
+    userTypingRef.current = false;
+    var stepDecimal = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(shiftKeyRef.current ? (0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.getDecupleSteps)(step) : step);
+    if (!up) {
+      stepDecimal = stepDecimal.negate();
+    }
+    var target = (decimalValue || (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(0)).add(stepDecimal.toString());
+    var updatedValue = triggerValueUpdate(target, false);
+    onStep === null || onStep === void 0 ? void 0 : onStep(getDecimalValue(stringMode, updatedValue), {
+      offset: shiftKeyRef.current ? (0,_utils_numberUtil__WEBPACK_IMPORTED_MODULE_12__.getDecupleSteps)(step) : step,
+      type: up ? 'up' : 'down'
+    });
+    (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.focus();
+  };
+  // ============================ Flush =============================
+  /**
+   * Flush current input content to trigger value change & re-formatter input if needed
+   */
+  var flushInputValue = function flushInputValue(userTyping) {
+    var parsedValue = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(mergedParser(inputValue));
+    var formatValue = parsedValue;
+    if (!parsedValue.isNaN()) {
+      // Only validate value or empty value can be re-fill to inputValue
+      // Reassign the formatValue within ranged of trigger control
+      formatValue = triggerValueUpdate(parsedValue, userTyping);
+    } else {
+      formatValue = decimalValue;
+    }
+    if (value !== undefined) {
+      // Reset back with controlled value first
+      setInputValue(decimalValue, false);
+    } else if (!formatValue.isNaN()) {
+      // Reset input back since no validate value
+      setInputValue(formatValue, false);
+    }
+  };
+  // Solve the issue of the event triggering sequence when entering numbers in chinese input (Safari)
+  var onBeforeInput = function onBeforeInput() {
+    userTypingRef.current = true;
+  };
+  var onKeyDown = function onKeyDown(event) {
+    var which = event.which,
+      shiftKey = event.shiftKey;
+    userTypingRef.current = true;
+    if (shiftKey) {
+      shiftKeyRef.current = true;
+    } else {
+      shiftKeyRef.current = false;
+    }
+    if (which === rc_util_es_KeyCode__WEBPACK_IMPORTED_MODULE_7__["default"].ENTER) {
+      if (!compositionRef.current) {
+        userTypingRef.current = false;
+      }
+      flushInputValue(false);
+      onPressEnter === null || onPressEnter === void 0 ? void 0 : onPressEnter(event);
+    }
+    if (keyboard === false) {
+      return;
+    }
+    // Do step
+    if (!compositionRef.current && [rc_util_es_KeyCode__WEBPACK_IMPORTED_MODULE_7__["default"].UP, rc_util_es_KeyCode__WEBPACK_IMPORTED_MODULE_7__["default"].DOWN].includes(which)) {
+      onInternalStep(rc_util_es_KeyCode__WEBPACK_IMPORTED_MODULE_7__["default"].UP === which);
+      event.preventDefault();
+    }
+  };
+  var onKeyUp = function onKeyUp() {
+    userTypingRef.current = false;
+    shiftKeyRef.current = false;
+  };
+  // >>> Focus & Blur
+  var onBlur = function onBlur() {
+    flushInputValue(false);
+    setFocus(false);
+    userTypingRef.current = false;
+  };
+  // ========================== Controlled ==========================
+  // Input by precision
+  (0,rc_util_es_hooks_useLayoutEffect__WEBPACK_IMPORTED_MODULE_8__.useLayoutUpdateEffect)(function () {
+    if (!decimalValue.isInvalidate()) {
+      setInputValue(decimalValue, false);
+    }
+  }, [precision]);
+  // Input by value
+  (0,rc_util_es_hooks_useLayoutEffect__WEBPACK_IMPORTED_MODULE_8__.useLayoutUpdateEffect)(function () {
+    var newValue = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(value);
+    setDecimalValue(newValue);
+    var currentParsedValue = (0,_utils_MiniDecimal__WEBPACK_IMPORTED_MODULE_10__["default"])(mergedParser(inputValue));
+    // When user typing from `1.2` to `1.`, we should not convert to `1` immediately.
+    // But let it go if user set `formatter`
+    if (!newValue.equals(currentParsedValue) || !userTypingRef.current || formatter) {
+      // Update value as effect
+      setInputValue(newValue, userTypingRef.current);
+    }
+  }, [value]);
+  // ============================ Cursor ============================
+  (0,rc_util_es_hooks_useLayoutEffect__WEBPACK_IMPORTED_MODULE_8__.useLayoutUpdateEffect)(function () {
+    if (formatter) {
+      restoreCursor();
+    }
+  }, [inputValue]);
+  // ============================ Render ============================
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_6___default()(prefixCls, className, (_classNames = {}, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(_classNames, "".concat(prefixCls, "-focused"), focus), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(_classNames, "".concat(prefixCls, "-disabled"), disabled), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(_classNames, "".concat(prefixCls, "-readonly"), readOnly), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(_classNames, "".concat(prefixCls, "-not-a-number"), decimalValue.isNaN()), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(_classNames, "".concat(prefixCls, "-out-of-range"), !decimalValue.isInvalidate() && !isInRange(decimalValue)), _classNames)),
+    style: style,
+    onFocus: function onFocus() {
+      setFocus(true);
+    },
+    onBlur: onBlur,
+    onKeyDown: onKeyDown,
+    onKeyUp: onKeyUp,
+    onCompositionStart: onCompositionStart,
+    onCompositionEnd: onCompositionEnd,
+    onBeforeInput: onBeforeInput
+  }, controls && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement(_StepHandler__WEBPACK_IMPORTED_MODULE_11__["default"], {
+    prefixCls: prefixCls,
+    upNode: upHandler,
+    downNode: downHandler,
+    upDisabled: upDisabled,
+    downDisabled: downDisabled,
+    onStep: onInternalStep
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("div", {
+    className: "".concat(inputClassName, "-wrap")
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_5__.createElement("input", (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    autoComplete: "off",
+    role: "spinbutton",
+    "aria-valuemin": min,
+    "aria-valuemax": max,
+    "aria-valuenow": decimalValue.isInvalidate() ? null : decimalValue.toString(),
+    step: step
+  }, inputProps, {
+    ref: (0,rc_util_es_ref__WEBPACK_IMPORTED_MODULE_9__.composeRef)(inputRef, ref),
+    className: inputClassName,
+    value: inputValue,
+    onChange: onInternalInput,
+    disabled: disabled,
+    readOnly: readOnly
+  }))));
+});
+InputNumber.displayName = 'InputNumber';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InputNumber);
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/StepHandler.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ StepHandler)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("../../node_modules/react/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("../../node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var rc_util_es_isMobile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("../../node_modules/rc-util/es/isMobile.js");
+
+
+/* eslint-disable react/no-unknown-property */
+
+
+
+/**
+ * When click and hold on a button - the speed of auto changing the value.
+ */
+var STEP_INTERVAL = 200;
+/**
+ * When click and hold on a button - the delay before auto changing the value.
+ */
+var STEP_DELAY = 600;
+function StepHandler(_ref) {
+  var prefixCls = _ref.prefixCls,
+    upNode = _ref.upNode,
+    downNode = _ref.downNode,
+    upDisabled = _ref.upDisabled,
+    downDisabled = _ref.downDisabled,
+    onStep = _ref.onStep;
+  // ======================== Step ========================
+  var stepTimeoutRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef();
+  var onStepRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef();
+  onStepRef.current = onStep;
+  // We will interval update step when hold mouse down
+  var onStepMouseDown = function onStepMouseDown(e, up) {
+    e.preventDefault();
+    onStepRef.current(up);
+    // Loop step for interval
+    function loopStep() {
+      onStepRef.current(up);
+      stepTimeoutRef.current = setTimeout(loopStep, STEP_INTERVAL);
+    }
+    // First time press will wait some time to trigger loop step update
+    stepTimeoutRef.current = setTimeout(loopStep, STEP_DELAY);
+  };
+  var onStopStep = function onStopStep() {
+    clearTimeout(stepTimeoutRef.current);
+  };
+  react__WEBPACK_IMPORTED_MODULE_2__.useEffect(function () {
+    return onStopStep;
+  }, []);
+  // ======================= Render =======================
+  if ((0,rc_util_es_isMobile__WEBPACK_IMPORTED_MODULE_4__["default"])()) {
+    return null;
+  }
+  var handlerClassName = "".concat(prefixCls, "-handler");
+  var upClassName = classnames__WEBPACK_IMPORTED_MODULE_3___default()(handlerClassName, "".concat(handlerClassName, "-up"), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, "".concat(handlerClassName, "-up-disabled"), upDisabled));
+  var downClassName = classnames__WEBPACK_IMPORTED_MODULE_3___default()(handlerClassName, "".concat(handlerClassName, "-down"), (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])({}, "".concat(handlerClassName, "-down-disabled"), downDisabled));
+  var sharedHandlerProps = {
+    unselectable: 'on',
+    role: 'button',
+    onMouseUp: onStopStep,
+    onMouseLeave: onStopStep
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    className: "".concat(handlerClassName, "-wrap")
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, sharedHandlerProps, {
+    onMouseDown: function onMouseDown(e) {
+      onStepMouseDown(e, true);
+    },
+    "aria-label": "Increase Value",
+    "aria-disabled": upDisabled,
+    className: upClassName
+  }), upNode || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    unselectable: "on",
+    className: "".concat(prefixCls, "-handler-up-inner")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, sharedHandlerProps, {
+    onMouseDown: function onMouseDown(e) {
+      onStepMouseDown(e, false);
+    },
+    "aria-label": "Decrease Value",
+    "aria-disabled": downDisabled,
+    className: downClassName
+  }), downNode || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    unselectable: "on",
+    className: "".concat(prefixCls, "-handler-down-inner")
+  })));
+}
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/hooks/useCursor.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useCursor)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/react/index.js");
+/* harmony import */ var rc_util_es_warning__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../node_modules/rc-util/es/warning.js");
+
+
+/**
+ * Keep input cursor in the correct position if possible.
+ * Is this necessary since we have `formatter` which may mass the content?
+ */
+function useCursor(input, focused) {
+  var selectionRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  function recordCursor() {
+    // Record position
+    try {
+      var start = input.selectionStart,
+        end = input.selectionEnd,
+        value = input.value;
+      var beforeTxt = value.substring(0, start);
+      var afterTxt = value.substring(end);
+      selectionRef.current = {
+        start: start,
+        end: end,
+        value: value,
+        beforeTxt: beforeTxt,
+        afterTxt: afterTxt
+      };
+    } catch (e) {
+      // Fix error in Chrome:
+      // Failed to read the 'selectionStart' property from 'HTMLInputElement'
+      // http://stackoverflow.com/q/21177489/3040605
+    }
+  }
+  /**
+   * Restore logic:
+   *  1. back string same
+   *  2. start string same
+   */
+  function restoreCursor() {
+    if (input && selectionRef.current && focused) {
+      try {
+        var value = input.value;
+        var _selectionRef$current = selectionRef.current,
+          beforeTxt = _selectionRef$current.beforeTxt,
+          afterTxt = _selectionRef$current.afterTxt,
+          start = _selectionRef$current.start;
+        var startPos = value.length;
+        if (value.endsWith(afterTxt)) {
+          startPos = value.length - selectionRef.current.afterTxt.length;
+        } else if (value.startsWith(beforeTxt)) {
+          startPos = beforeTxt.length;
+        } else {
+          var beforeLastChar = beforeTxt[start - 1];
+          var newIndex = value.indexOf(beforeLastChar, start - 1);
+          if (newIndex !== -1) {
+            startPos = newIndex + 1;
+          }
+        }
+        input.setSelectionRange(startPos, startPos);
+      } catch (e) {
+        (0,rc_util_es_warning__WEBPACK_IMPORTED_MODULE_1__["default"])(false, "Something warning of cursor restore. Please fire issue about this: ".concat(e.message));
+      }
+    }
+  }
+  return [recordCursor, restoreCursor];
+}
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/hooks/useFrame.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/react/index.js");
+/* harmony import */ var rc_util_es_raf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../node_modules/rc-util/es/raf.js");
+
+
+/**
+ * Always trigger latest once when call multiple time
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  var idRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(0);
+  var cleanUp = function cleanUp() {
+    rc_util_es_raf__WEBPACK_IMPORTED_MODULE_1__["default"].cancel(idRef.current);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    return cleanUp;
+  }, []);
+  return function (callback) {
+    cleanUp();
+    idRef.current = (0,rc_util_es_raf__WEBPACK_IMPORTED_MODULE_1__["default"])(function () {
+      callback();
+    });
+  };
+});
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/index.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _InputNumber__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/rc-input-number/es/InputNumber.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_InputNumber__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/utils/MiniDecimal.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BigIntDecimal: () => (/* binding */ BigIntDecimal),
+/* harmony export */   NumberDecimal: () => (/* binding */ NumberDecimal),
+/* harmony export */   "default": () => (/* binding */ getMiniDecimal),
+/* harmony export */   toFixed: () => (/* binding */ toFixed)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("../../node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _numberUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("../../node_modules/rc-input-number/es/utils/numberUtil.js");
+/* harmony import */ var _supportUtil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("../../node_modules/rc-input-number/es/utils/supportUtil.js");
+
+
+/* eslint-disable max-classes-per-file */
+
+
+/**
+ * We can remove this when IE not support anymore
+ */
+var NumberDecimal = /*#__PURE__*/function () {
+  function NumberDecimal(value) {
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, NumberDecimal);
+    this.origin = '';
+    this.number = void 0;
+    this.empty = void 0;
+    if (!value && value !== 0 || !String(value).trim()) {
+      this.empty = true;
+      return;
+    }
+    this.origin = String(value);
+    this.number = Number(value);
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(NumberDecimal, [{
+    key: "negate",
+    value: function negate() {
+      return new NumberDecimal(-this.toNumber());
+    }
+  }, {
+    key: "add",
+    value: function add(value) {
+      if (this.isInvalidate()) {
+        return new NumberDecimal(value);
+      }
+      var target = Number(value);
+      if (Number.isNaN(target)) {
+        return this;
+      }
+      var number = this.number + target;
+      // [Legacy] Back to safe integer
+      if (number > Number.MAX_SAFE_INTEGER) {
+        return new NumberDecimal(Number.MAX_SAFE_INTEGER);
+      }
+      if (number < Number.MIN_SAFE_INTEGER) {
+        return new NumberDecimal(Number.MIN_SAFE_INTEGER);
+      }
+      var maxPrecision = Math.max((0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.getNumberPrecision)(this.number), (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.getNumberPrecision)(target));
+      return new NumberDecimal(number.toFixed(maxPrecision));
+    }
+  }, {
+    key: "isEmpty",
+    value: function isEmpty() {
+      return this.empty;
+    }
+  }, {
+    key: "isNaN",
+    value: function isNaN() {
+      return Number.isNaN(this.number);
+    }
+  }, {
+    key: "isInvalidate",
+    value: function isInvalidate() {
+      return this.isEmpty() || this.isNaN();
+    }
+  }, {
+    key: "equals",
+    value: function equals(target) {
+      return this.toNumber() === (target === null || target === void 0 ? void 0 : target.toNumber());
+    }
+  }, {
+    key: "lessEquals",
+    value: function lessEquals(target) {
+      return this.add(target.negate().toString()).toNumber() <= 0;
+    }
+  }, {
+    key: "toNumber",
+    value: function toNumber() {
+      return this.number;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      var safe = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      if (!safe) {
+        return this.origin;
+      }
+      if (this.isInvalidate()) {
+        return '';
+      }
+      return (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.num2str)(this.number);
+    }
+  }]);
+  return NumberDecimal;
+}();
+var BigIntDecimal = /*#__PURE__*/function () {
+  /** BigInt will convert `0009` to `9`. We need record the len of decimal */
+
+  function BigIntDecimal(value) {
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, BigIntDecimal);
+    this.origin = '';
+    this.negative = void 0;
+    this.integer = void 0;
+    this.decimal = void 0;
+    this.decimalLen = void 0;
+    this.empty = void 0;
+    this.nan = void 0;
+    if (!value && value !== 0 || !String(value).trim()) {
+      this.empty = true;
+      return;
+    }
+    this.origin = String(value);
+    // Act like Number convert
+    if (value === '-') {
+      this.nan = true;
+      return;
+    }
+    var mergedValue = value;
+    // We need convert back to Number since it require `toFixed` to handle this
+    if ((0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.isE)(mergedValue)) {
+      mergedValue = Number(mergedValue);
+    }
+    mergedValue = typeof mergedValue === 'string' ? mergedValue : (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.num2str)(mergedValue);
+    if ((0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.validateNumber)(mergedValue)) {
+      var trimRet = (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.trimNumber)(mergedValue);
+      this.negative = trimRet.negative;
+      var numbers = trimRet.trimStr.split('.');
+      this.integer = BigInt(numbers[0]);
+      var decimalStr = numbers[1] || '0';
+      this.decimal = BigInt(decimalStr);
+      this.decimalLen = decimalStr.length;
+    } else {
+      this.nan = true;
+    }
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(BigIntDecimal, [{
+    key: "getMark",
+    value: function getMark() {
+      return this.negative ? '-' : '';
+    }
+  }, {
+    key: "getIntegerStr",
+    value: function getIntegerStr() {
+      return this.integer.toString();
+    }
+  }, {
+    key: "getDecimalStr",
+    value: function getDecimalStr() {
+      return this.decimal.toString().padStart(this.decimalLen, '0');
+    }
+    /**
+     * Align BigIntDecimal with same decimal length. e.g. 12.3 + 5 = 1230000
+     * This is used for add function only.
+     */
+  }, {
+    key: "alignDecimal",
+    value: function alignDecimal(decimalLength) {
+      var str = "".concat(this.getMark()).concat(this.getIntegerStr()).concat(this.getDecimalStr().padEnd(decimalLength, '0'));
+      return BigInt(str);
+    }
+  }, {
+    key: "negate",
+    value: function negate() {
+      var clone = new BigIntDecimal(this.toString());
+      clone.negative = !clone.negative;
+      return clone;
+    }
+  }, {
+    key: "add",
+    value: function add(value) {
+      if (this.isInvalidate()) {
+        return new BigIntDecimal(value);
+      }
+      var offset = new BigIntDecimal(value);
+      if (offset.isInvalidate()) {
+        return this;
+      }
+      var maxDecimalLength = Math.max(this.getDecimalStr().length, offset.getDecimalStr().length);
+      var myAlignedDecimal = this.alignDecimal(maxDecimalLength);
+      var offsetAlignedDecimal = offset.alignDecimal(maxDecimalLength);
+      var valueStr = (myAlignedDecimal + offsetAlignedDecimal).toString();
+      // We need fill string length back to `maxDecimalLength` to avoid parser failed
+      var _trimNumber = (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.trimNumber)(valueStr),
+        negativeStr = _trimNumber.negativeStr,
+        trimStr = _trimNumber.trimStr;
+      var hydrateValueStr = "".concat(negativeStr).concat(trimStr.padStart(maxDecimalLength + 1, '0'));
+      return new BigIntDecimal("".concat(hydrateValueStr.slice(0, -maxDecimalLength), ".").concat(hydrateValueStr.slice(-maxDecimalLength)));
+    }
+  }, {
+    key: "isEmpty",
+    value: function isEmpty() {
+      return this.empty;
+    }
+  }, {
+    key: "isNaN",
+    value: function isNaN() {
+      return this.nan;
+    }
+  }, {
+    key: "isInvalidate",
+    value: function isInvalidate() {
+      return this.isEmpty() || this.isNaN();
+    }
+  }, {
+    key: "equals",
+    value: function equals(target) {
+      return this.toString() === (target === null || target === void 0 ? void 0 : target.toString());
+    }
+  }, {
+    key: "lessEquals",
+    value: function lessEquals(target) {
+      return this.add(target.negate().toString()).toNumber() <= 0;
+    }
+  }, {
+    key: "toNumber",
+    value: function toNumber() {
+      if (this.isNaN()) {
+        return NaN;
+      }
+      return Number(this.toString());
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      var safe = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      if (!safe) {
+        return this.origin;
+      }
+      if (this.isInvalidate()) {
+        return '';
+      }
+      return (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.trimNumber)("".concat(this.getMark()).concat(this.getIntegerStr(), ".").concat(this.getDecimalStr())).fullStr;
+    }
+  }]);
+  return BigIntDecimal;
+}();
+function getMiniDecimal(value) {
+  // We use BigInt here.
+  // Will fallback to Number if not support.
+  if ((0,_supportUtil__WEBPACK_IMPORTED_MODULE_3__.supportBigInt)()) {
+    return new BigIntDecimal(value);
+  }
+  return new NumberDecimal(value);
+}
+/**
+ * Align the logic of toFixed to around like 1.5 => 2.
+ * If set `cutOnly`, will just remove the over decimal part.
+ */
+function toFixed(numStr, separatorStr, precision) {
+  var cutOnly = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  if (numStr === '') {
+    return '';
+  }
+  var _trimNumber2 = (0,_numberUtil__WEBPACK_IMPORTED_MODULE_2__.trimNumber)(numStr),
+    negativeStr = _trimNumber2.negativeStr,
+    integerStr = _trimNumber2.integerStr,
+    decimalStr = _trimNumber2.decimalStr;
+  var precisionDecimalStr = "".concat(separatorStr).concat(decimalStr);
+  var numberWithoutDecimal = "".concat(negativeStr).concat(integerStr);
+  if (precision >= 0) {
+    // We will get last + 1 number to check if need advanced number
+    var advancedNum = Number(decimalStr[precision]);
+    if (advancedNum >= 5 && !cutOnly) {
+      var advancedDecimal = getMiniDecimal(numStr).add("".concat(negativeStr, "0.").concat('0'.repeat(precision)).concat(10 - advancedNum));
+      return toFixed(advancedDecimal.toString(), separatorStr, precision, cutOnly);
+    }
+    if (precision === 0) {
+      return numberWithoutDecimal;
+    }
+    return "".concat(numberWithoutDecimal).concat(separatorStr).concat(decimalStr.padEnd(precision, '0').slice(0, precision));
+  }
+  if (precisionDecimalStr === '.0') {
+    return numberWithoutDecimal;
+  }
+  return "".concat(numberWithoutDecimal).concat(precisionDecimalStr);
+}
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/utils/numberUtil.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getDecupleSteps: () => (/* binding */ getDecupleSteps),
+/* harmony export */   getNumberPrecision: () => (/* binding */ getNumberPrecision),
+/* harmony export */   isE: () => (/* binding */ isE),
+/* harmony export */   num2str: () => (/* binding */ num2str),
+/* harmony export */   trimNumber: () => (/* binding */ trimNumber),
+/* harmony export */   validateNumber: () => (/* binding */ validateNumber)
+/* harmony export */ });
+/* harmony import */ var _supportUtil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/rc-input-number/es/utils/supportUtil.js");
+
+/**
+ * Format string number to readable number
+ */
+function trimNumber(numStr) {
+  var str = numStr.trim();
+  var negative = str.startsWith('-');
+  if (negative) {
+    str = str.slice(1);
+  }
+  str = str
+  // Remove decimal 0. `1.000` => `1.`, `1.100` => `1.1`
+  .replace(/(\.\d*[^0])0*$/, '$1')
+  // Remove useless decimal. `1.` => `1`
+  .replace(/\.0*$/, '')
+  // Remove integer 0. `0001` => `1`, 000.1' => `.1`
+  .replace(/^0+/, '');
+  if (str.startsWith('.')) {
+    str = "0".concat(str);
+  }
+  var trimStr = str || '0';
+  var splitNumber = trimStr.split('.');
+  var integerStr = splitNumber[0] || '0';
+  var decimalStr = splitNumber[1] || '0';
+  if (integerStr === '0' && decimalStr === '0') {
+    negative = false;
+  }
+  var negativeStr = negative ? '-' : '';
+  return {
+    negative: negative,
+    negativeStr: negativeStr,
+    trimStr: trimStr,
+    integerStr: integerStr,
+    decimalStr: decimalStr,
+    fullStr: "".concat(negativeStr).concat(trimStr)
+  };
+}
+function isE(number) {
+  var str = String(number);
+  return !Number.isNaN(Number(str)) && str.includes('e');
+}
+/**
+ * [Legacy] Convert 1e-9 to 0.000000001.
+ * This may lose some precision if user really want 1e-9.
+ */
+function getNumberPrecision(number) {
+  var numStr = String(number);
+  if (isE(number)) {
+    var precision = Number(numStr.slice(numStr.indexOf('e-') + 2));
+    var decimalMatch = numStr.match(/\.(\d+)/);
+    if (decimalMatch === null || decimalMatch === void 0 ? void 0 : decimalMatch[1]) {
+      precision += decimalMatch[1].length;
+    }
+    return precision;
+  }
+  return numStr.includes('.') && validateNumber(numStr) ? numStr.length - numStr.indexOf('.') - 1 : 0;
+}
+/**
+ * Convert number (includes scientific notation) to -xxx.yyy format
+ */
+function num2str(number) {
+  var numStr = String(number);
+  if (isE(number)) {
+    if (number > Number.MAX_SAFE_INTEGER) {
+      return String((0,_supportUtil__WEBPACK_IMPORTED_MODULE_0__.supportBigInt)() ? BigInt(number).toString() : Number.MAX_SAFE_INTEGER);
+    }
+    if (number < Number.MIN_SAFE_INTEGER) {
+      return String((0,_supportUtil__WEBPACK_IMPORTED_MODULE_0__.supportBigInt)() ? BigInt(number).toString() : Number.MIN_SAFE_INTEGER);
+    }
+    numStr = number.toFixed(getNumberPrecision(numStr));
+  }
+  return trimNumber(numStr).fullStr;
+}
+function validateNumber(num) {
+  if (typeof num === 'number') {
+    return !Number.isNaN(num);
+  }
+  // Empty
+  if (!num) {
+    return false;
+  }
+  return (
+    // Normal type: 11.28
+    /^\s*-?\d+(\.\d+)?\s*$/.test(num) ||
+    // Pre-number: 1.
+    /^\s*-?\d+\.\s*$/.test(num) ||
+    // Post-number: .1
+    /^\s*-?\.\d+\s*$/.test(num)
+  );
+}
+function getDecupleSteps(step) {
+  var stepStr = typeof step === 'number' ? num2str(step) : trimNumber(step).fullStr;
+  var hasPoint = stepStr.includes('.');
+  if (!hasPoint) {
+    return step + '0';
+  }
+  return trimNumber(stepStr.replace(/(\d)\.(\d)/g, '$1$2.')).fullStr;
+}
+
+/***/ }),
+
+/***/ "../../node_modules/rc-input-number/es/utils/supportUtil.js":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportBigInt: () => (/* binding */ supportBigInt)
+/* harmony export */ });
+function supportBigInt() {
+  return typeof BigInt === 'function';
 }
 
 /***/ }),
@@ -267437,7 +268781,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ControlButton: () => (/* binding */ ControlButton),
 /* harmony export */   Controls: () => (/* binding */ Controls)
 /* harmony export */ });
-/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__("../../node_modules/antd/lib/message/index.js");
+/* harmony import */ var antd_lib_input_number__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__("../../node_modules/antd/lib/input-number/index.js");
+/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__("../../node_modules/antd/lib/message/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../../node_modules/react/index.js");
 /* harmony import */ var _assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/assets/icons/timeline/index.ts");
 /* harmony import */ var _common_Button_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./src/common/Button/Button.tsx");
@@ -267451,11 +268796,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Controls_AudioControl__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("./src/components/Timeline/Controls/AudioControl.tsx");
 /* harmony import */ var _Controls_ConfigControl__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("./src/components/Timeline/Controls/ConfigControl.tsx");
 /* harmony import */ var _TimeDurationControl_TimeDurationControl__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("./src/components/TimeDurationControl/TimeDurationControl.tsx");
-/* harmony import */ var _assets_icons__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("./src/assets/icons/index.tsx");
-/* harmony import */ var _common_Dropdown_Dropdown__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("./src/common/Dropdown/Dropdown.ts");
-/* harmony import */ var _common_Menu_Menu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__("./src/common/Menu/Menu.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__("../../node_modules/react/jsx-runtime.js");
-
+/* harmony import */ var _common_Menu_Menu__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("./src/common/Menu/Menu.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("../../node_modules/react/jsx-runtime.js");
 
 
 
@@ -267518,13 +268860,16 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
   ...props
 }) => {
   const {
-    settings
+    settings,
+    data: timelineData
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_Context__WEBPACK_IMPORTED_MODULE_6__.TimelineContext);
   const [altControlsMode, setAltControlsMode] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [configModal, setConfigModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [audioModal, setAudioModal] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [callModelLoading, setCallModelLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [callCleanSamCacheLoading, setCallCleanSamCacheLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [curCallModelLabel, setCurCallModelLabel] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [samFrameLength, setSamFrameLength] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(100);
   const [startReached, endReached] = [position === 1, position === length];
   const durationFormatted = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
     return Math.max((length - 1) / frameRate, 0);
@@ -267550,14 +268895,14 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
     setConfigModal(!configModal);
   };
   const renderControls = () => {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "group",
       tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
       size: "small",
       style: {
         gridAutoColumns: 'auto'
       },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_Controls_ConfigControl__WEBPACK_IMPORTED_MODULE_11__.ConfigControl, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_Controls_ConfigControl__WEBPACK_IMPORTED_MODULE_11__.ConfigControl, {
         onSetModal: onSetConfigModal,
         onAmpChange: props.onAmpChange,
         configModal: configModal,
@@ -267566,7 +268911,7 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
         amp: props.amp || 0,
         toggleVisibility: toggleVisibility,
         layerVisibility: layerVisibility
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_Controls_AudioControl__WEBPACK_IMPORTED_MODULE_10__.AudioControl, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_Controls_AudioControl__WEBPACK_IMPORTED_MODULE_10__.AudioControl, {
         volume: props.volume || 0,
         onVolumeChange: props.onVolumeChange,
         onSetModal: onSetVolumeModal,
@@ -267574,6 +268919,379 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
       })]
     });
   };
+
+  /**
+   * 获取当前画布中所有绘制的标注box
+   * @param {number} frame - 帧位置，默认为当前position
+   * @returns {Array} 返回所有标注box的数组，每个box包含 {x, y, width, height, rotation, id, labels, ...}
+   */
+  const getAllAnnotationBoxes = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(frame => {
+    const videoItem = timelineData === null || timelineData === void 0 ? void 0 : timelineData.item;
+    const currentFrame = frame !== null && frame !== void 0 ? frame : position;
+    if (!videoItem || !videoItem.regs) {
+      return [];
+    }
+    const boxes = [];
+
+    // 遍历所有区域
+    for (const region of videoItem.regs) {
+      // 检查区域是否隐藏
+      if (region.hidden) {
+        continue;
+      }
+
+      // 检查区域是否在当前帧的生命周期内
+      if (typeof region.isInLifespan === 'function' && !region.isInLifespan(currentFrame)) {
+        continue;
+      }
+
+      // 获取当前帧的box形状
+      if (typeof region.getShape !== 'function') {
+        continue;
+      }
+      const shape = region.getShape(currentFrame);
+      if (shape) {
+        boxes.push({
+          id: region.cleanId || region.id,
+          ...shape,
+          // x, y, width, height, rotation
+          labels: region.labels || [],
+          selected: region.selected || region.inSelection || false,
+          region: region // 保留原始region引用，方便后续操作
+        });
+      }
+    }
+    return boxes;
+  }, [timelineData, position]);
+  const callSamModel = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async () => {
+    var _videoItem$ref;
+    const prompts = getAllAnnotationBoxes();
+    const videoItem = timelineData === null || timelineData === void 0 ? void 0 : timelineData.item;
+    if (!videoItem) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('无法访问视频对象');
+      return;
+    }
+    if (!((_videoItem$ref = videoItem.ref) !== null && _videoItem$ref !== void 0 && _videoItem$ref.current)) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('视频未加载');
+      return;
+    }
+    try {
+      setCallModelLoading(true);
+
+      // start sam inference
+      const startSamResp = await fetch("/api/tasks/video_sam_predict", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          prompt_frame_index: position,
+          prompts: prompts,
+          predict_frame_length: samFrameLength
+        })
+      });
+      if (startSamResp.status !== 200) {
+        antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error("failed to call sam predict");
+        return;
+      }
+      const startSamRet = await startSamResp.json();
+      const data = startSamRet["data"];
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].success("SAM成功，开始标注结果");
+      const startFrame = position;
+      const endFrame = Math.min(startFrame + samFrameLength - 1, length);
+      const totalFrames = endFrame - startFrame + 1;
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].info(`正在处理 ${totalFrames} 帧 (${startFrame} - ${endFrame})`);
+
+      // 保存原始帧位置，处理完成后恢复
+      const originalFrame = videoItem.frame;
+
+      // 存储每一帧检测到的对象，用于跟踪跨帧的对象
+      // 格式: Map<objectId, { area: VideoRegion, label: string }>
+      const objectMap = new Map();
+      let totalRegionsAdded = 0;
+
+      // 删除已有label
+      const toRemoveRegions = [];
+      videoItem.regs.forEach(region => {
+        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+          // label开始于当前帧之后，需要删除防止与sam结果冲突
+          toRemoveRegions.push(region.cleanId);
+        }
+      });
+      toRemoveRegions.forEach(id => videoItem.deleteRegion(id));
+
+      // 循环处理每一帧
+      for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
+        const currentFrame = startFrame + frameIndex + 1;
+
+        // 设置视频到指定帧
+        videoItem.setFrame(currentFrame);
+
+        // 等待视频帧加载完成（给视频一点时间 seek 到正确位置）
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        // 获取当前帧的图片
+        const {
+          blob: videoImg,
+          size
+        } = await videoItem.ref.current.getCurrentImg();
+        const {
+          width: waWidth,
+          height: waHeight,
+          offset
+        } = size;
+        if (!videoImg) {
+          console.warn(`无法获取第 ${currentFrame} 帧图片，跳过`);
+          continue;
+        }
+
+        // 示例：假设 SAM 模型返回多个区域的边界框
+        // 格式: [{ x, y, width, height, label, objectId? }, ...]
+        // objectId 用于跟踪同一对象在不同帧中的位置
+        const samResults = data[frameIndex];
+
+        // 为当前帧的每个检测结果处理
+        for (const box of samResults) {
+          // 将像素坐标转换为百分比
+          let regionData = {
+            x: box.x,
+            y: box.y,
+            width: box.width,
+            height: box.height
+          };
+          if (!box.object_id) {
+            continue;
+          }
+          let area = videoItem.findRegion(box.object_id);
+          if (area) {
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame);
+            area.addKeypoint(currentFrame, null, regionData);
+          } else if (objectMap.has(box.object_id)) {
+            // get from object map
+            area = objectMap.get(box.object_id);
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame);
+            area.addKeypoint(currentFrame, null, regionData);
+          } else {
+            // 创建新的 region
+            area = videoItem.addRegion(regionData, box.label);
+            area.interpolation = false;
+          }
+          objectMap.set(box.object_id, area);
+        }
+
+        // 更新进度提示
+        if ((frameIndex + 1) % 10 === 0 || frameIndex === totalFrames - 1) {
+          antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].info(`已处理 ${frameIndex + 1}/${totalFrames} 帧`);
+        }
+      }
+      objectMap.forEach(area => {
+        const sequence = area === null || area === void 0 ? void 0 : area.sequence;
+        sequence[sequence.length - 1].enabled = false;
+      });
+      // 恢复原始帧位置
+      videoItem.setFrame(originalFrame);
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].success("SAM成功");
+    } catch (error) {
+      console.error('SAM 模型调用失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('SAM 模型调用失败: ' + errorMessage);
+    } finally {
+      setCallModelLoading(false);
+    }
+  }, [timelineData, position, samFrameLength, length, setCallModelLoading]);
+  const callSamModelSingle = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async () => {
+    var _videoItem$ref2;
+    const videoItem = timelineData === null || timelineData === void 0 ? void 0 : timelineData.item;
+    if (!videoItem) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('无法访问视频对象');
+      return;
+    }
+    if (!((_videoItem$ref2 = videoItem.ref) !== null && _videoItem$ref2 !== void 0 && _videoItem$ref2.current)) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('视频未加载');
+      return;
+    }
+
+    // get selected region
+    const selectedRegions = videoItem.regs.filter(reg => reg.inSelection);
+    if (selectedRegions.length != 1) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('请选择一个需要SAM的label');
+      return;
+    }
+    const selectedRegionId = selectedRegions[0].cleanId;
+    const prompts = getAllAnnotationBoxes().filter(prompt => prompt.id === selectedRegionId);
+    try {
+      setCallModelLoading(true);
+
+      // start sam inference
+      const startSamResp = await fetch("/api/tasks/video_sam_predict_single", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          prompt_frame_index: position,
+          prompts: prompts,
+          is_single_predict: true,
+          predict_frame_length: samFrameLength
+        })
+      });
+      if (startSamResp.status !== 200) {
+        antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error("failed to call sam predict");
+        return;
+      }
+      const startSamRet = await startSamResp.json();
+      const data = startSamRet["data"];
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].success("SAM成功，开始标注结果");
+      const startFrame = position;
+      const endFrame = Math.min(startFrame + samFrameLength - 1, length);
+      const totalFrames = endFrame - startFrame + 1;
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].info(`正在处理 ${totalFrames} 帧 (${startFrame} - ${endFrame})`);
+
+      // 保存原始帧位置，处理完成后恢复
+      const originalFrame = videoItem.frame;
+
+      // 存储每一帧检测到的对象，用于跟踪跨帧的对象
+      // 格式: Map<objectId, { area: VideoRegion, label: string }>
+      const objectMap = new Map();
+      let totalRegionsAdded = 0;
+
+      // 删除已有label
+      const toRemoveRegions = [];
+      videoItem.regs.forEach(region => {
+        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+          // label开始于当前帧之后，需要删除防止与sam结果冲突
+          toRemoveRegions.push(region.cleanId);
+        }
+      });
+      toRemoveRegions.forEach(id => videoItem.deleteRegion(id));
+
+      // 循环处理每一帧
+      for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
+        const currentFrame = startFrame + frameIndex + 1;
+
+        // 设置视频到指定帧
+        videoItem.setFrame(currentFrame);
+
+        // 等待视频帧加载完成（给视频一点时间 seek 到正确位置）
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        // 获取当前帧的图片
+        const {
+          blob: videoImg,
+          size
+        } = await videoItem.ref.current.getCurrentImg();
+        const {
+          width: waWidth,
+          height: waHeight,
+          offset
+        } = size;
+        if (!videoImg) {
+          console.warn(`无法获取第 ${currentFrame} 帧图片，跳过`);
+          continue;
+        }
+
+        // 示例：假设 SAM 模型返回多个区域的边界框
+        // 格式: [{ x, y, width, height, label, objectId? }, ...]
+        // objectId 用于跟踪同一对象在不同帧中的位置
+        const samResults = data[frameIndex];
+
+        // 为当前帧的每个检测结果处理
+        for (const box of samResults) {
+          // 将像素坐标转换为百分比
+          let regionData = {
+            x: box.x,
+            y: box.y,
+            width: box.width,
+            height: box.height,
+            rotation: 0
+          };
+          if (!box.object_id) {
+            continue;
+          }
+          let area = videoItem.findRegion(box.object_id);
+          if (area) {
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame);
+            area.addKeypoint(currentFrame, null, regionData);
+          } else if (objectMap.has(box.object_id)) {
+            // get from object map
+            area = objectMap.get(box.object_id);
+            area.interpolation = false;
+            area.removeKeypoint(currentFrame);
+            area.addKeypoint(currentFrame, null, regionData);
+          } else {
+            // 创建新的 region
+            area = videoItem.addRegion(regionData, box.label);
+            area.interpolation = false;
+          }
+          objectMap.set(box.object_id, area);
+        }
+
+        // 更新进度提示
+        if ((frameIndex + 1) % 10 === 0 || frameIndex === totalFrames - 1) {
+          antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].info(`已处理 ${frameIndex + 1}/${totalFrames} 帧`);
+        }
+      }
+      objectMap.forEach(area => {
+        const sequence = area === null || area === void 0 ? void 0 : area.sequence;
+        sequence[sequence.length - 1].enabled = false;
+      });
+      // 恢复原始帧位置
+      videoItem.setFrame(originalFrame);
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].success("SAM成功");
+    } catch (error) {
+      console.error('SAM 模型调用失败:', error);
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('SAM 模型调用失败: ' + errorMessage);
+    } finally {
+      setCallModelLoading(false);
+    }
+  }, [timelineData, position, samFrameLength, length, setCallModelLoading]);
+  const callCleanSamCache = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(async () => {
+    var _videoItem$ref3;
+    const videoItem = timelineData === null || timelineData === void 0 ? void 0 : timelineData.item;
+    if (!videoItem) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('无法访问视频对象');
+      return;
+    }
+    if (!((_videoItem$ref3 = videoItem.ref) !== null && _videoItem$ref3 !== void 0 && _videoItem$ref3.current)) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('视频未加载');
+      return;
+    }
+
+    // get selected region
+    const selectedRegions = videoItem.regs.filter(reg => reg.inSelection);
+    if (selectedRegions.length != 1) {
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('请选择一个需要clean的label');
+      return;
+    }
+    const selectedRegionId = selectedRegions[0].cleanId;
+    try {
+      setCallCleanSamCacheLoading(true);
+      const startSamResp = await fetch("/api/tasks/video_sam_clean_cache", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          task_id: videoItem.store.task.id,
+          obj_id: selectedRegionId
+        })
+      });
+      if (startSamResp.status !== 200) {
+        antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error("failed to clean sam cache");
+        return;
+      }
+      const startSamRet = await startSamResp.json();
+      antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].success("清除当前label的缓存成功");
+    } finally {
+      setCallCleanSamCacheLoading(false);
+    }
+  }, [timelineData, position, samFrameLength, length, setCallCleanSamCacheLoading]);
   const closeModalHandler = () => {
     setConfigModal(false);
     setAudioModal(false);
@@ -267601,7 +269319,7 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
     const keyboardHandler = async e => {
       if ((e.metaKey || e.altKey) && e.code === 'KeyM') {
         if (!curCallModelLabel) {
-          antd_lib_message__WEBPACK_IMPORTED_MODULE_17__["default"].error('请选择与标注目标label');
+          antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].error('请选择与标注目标label');
           return;
         }
         setCallModelLoading(true);
@@ -267618,7 +269336,7 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
     onPositionChange(value);
   };
   const dropdownContent = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_common_Menu_Menu__WEBPACK_IMPORTED_MODULE_15__.Menu, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_common_Menu_Menu__WEBPACK_IMPORTED_MODULE_13__.Menu, {
       size: "medium",
       style: {
         width: 200,
@@ -267626,7 +269344,7 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
       },
       selectedKeys: [curCallModelLabel],
       children: labels === null || labels === void 0 ? void 0 : labels.map(item => {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_common_Menu_Menu__WEBPACK_IMPORTED_MODULE_15__.Menu.Item, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_common_Menu_Menu__WEBPACK_IMPORTED_MODULE_13__.Menu.Item, {
           name: item.value || item.name,
           onClick: () => {
             setCurCallModelLabel(item.value || item.name);
@@ -267636,14 +269354,14 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
       })
     });
   }, [labels, curCallModelLabel]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Block, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Block, {
     name: "timeline-controls",
     tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
     spread: true,
     style: {
       gridAutoColumns: 'auto'
     },
-    children: [(0,_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.isFF)(_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.FF_DEV_2715) && mediaType === 'audio' ? renderControls() : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    children: [(0,_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.isFF)(_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.FF_DEV_2715) && mediaType === 'audio' ? renderControls() : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "group",
       tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
       size: "small",
@@ -267653,7 +269371,7 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
       children: [props.controls && Object.entries(props.controls).map(([name, enabled]) => {
         if (enabled === false) return;
         const Component = _SideControls__WEBPACK_IMPORTED_MODULE_8__[name];
-        return (0,_utils_utilities__WEBPACK_IMPORTED_MODULE_5__.isDefined)(Component) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(Component, {
+        return (0,_utils_utilities__WEBPACK_IMPORTED_MODULE_5__.isDefined)(Component) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(Component, {
           length: length,
           position: position - 1,
           volume: props.volume,
@@ -267661,133 +269379,124 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
           onVolumeChange: props.onVolumeChange
         }, name);
       }), customControls === null || customControls === void 0 ? void 0 : customControls.left]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "main-controls",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
         name: "group",
         tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
         collapsed: true,
         children: extraControls
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
         name: "group",
         tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
         collapsed: true,
-        children: [customControls === null || customControls === void 0 ? void 0 : customControls.leftCenter, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(AltControls, {
+        children: [customControls === null || customControls === void 0 ? void 0 : customControls.leftCenter, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(AltControls, {
           showAlterantive: altControlsMode && !disableFrames,
-          main: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-            children: [(settings === null || settings === void 0 ? void 0 : settings.stepSize) && !disableFrames && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+          main: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+            children: [(settings === null || settings === void 0 ? void 0 : settings.stepSize) && !disableFrames && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: stepHandlerWrapper(onStepBackward, settings.stepSize),
               hotkey: settings === null || settings === void 0 ? void 0 : settings.stepAltBack,
               disabled: startReached,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPrev, {})
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPrev, {})
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: stepHandlerWrapper(onStepBackward),
               hotkey: settings === null || settings === void 0 ? void 0 : settings.stepBackHotkey,
               disabled: startReached,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconChevronLeft, {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconChevronLeft, {})
             })]
           }),
-          alt: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+          alt: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: () => onRewind === null || onRewind === void 0 ? void 0 : onRewind(),
               disabled: startReached,
               hotkey: settings === null || settings === void 0 ? void 0 : settings.skipToBeginning,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconRewind, {})
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconRewind, {})
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: () => onRewind === null || onRewind === void 0 ? void 0 : onRewind(altHopSize),
               disabled: startReached,
               hotkey: settings === null || settings === void 0 ? void 0 : settings.hopBackward,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconBackward, {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconBackward, {})
             })]
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
           "data-testid": `playback-button:${playing ? 'pause' : 'play'}`,
           onClick: handlePlay,
           hotkey: settings === null || settings === void 0 ? void 0 : settings.playpauseHotkey,
-          children: playing ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPause, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPlay, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(AltControls, {
+          children: playing ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPause, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconPlay, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(AltControls, {
           showAlterantive: altControlsMode && !disableFrames,
-          main: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+          main: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: stepHandlerWrapper(onStepForward),
               hotkey: settings === null || settings === void 0 ? void 0 : settings.stepForwardHotkey,
               disabled: endReached,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconChevronRight, {})
-            }), (settings === null || settings === void 0 ? void 0 : settings.stepSize) && !disableFrames && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconChevronRight, {})
+            }), (settings === null || settings === void 0 ? void 0 : settings.stepSize) && !disableFrames && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               disabled: endReached,
               onClick: stepHandlerWrapper(onStepForward, settings.stepSize),
               hotkey: settings === null || settings === void 0 ? void 0 : settings.stepAltForward,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconNext, {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconNext, {})
             })]
           }),
-          alt: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+          alt: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: () => onForward === null || onForward === void 0 ? void 0 : onForward(altHopSize),
               disabled: endReached,
               hotkey: settings === null || settings === void 0 ? void 0 : settings.hopForward,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconForward, {})
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconForward, {})
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
               onClick: () => onForward === null || onForward === void 0 ? void 0 : onForward(),
               disabled: endReached,
               hotkey: settings === null || settings === void 0 ? void 0 : settings.skipToEnd,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFastForward, {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFastForward, {})
             })]
           })
         }), customControls === null || customControls === void 0 ? void 0 : customControls.rightCenter]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
         name: "group",
         tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
         collapsed: true,
-        children: [!disableFrames && allowViewCollapse && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+        children: [!disableFrames && allowViewCollapse && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
           tooltip: "Toggle Timeline",
           onClick: () => onToggleCollapsed === null || onToggleCollapsed === void 0 ? void 0 : onToggleCollapsed(!collapsed),
-          children: collapsed ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconExpand, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconCollapse, {})
-        }), allowFullscreen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(ControlButton, {
+          children: collapsed ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconExpand, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconCollapse, {})
+        }), allowFullscreen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(ControlButton, {
           tooltip: "Fullscreen",
           onClick: () => onFullScreenToggle === null || onFullScreenToggle === void 0 ? void 0 : onFullScreenToggle(false),
-          children: fullscreen ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFullscreenExit, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFullscreen, {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
-          tooltip: "Call Model",
-          type: "text",
-          disabled: !curCallModelLabel,
-          waiting: callModelLoading,
-          style: {
-            width: 36,
-            height: 36,
-            padding: 0
-          },
-          onClick: async () => {
-            setCallModelLoading(true);
-            await (onCallModel === null || onCallModel === void 0 ? void 0 : onCallModel(curCallModelLabel));
-            setCallModelLoading(false);
-          },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons__WEBPACK_IMPORTED_MODULE_13__.IconRectangleTool, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons__WEBPACK_IMPORTED_MODULE_13__.LsPlus, {})]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_common_Dropdown_Dropdown__WEBPACK_IMPORTED_MODULE_14__.Dropdown.Trigger, {
-          alignment: "bottom-right",
-          content: dropdownContent,
-          style: {
-            width: 200
-          },
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
-            tooltip: "Call Model Labels",
-            type: "text",
+          children: fullscreen ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFullscreenExit, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_assets_icons_timeline__WEBPACK_IMPORTED_MODULE_1__.IconFullscreen, {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+          name: "group",
+          tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
+          collapsed: true,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            tooltip: "call Segment Anything Model",
+            size: 'small',
+            waiting: callModelLoading,
+            onClick: callSamModelSingle,
+            children: "sam"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(antd_lib_input_number__WEBPACK_IMPORTED_MODULE_16__["default"], {
+            size: 'small',
+            addonAfter: "\u5E27",
             style: {
-              width: '100%',
-              height: 36,
-              padding: 10
+              width: "100px"
             },
-            children: curCallModelLabel ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-              children: curCallModelLabel
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_assets_icons__WEBPACK_IMPORTED_MODULE_13__.IconMenu, {})
-          })
+            value: samFrameLength,
+            onChange: v => setSamFrameLength(v !== null && v !== void 0 ? v : 0)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            tooltip: "clean SAM cache",
+            size: 'small',
+            waiting: callCleanSamCacheLoading,
+            onClick: callCleanSamCache,
+            children: "clean"
+          })]
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "group",
       tag: _common_Space_Space__WEBPACK_IMPORTED_MODULE_3__.Space,
       size: "small",
-      children: (0,_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.isFF)(_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.FF_DEV_2715) && mediaType === 'audio' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-        children: [customControls === null || customControls === void 0 ? void 0 : customControls.right, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_TimeDurationControl_TimeDurationControl__WEBPACK_IMPORTED_MODULE_12__.TimeDurationControl, {
+      children: (0,_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.isFF)(_utils_feature_flags__WEBPACK_IMPORTED_MODULE_9__.FF_DEV_2715) && mediaType === 'audio' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+        children: [customControls === null || customControls === void 0 ? void 0 : customControls.right, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_TimeDurationControl_TimeDurationControl__WEBPACK_IMPORTED_MODULE_12__.TimeDurationControl, {
           startTime: 0,
           endTime: duration,
           minTime: 0,
@@ -267796,8 +269505,8 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
           currentTime: position,
           onChangeStartTime: onTimeUpdateChange
         })]
-      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-        children: [customControls === null || customControls === void 0 ? void 0 : customControls.right, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(TimeDisplay, {
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+        children: [customControls === null || customControls === void 0 ? void 0 : customControls.right, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(TimeDisplay, {
           currentTime: currentTime,
           duration: durationFormatted,
           length: length,
@@ -267813,7 +269522,7 @@ const ControlButton = ({
   children,
   ...props
 }) => {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_common_Button_Button__WEBPACK_IMPORTED_MODULE_2__.Button, {
     ...props,
     type: "text",
     style: {
@@ -267847,17 +269556,17 @@ const TimeDisplay = ({
     time: duration,
     ...commonOptions
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
     name: "time",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "time-section",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(Time, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(Time, {
         time: currentTime,
         position: currentTimeFormatted
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_utils_bem__WEBPACK_IMPORTED_MODULE_4__.Elem, {
       name: "time-section",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(Time, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(Time, {
         time: Math.max(duration, 0),
         position: totalTimeFormatted
       })
@@ -267870,8 +269579,8 @@ const Time = ({
 }) => {
   const timeDate = new Date(time * 1000).toISOString();
   const formatted = time > 3600 ? timeDate.substr(11, 8) : timeDate.substr(14, 5);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
-    children: [formatted, position ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("span", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
+    children: [formatted, position ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("span", {
       children: position
     }) : null]
   });
@@ -268657,6 +270366,7 @@ const TimelineComponent = ({
   const controls = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_utils_bem__WEBPACK_IMPORTED_MODULE_3__.Elem, {
     name: "topbar",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_Controls__WEBPACK_IMPORTED_MODULE_6__.Controls, {
+      regions: regions,
       labels: labels,
       length: length,
       position: currentPosition,
@@ -293537,7 +295247,7 @@ __webpack_require__.r(__webpack_exports__);
 // Get environment settings
 const getEnvironment = async () => {
   /* istanbul ignore next */
-  if ( true && !({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/11897959171853212202","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"11897959171853212202"}).BUILD_NO_SERVER) {
+  if ( true && !({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).BUILD_NO_SERVER) {
     return (await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, "./src/env/development.js"))).default;
   }
   return (await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, "./src/env/production.js"))).default;
@@ -321199,7 +322909,10 @@ const HtxVideoView = ({
         onFullscreenToggle: handleFullscreenToggle,
         onSelectRegion: handleSelectRegion,
         onAction: handleAction,
-        onCallModel: handelCallModel
+        onCallModel: handelCallModel,
+        data: {
+          item
+        }
       })]
     })
   });
@@ -337675,7 +339388,7 @@ module.exports = JSON.parse('{"ff_front_1170_outliner_030222_short":true,"ff_fro
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"audio:back":{"key":"ctrl+b","mac":"command+b","description":"Back for one second"},"audio:playpause":{},"ts:grow-left":{"key":"left","description":"Increase region to the left"},"ts:grow-right":{"key":"right","description":"Increase region to the right"},"ts:shrink-left":{"key":"alt+left","description":"Decrease region on the left"},"ts:shrink-right":{"key":"alt+right","description":"Decrease region on the right"},"ts:grow-left-largre":{"key":"shift+left"},"ts:grow-right-largre":{"key":"shift+right"},"ts:shrink-left-largre":{"key":"shift+alt+left"},"ts:shrink-right-largre":{"key":"shift+alt+right"},"annotation:submit":{"key":"ctrl+enter","mac":"command+enter","description":"Submit annotation"},"annotation:skip":{"key":"ctrl+space","mac":"alt+enter","description":"Skip task"},"annotation:undo":{"key":"ctrl+z","mac":"command+z","description":"Undo"},"annotation:redo":{"key":"ctrl+shift+z","mac":"command+shift+z","description":"Redo"},"polygon:undo":{"key":"ctrl+z","mac":"command+z","description":"Undo"},"polygon:redo":{"key":"ctrl+shift+z","mac":"command+shift+z","description":"Redo"},"region:delete-all":{"key":"ctrl+backspace","mac":"command+backspace","description":"Delete all regions"},"region:focus":{"key":"enter","description":"Focus first focusable region"},"region:relation":{"key":"alt+r","description":"Create relation between regions"},"region:visibility":{"key":"alt+h","description":"Toggle selected region visibility"},"region:lock":{"key":"alt+l","description":"Lock selected region"},"region:meta":{"key":"alt+m","description":"Edit selected region meta"},"region:unselect":{"key":"u","description":"Unselect region"},"region:exit":{"key":"escape","description":"Exit relation mode, unselect region"},"region:delete":{"key":"backspace","description":"Delete selected region"},"region:cycle":{"key":"alt+.","description":"Cycle through regions"},"region:duplicate":{"key":"ctrl+d","mac":"command+d","description":"Duplicate selected region"},"segment:delete":{"key":"delete","description":"Delete selected region"},"media:playpause":{"key":"alt+space","description":"Play/pause"},"media:step-backward":{"key":"alt+left","description":"Go one step back"},"media:step-forward":{"key":"alt+right","description":"Go one step forward"},"video:keyframe-backward":{"key":"ctrl+alt+left","description":"Go to previous keyframe"},"video:keyframe-forward":{"key":"ctrl+alt+right","description":"Go to next keyframe"},"video:backward":{"key":"alt+left","description":"Go back"},"video:rewind":{"key":"shift+ctrl+alt+left","description":"Go to first frame"},"video:forward":{"key":"shift+alt+right","description":"Go forward"},"video:fastforward":{"key":"shift+ctrl+alt+right","description":"Go to last frame"},"video:hop-backward":{"key":"shift+alt+left","description":"Hop Backward"},"video:hop-forward":{"key":"shift+alt+right","description":"Hop Forward"},"repeater:next-page":{"key":"alt+right","description":"Next Page"},"repeater:previous-page":{"key":"alt+left","description":"Previous Page"},"image:prev":{"key":"ctrl+a","description":"Previous Image"},"image:next":{"key":"ctrl+d","description":"Next Image"},"video:toggle-keypoint":{"key":"alt+k","mac":"command+k","description":"Toggle keypoint"}}');
+module.exports = JSON.parse('{"audio:back":{"key":"ctrl+b","mac":"command+b","description":"Back for one second"},"audio:playpause":{},"ts:grow-left":{"key":"left","description":"Increase region to the left"},"ts:grow-right":{"key":"right","description":"Increase region to the right"},"ts:shrink-left":{"key":"alt+left","description":"Decrease region on the left"},"ts:shrink-right":{"key":"alt+right","description":"Decrease region on the right"},"ts:grow-left-largre":{"key":"shift+left"},"ts:grow-right-largre":{"key":"shift+right"},"ts:shrink-left-largre":{"key":"shift+alt+left"},"ts:shrink-right-largre":{"key":"shift+alt+right"},"annotation:submit":{"key":"ctrl+enter","mac":"command+enter","description":"Submit annotation"},"annotation:skip":{"key":"ctrl+space","mac":"alt+enter","description":"Skip task"},"annotation:undo":{"key":"ctrl+z","mac":"command+z","description":"Undo"},"annotation:redo":{"key":"ctrl+shift+z","mac":"command+shift+z","description":"Redo"},"polygon:undo":{"key":"ctrl+z","mac":"command+z","description":"Undo"},"polygon:redo":{"key":"ctrl+shift+z","mac":"command+shift+z","description":"Redo"},"region:delete-all":{"key":"ctrl+backspace","mac":"command+backspace","description":"Delete all regions"},"region:focus":{"key":"enter","description":"Focus first focusable region"},"region:relation":{"key":"alt+r","description":"Create relation between regions"},"region:visibility":{"key":"alt+h","description":"Toggle selected region visibility"},"region:lock":{"key":"alt+l","description":"Lock selected region"},"region:meta":{"key":"alt+m","description":"Edit selected region meta"},"region:unselect":{"key":"u","description":"Unselect region"},"region:exit":{"key":"escape","description":"Exit relation mode, unselect region"},"region:delete":{"key":"backspace","description":"Delete selected region"},"region:cycle":{"key":"alt+.","description":"Cycle through regions"},"region:duplicate":{"key":"ctrl+d","mac":"command+d","description":"Duplicate selected region"},"segment:delete":{"key":"delete","description":"Delete selected region"},"media:playpause":{"key":"alt+s","mac":"command+s","description":"Play/pause"},"media:step-backward":{"key":"alt+left","description":"Go one step back"},"media:step-forward":{"key":"alt+right","description":"Go one step forward"},"video:keyframe-backward":{"key":"ctrl+alt+left","description":"Go to previous keyframe"},"video:keyframe-forward":{"key":"ctrl+alt+right","description":"Go to next keyframe"},"video:backward":{"key":"alt+left","description":"Go back"},"video:rewind":{"key":"shift+ctrl+alt+left","description":"Go to first frame"},"video:forward":{"key":"shift+alt+right","description":"Go forward"},"video:fastforward":{"key":"shift+ctrl+alt+right","description":"Go to last frame"},"video:hop-backward":{"key":"shift+alt+left","description":"Hop Backward"},"video:hop-forward":{"key":"shift+alt+right","description":"Hop Forward"},"repeater:next-page":{"key":"alt+right","description":"Next Page"},"repeater:previous-page":{"key":"alt+left","description":"Previous Page"},"image:prev":{"key":"ctrl+a","description":"Previous Image"},"image:next":{"key":"ctrl+d","description":"Next Image"},"video:toggle-keypoint":{"key":"alt+k","mac":"command+k","description":"Toggle keypoint"}}');
 
 /***/ }),
 
