@@ -76,6 +76,10 @@ od_config = [
     {
         "project_name_keyword": "aimeite",
         "account_name_keyword": "aimeite",
+    },
+    {
+        "project_name_keyword": "baichuang",
+        "account_name_keyword": "baichuang",
     }
 ]
 
@@ -147,7 +151,7 @@ class ProjectFilterSet(FilterSet):
         operation_summary='Create new project',
         operation_description="""
     Create a project and set up the labeling interface in Label Studio using the API.
-    
+
     ```bash
     curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST '{}/api/projects' \
     --data '{{"label_config": "<View>[...]</View>"}}'
