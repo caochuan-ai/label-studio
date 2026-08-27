@@ -673,4 +673,6 @@ class PreparedTaskManager(models.Manager):
 
 class TaskManager(models.Manager):
     def for_user(self, user):
-        return self.filter(project__organization=user.active_organization)
+        from platform_integration.access import authorized_projects
+
+        return self.filter(project__in=authorized_projects(user))

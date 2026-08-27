@@ -19,6 +19,7 @@ from django.utils.decorators import method_decorator
 from drf_yasg import openapi as openapi
 from drf_yasg.utils import swagger_auto_schema
 from projects.models import Project
+from platform_integration.access import authorized_projects
 from ranged_fileresponse import RangedFileResponse
 from rest_framework import generics, status
 from rest_framework.exceptions import NotFound, ValidationError
@@ -69,7 +70,7 @@ class ExportFormatsListAPI(generics.RetrieveAPIView):
     permission_required = all_permissions.projects_view
 
     def get_queryset(self):
-        return Project.objects.filter(organization=self.request.user.active_organization)
+        return authorized_projects(self.request.user)
 
     def get(self, request, *args, **kwargs):
         project = self.get_object()
@@ -157,7 +158,7 @@ class ExportAPI(generics.RetrieveAPIView):
     permission_required = all_permissions.projects_change
 
     def get_queryset(self):
-        return Project.objects.filter(organization=self.request.user.active_organization)
+        return authorized_projects(self.request.user)
 
     def get_task_queryset(self, queryset):
         return queryset.select_related('project').prefetch_related('annotations', 'predictions')
@@ -225,7 +226,7 @@ class ProjectExportFiles(generics.RetrieveAPIView):
     swagger_schema = None  # hide export files endpoint from swagger
 
     def get_queryset(self):
-        return Project.objects.filter(organization=self.request.user.active_organization)
+        return authorized_projects(self.request.user)
 
     def get(self, request, *args, **kwargs):
         # project permission check
@@ -259,7 +260,7 @@ class ProjectExportFilesAuthCheck(APIView):
         except ValueError:
             return Response({'detail': 'Incorrect filename in export'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        generics.get_object_or_404(Project.objects.filter(organization=self.request.user.active_organization), pk=pk)
+        generics.get_object_or_404(authorized_projects(request.user), pk=pk)
         return Response({'detail': 'auth ok'}, status=status.HTTP_200_OK)
 
 

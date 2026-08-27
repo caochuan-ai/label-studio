@@ -47,33 +47,15 @@ from tasks.serializers import (
     TaskSimpleSerializer,
     TaskWithAnnotationsAndPredictionsAndDraftsSerializer,
 )
+from platform_integration.access import (
+    assert_platform_managed_mutation,
+    authorized_projects,
+    enabled as platform_integration_enabled,
+)
 from webhooks.models import WebhookAction
 from webhooks.utils import api_webhook, api_webhook_for_delete, emit_webhooks_for_instance
 
 logger = logging.getLogger(__name__)
-
-od_config = [
-    {
-        "project_name_keyword": "bodeng",
-        "account_name_keyword": "bodeng",
-    },
-    {
-        "project_name_keyword": "njjjx",
-        "account_name_keyword": "njjjx",
-    },
-    {
-        "project_name_keyword": "shenzhou",
-        "account_name_keyword": "shenzhou",
-    },
-    {
-        "project_name_keyword": "ykz",
-        "account_name_keyword": "ykz",
-    },
-    {
-        "project_name_keyword": "cixi",
-        "account_name_keyword": "cixi",
-    }
-]
 
 _result_schema = openapi.Schema(
     title='Labeling result',
@@ -169,14 +151,9 @@ class ProjectListAPI(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         fields = serializer.validated_data.get('include')
         filter = serializer.validated_data.get('filter')
-        projects = Project.objects.filter(organization=self.request.user.active_organization).order_by(
+        projects = authorized_projects(self.request.user).order_by(
             F('pinned_at').desc(nulls_last=True), '-created_at'
         )
-        for od in od_config:
-            if od.get("project_name_keyword") in self.request.user.email.lower():
-                projects = Project.objects.filter(organization=self.request.user.active_organization).filter(title__icontains=od.get("account_name_keyword")).order_by(
-                    F('pinned_at').desc(nulls_last=True), '-created_at'
-                )
         if filter in ['pinned_only', 'exclude_pinned']:
             projects = projects.filter(pinned_at__isnull=filter == 'exclude_pinned')
         return ProjectManager.with_counts_annotate(projects, fields=fields).prefetch_related('members', 'created_by')
@@ -187,6 +164,8 @@ class ProjectListAPI(generics.ListCreateAPIView):
         return context
 
     def perform_create(self, ser):
+        if platform_integration_enabled():
+            raise RestValidationError('请通过 ISP 平台创建 Label Studio 项目。')
         try:
             ser.save(organization=self.request.user.active_organization)
         except IntegrityError as e:
@@ -249,17 +228,20 @@ class ProjectAPI(generics.RetrieveUpdateDestroyAPIView):
         serializer = GetFieldsSerializer(data=self.request.query_params)
         serializer.is_valid(raise_exception=True)
         fields = serializer.validated_data.get('include')
-        return Project.objects.with_counts(fields=fields).filter(organization=self.request.user.active_organization)
+        return authorized_projects(self.request.user, Project.objects.with_counts(fields=fields))
 
     def get(self, request, *args, **kwargs):
         return super(ProjectAPI, self).get(request, *args, **kwargs)
 
     @api_webhook_for_delete(WebhookAction.PROJECT_DELETED)
     def delete(self, request, *args, **kwargs):
+        if platform_integration_enabled():
+            raise RestValidationError('请通过 ISP 平台停用 Label Studio 项目。')
         return super(ProjectAPI, self).delete(request, *args, **kwargs)
 
     @api_webhook(WebhookAction.PROJECT_UPDATED)
     def patch(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         project = self.get_object()
         label_config = self.request.data.get('label_config')
 
@@ -280,6 +262,7 @@ class ProjectAPI(generics.RetrieveUpdateDestroyAPIView):
     @swagger_auto_schema(auto_schema=None)
     @api_webhook(WebhookAction.PROJECT_UPDATED)
     def put(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         return super(ProjectAPI, self).put(request, *args, **kwargs)
 
 
@@ -543,6 +526,7 @@ class ProjectTaskListAPI(GetParentObjectMixin, generics.ListCreateAPIView, gener
             raise Http404
 
     def delete(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         project = generics.get_object_or_404(Project.objects.for_user(self.request.user), pk=self.kwargs['pk'])
         task_ids = list(Task.objects.filter(project=project).values('id'))
         Task.delete_tasks_without_signals(Task.objects.filter(project=project))
@@ -555,6 +539,7 @@ class ProjectTaskListAPI(GetParentObjectMixin, generics.ListCreateAPIView, gener
 
     @swagger_auto_schema(auto_schema=None)
     def post(self, *args, **kwargs):
+        assert_platform_managed_mutation(self.request.user)
         return super(ProjectTaskListAPI, self).post(*args, **kwargs)
 
     def get_serializer_context(self):

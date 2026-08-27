@@ -212,6 +212,7 @@ INSTALLED_APPS = [
     'ml',
     'webhooks',
     'labels_manager',
+    'platform_integration',
 ]
 
 MIDDLEWARE = [
@@ -222,6 +223,7 @@ MIDDLEWARE = [
     'core.middleware.DisableCSRF',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'platform_integration.middleware.PlatformSessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'core.middleware.CommonMiddlewareAppendSlashWithoutRedirect',  # instead of 'CommonMiddleware'
     'core.middleware.CommonMiddleware',
@@ -375,8 +377,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
-# if FORCE_SCRIPT_NAME:
-#    STATIC_URL = FORCE_SCRIPT_NAME + STATIC_URL
+if globals().get('FORCE_SCRIPT_NAME'):
+    STATIC_URL = FORCE_SCRIPT_NAME.rstrip('/') + STATIC_URL
 logger.info(f'=> Static URL is set to: {STATIC_URL}')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_build')
@@ -494,6 +496,18 @@ PROJECT_TITLE_MIN_LEN = 3
 PROJECT_TITLE_MAX_LEN = 50
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/'
+
+PLATFORM_INTEGRATION_ENABLED = get_bool_env('PLATFORM_INTEGRATION_ENABLED', False)
+PLATFORM_API_URL = get_env('PLATFORM_API_URL', '')
+PLATFORM_WEB_URL = get_env('PLATFORM_WEB_URL', '/')
+PLATFORM_INTEGRATION_ID = get_env('PLATFORM_INTEGRATION_ID', '')
+PLATFORM_SERVICE_TOKEN = get_env('PLATFORM_SERVICE_TOKEN', '')
+PLATFORM_SERVICE_USER_EMAIL = get_env('PLATFORM_SERVICE_USER_EMAIL', '')
+PLATFORM_API_TIMEOUT_SECONDS = float(get_env('PLATFORM_API_TIMEOUT_SECONDS', '5'))
+PLATFORM_INTROSPECTION_INTERVAL_SECONDS = int(get_env('PLATFORM_INTROSPECTION_INTERVAL_SECONDS', '60'))
+if globals().get('FORCE_SCRIPT_NAME'):
+    SESSION_COOKIE_PATH = FORCE_SCRIPT_NAME.rstrip('/') + '/'
+    CSRF_COOKIE_PATH = SESSION_COOKIE_PATH
 MIN_GROUND_TRUTH = 10
 DATA_UNDEFINED_NAME = '$undefined$'
 LICENSE = {}

@@ -19,13 +19,23 @@ from rest_framework.authtoken.models import Token
 from users import forms
 from users.functions import login, proceed_registration
 from users.models import User
+from platform_integration.access import enabled as platform_integration_enabled, get_identity
+from platform_integration.client import PlatformClientError, revoke_session
 
 logger = logging.getLogger()
 
 
 @login_required
 def logout(request):
+    identity = get_identity(request.user)
+    if identity and identity.platform_session_id:
+        try:
+            revoke_session(identity.platform_session_id)
+        except PlatformClientError:
+            logger.warning('Unable to revoke ISP platform session during logout', exc_info=True)
     auth.logout(request)
+    if platform_integration_enabled():
+        return redirect(settings.PLATFORM_WEB_URL or '/')
     if settings.HOSTNAME:
         redirect_url = settings.HOSTNAME
         if not redirect_url.endswith('/'):
@@ -38,6 +48,8 @@ def logout(request):
 def user_signup(request):
     """Sign up page"""
     user = request.user
+    if platform_integration_enabled():
+        return redirect(settings.PLATFORM_WEB_URL or '/')
     next_page = request.GET.get('next')
     token = request.GET.get('token')
 
@@ -165,6 +177,8 @@ def casdoor_callback(request):
 @enforce_csrf_checks
 def user_login(request):
     """Login page"""
+    if platform_integration_enabled():
+        return redirect(settings.PLATFORM_WEB_URL or '/')
     user = request.user
     next_page = request.GET.get('next')
 

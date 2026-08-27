@@ -17,6 +17,8 @@ from rest_framework.views import APIView
 from users.functions import check_avatar
 from users.models import User
 from users.serializers import UserSerializer, UserSerializerUpdate
+from platform_integration.access import is_sso_user
+from rest_framework.exceptions import PermissionDenied
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +102,8 @@ class UserAPI(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'head', 'patch', 'delete']
 
     def get_queryset(self):
+        if is_sso_user(self.request.user):
+            return User.objects.filter(pk=self.request.user.pk)
         return User.objects.filter(organizations=self.request.user.active_organization)
 
     @swagger_auto_schema(auto_schema=None, methods=['delete', 'post'])
@@ -191,6 +195,8 @@ class UserResetTokenAPI(APIView):
 
     def post(self, request, *args, **kwargs):
         user = request.user
+        if is_sso_user(user):
+            raise PermissionDenied('SSO 账号不能创建 Label Studio API Token。')
         token = user.reset_token()
         logger.debug(f'New token for user {user.pk} is {token.key}')
         return Response({'token': token.key}, status=201)
@@ -217,6 +223,8 @@ class UserGetTokenAPI(APIView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
+        if is_sso_user(user):
+            raise PermissionDenied('SSO 账号不能读取 Label Studio API Token。')
         token = Token.objects.get(user=user)
         return Response({'token': str(token)}, status=200)
 

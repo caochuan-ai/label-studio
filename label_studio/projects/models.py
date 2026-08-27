@@ -59,7 +59,9 @@ logger = logging.getLogger(__name__)
 
 class ProjectManager(models.Manager):
     def for_user(self, user):
-        return self.filter(organization=user.active_organization)
+        from platform_integration.access import authorized_projects
+
+        return authorized_projects(user, self.get_queryset())
 
     COUNTER_FIELDS = [
         'task_number',

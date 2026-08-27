@@ -18,6 +18,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from projects.models import Project
+from platform_integration.access import assert_platform_managed_mutation, authorized_projects, is_sso_user
 from projects.serializers import ProjectSerializer
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
@@ -127,7 +128,7 @@ class ViewAPI(viewsets.ModelViewSet):
         return Response(status=204)
 
     def get_queryset(self):
-        return View.objects.filter(project__organization=self.request.user.active_organization).order_by('id')
+        return View.objects.filter(project__in=authorized_projects(self.request.user), user=self.request.user).order_by('id')
 
 
 class TaskPagination(PageNumberPagination):
@@ -214,10 +215,12 @@ class TaskListAPI(generics.ListCreateAPIView):
         view_pk = int_from_request(request.GET, 'view', 0) or int_from_request(request.data, 'view', 0)
         project_pk = int_from_request(request.GET, 'project', 0) or int_from_request(request.data, 'project', 0)
         if project_pk:
-            project = generics.get_object_or_404(Project, pk=project_pk)
+            project = generics.get_object_or_404(authorized_projects(request.user), pk=project_pk)
             self.check_object_permissions(request, project)
         elif view_pk:
-            view = generics.get_object_or_404(View, pk=view_pk)
+            view = generics.get_object_or_404(
+                View.objects.filter(project__in=authorized_projects(request.user), user=request.user), pk=view_pk
+            )
             project = view.project
             self.check_object_permissions(request, project)
         else:
@@ -294,7 +297,7 @@ class ProjectColumnsAPI(APIView):
 
     def get(self, request):
         pk = int_from_request(request.GET, 'project', 1)
-        project = generics.get_object_or_404(Project, pk=pk)
+        project = generics.get_object_or_404(authorized_projects(request.user), pk=pk)
         self.check_object_permissions(request, project)
         GET_ALL_COLUMNS = load_func(settings.DATA_MANAGER_GET_ALL_COLUMNS)
         data = GET_ALL_COLUMNS(project, request.user)
@@ -314,15 +317,15 @@ class ProjectStateAPI(APIView):
 
     def get(self, request):
         pk = int_from_request(request.GET, 'project', 1)  # replace 1 to None, it's for debug only
-        project = generics.get_object_or_404(Project, pk=pk)
+        project = generics.get_object_or_404(authorized_projects(request.user), pk=pk)
         self.check_object_permissions(request, project)
         data = ProjectSerializer(project).data
 
         data.update(
             {
-                'can_delete_tasks': True,
+                'can_delete_tasks': not is_sso_user(request.user),
                 'can_manage_annotations': True,
-                'can_manage_tasks': True,
+                'can_manage_tasks': not is_sso_user(request.user),
                 'source_syncing': False,
                 'target_syncing': False,
                 'task_count': project.tasks.count(),
@@ -357,13 +360,14 @@ class ProjectActionsAPI(APIView):
 
     def get(self, request):
         pk = int_from_request(request.GET, 'project', 1)  # replace 1 to None, it's for debug only
-        project = generics.get_object_or_404(Project, pk=pk)
+        project = generics.get_object_or_404(authorized_projects(request.user), pk=pk)
         self.check_object_permissions(request, project)
         return Response(get_all_actions(request.user, project))
 
     def post(self, request):
+        assert_platform_managed_mutation(request.user)
         pk = int_from_request(request.GET, 'project', None)
-        project = generics.get_object_or_404(Project, pk=pk)
+        project = generics.get_object_or_404(authorized_projects(request.user), pk=pk)
         self.check_object_permissions(request, project)
 
         queryset = get_prepared_queryset(request, project)

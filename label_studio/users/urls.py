@@ -16,8 +16,6 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     # Authentication
     path('user/login/', views.user_login, name='user-login'),
-    path('user/casdoor/', views.casdoor_login, name='casdoor-login'),
-    path('user/casdoor_callback/', views.casdoor_callback, name='casdoor-callback'),
     # path('user/signup/', views.user_signup, name='user-signup'),
     path('user/account/', views.user_account, name='user-account'),
     url(r'^logout/?$', views.logout, name='logout'),
@@ -26,6 +24,12 @@ urlpatterns = [
     path('api/current-user/token', api.UserGetTokenAPI.as_view(), name='current-user-token'),
     path('api/current-user/whoami', api.UserWhoAmIAPI.as_view(), name='current-user-whoami'),
 ]
+
+if not settings.PLATFORM_INTEGRATION_ENABLED:
+    urlpatterns += [
+        path('user/casdoor/', views.casdoor_login, name='casdoor-login'),
+        path('user/casdoor_callback/', views.casdoor_callback, name='casdoor-callback'),
+    ]
 
 # When CLOUD_FILE_STORAGE_ENABLED is set, avatars are uploaded to cloud storage with a different URL pattern.
 # This local serving pattern is unnecessary for environments with cloud storage enabled.

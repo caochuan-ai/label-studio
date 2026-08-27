@@ -41,7 +41,7 @@ RUN set -eux \
      --option APT::AutoRemove::SuggestsImportant=false && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN --mount=type=cache,target=$PIP_CACHE_DIR,uid=1001,gid=0 \
-    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop
+    pip3 install --upgrade pip setuptools && pip3 install "poetry==1.6.1" uwsgi uwsgitop
 
 # incapsulate nginx install & configure to a single layer
 RUN set -eux; \
@@ -68,7 +68,9 @@ COPY --chown=1001:0 label_studio/__init__.py ./label_studio/__init__.py
 # the system python. This includes label-studio itself. For caching purposes,
 # do this before copying the rest of the source code.
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR \
-    poetry check --lock && POETRY_VIRTUALENVS_CREATE=false poetry install
+    poetry check --lock && \
+    POETRY_VIRTUALENVS_CREATE=false POETRY_INSTALLER_MAX_WORKERS=1 poetry install && \
+    python3 -m pip install --no-cache-dir --no-deps "opencv-python-headless==4.10.0.84"
 
 COPY --chown=1001:0 . .
 

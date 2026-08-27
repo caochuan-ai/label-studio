@@ -15,18 +15,26 @@ from rest_framework import generics, status
 from rest_framework.exceptions import NotFound, PermissionDenied, ValidationError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
+from platform_integration.access import enabled as platform_integration_enabled, is_sso_user
 
 logger = logging.getLogger(__name__)
 
 
-class ImportStorageListAPI(generics.ListCreateAPIView):
+class PlatformStorageServiceOnlyMixin:
+    def initial(self, request, *args, **kwargs):
+        if platform_integration_enabled() and is_sso_user(request.user):
+            raise PermissionDenied('存储配置只能在 ISP 平台中管理。')
+        return super().initial(request, *args, **kwargs)
+
+
+class ImportStorageListAPI(PlatformStorageServiceOnlyMixin, generics.ListCreateAPIView):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
     serializer_class = ImportStorageSerializer
 
     def get_queryset(self):
         project_pk = self.request.query_params.get('project')
-        project = generics.get_object_or_404(Project, pk=project_pk)
+        project = generics.get_object_or_404(Project.objects.for_user(self.request.user), pk=project_pk)
         self.check_object_permissions(self.request, project)
         StorageClass = self.serializer_class.Meta.model
         storages = StorageClass.objects.filter(project_id=project.id)
@@ -36,7 +44,7 @@ class ImportStorageListAPI(generics.ListCreateAPIView):
         return storages
 
 
-class ImportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+class ImportStorageDetailAPI(PlatformStorageServiceOnlyMixin, generics.RetrieveUpdateDestroyAPIView):
     """RUD storage by pk specified in URL"""
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -48,14 +56,14 @@ class ImportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
         return super(ImportStorageDetailAPI, self).put(request, *args, **kwargs)
 
 
-class ExportStorageListAPI(generics.ListCreateAPIView):
+class ExportStorageListAPI(PlatformStorageServiceOnlyMixin, generics.ListCreateAPIView):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
     serializer_class = ExportStorageSerializer
 
     def get_queryset(self):
         project_pk = self.request.query_params.get('project')
-        project = generics.get_object_or_404(Project, pk=project_pk)
+        project = generics.get_object_or_404(Project.objects.for_user(self.request.user), pk=project_pk)
         self.check_object_permissions(self.request, project)
         StorageClass = self.serializer_class.Meta.model
         storages = StorageClass.objects.filter(project_id=project.id)
@@ -78,7 +86,7 @@ class ExportStorageListAPI(generics.ListCreateAPIView):
             storage.sync()
 
 
-class ExportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+class ExportStorageDetailAPI(PlatformStorageServiceOnlyMixin, generics.RetrieveUpdateDestroyAPIView):
     """RUD storage by pk specified in URL"""
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -90,7 +98,7 @@ class ExportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
         return super(ExportStorageDetailAPI, self).put(request, *args, **kwargs)
 
 
-class ImportStorageSyncAPI(generics.GenericAPIView):
+class ImportStorageSyncAPI(PlatformStorageServiceOnlyMixin, generics.GenericAPIView):
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
@@ -112,7 +120,7 @@ class ImportStorageSyncAPI(generics.GenericAPIView):
         return Response(self.serializer_class(storage).data)
 
 
-class ExportStorageSyncAPI(generics.GenericAPIView):
+class ExportStorageSyncAPI(PlatformStorageServiceOnlyMixin, generics.GenericAPIView):
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
@@ -134,7 +142,7 @@ class ExportStorageSyncAPI(generics.GenericAPIView):
         return Response(self.serializer_class(storage).data)
 
 
-class StorageValidateAPI(generics.CreateAPIView):
+class StorageValidateAPI(PlatformStorageServiceOnlyMixin, generics.CreateAPIView):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
 
@@ -164,7 +172,7 @@ class StorageValidateAPI(generics.CreateAPIView):
         return Response()
 
 
-class StorageFormLayoutAPI(generics.RetrieveAPIView):
+class StorageFormLayoutAPI(PlatformStorageServiceOnlyMixin, generics.RetrieveAPIView):
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change

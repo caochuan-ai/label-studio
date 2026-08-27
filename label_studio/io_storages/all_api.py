@@ -11,6 +11,8 @@ from rest_framework import generics
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import PermissionDenied
+from platform_integration.access import enabled as platform_integration_enabled, is_sso_user
 
 from label_studio.core.utils.common import load_func
 
@@ -41,6 +43,13 @@ def _get_common_storage_list():
 _common_storage_list = _get_common_storage_list()
 
 
+class PlatformStorageServiceOnlyMixin:
+    def initial(self, request, *args, **kwargs):
+        if platform_integration_enabled() and is_sso_user(request.user):
+            raise PermissionDenied('存储配置只能在 ISP 平台中管理。')
+        return super().initial(request, *args, **kwargs)
+
+
 @method_decorator(
     name='get',
     decorator=swagger_auto_schema(
@@ -50,7 +59,7 @@ _common_storage_list = _get_common_storage_list()
         responses={'200': "A list of import storages types {'name': name, 'title': title}."},
     ),
 )
-class AllImportStorageTypesAPI(APIView):
+class AllImportStorageTypesAPI(PlatformStorageServiceOnlyMixin, APIView):
     permission_required = all_permissions.projects_change
 
     def get(self, request, **kwargs):
@@ -66,7 +75,7 @@ class AllImportStorageTypesAPI(APIView):
         responses={'200': "A list of export storages types {'name': name, 'title': title}."},
     ),
 )
-class AllExportStorageTypesAPI(APIView):
+class AllExportStorageTypesAPI(PlatformStorageServiceOnlyMixin, APIView):
     permission_required = all_permissions.projects_change
 
     def get(self, request, **kwargs):
@@ -90,7 +99,7 @@ class AllExportStorageTypesAPI(APIView):
         responses={200: 'List of ImportStorageSerializer'},
     ),
 )
-class AllImportStorageListAPI(generics.ListAPIView):
+class AllImportStorageListAPI(PlatformStorageServiceOnlyMixin, generics.ListAPIView):
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change
@@ -131,7 +140,7 @@ class AllImportStorageListAPI(generics.ListAPIView):
         responses={200: 'List of ExportStorageSerializer'},
     ),
 )
-class AllExportStorageListAPI(generics.ListAPIView):
+class AllExportStorageListAPI(PlatformStorageServiceOnlyMixin, generics.ListAPIView):
 
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = all_permissions.projects_change

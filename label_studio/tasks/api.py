@@ -38,6 +38,11 @@ from tasks.serializers import (
     TaskSimpleSerializer,
 )
 from users.models import User
+from platform_integration.access import (
+    assert_platform_managed_mutation,
+    authorized_projects,
+    is_sso_user,
+)
 from webhooks.models import WebhookAction
 from webhooks.utils import (
     api_webhook,
@@ -91,18 +96,19 @@ class TaskListAPI(DMTaskListAPI):
 
     def filter_queryset(self, queryset):
         queryset = super().filter_queryset(queryset)
-        return queryset.filter(project__organization=self.request.user.active_organization)
+        return queryset.filter(project__in=authorized_projects(self.request.user))
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
         project_id = self.request.data.get('project')
         if project_id:
-            context['project'] = generics.get_object_or_404(Project, pk=project_id)
+            context['project'] = generics.get_object_or_404(authorized_projects(self.request.user), pk=project_id)
         return context
 
     def perform_create(self, serializer):
+        assert_platform_managed_mutation(self.request.user)
         project_id = self.request.data.get('project')
-        project = generics.get_object_or_404(Project, pk=project_id)
+        project = generics.get_object_or_404(authorized_projects(self.request.user), pk=project_id)
         instance = serializer.save(project=project)
         emit_webhooks_for_instance(
             self.request.user.active_organization, project, WebhookAction.TASKS_CREATED, [instance]
@@ -204,7 +210,9 @@ class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         task_id = self.request.parser_context['kwargs'].get('pk')
-        task = generics.get_object_or_404(Task, pk=task_id)
+        task = generics.get_object_or_404(
+            Task.objects.filter(project__in=authorized_projects(self.request.user)), pk=task_id
+        )
         review = bool_from_request(self.request.GET, 'review', False)
         selected = {'all': False, 'included': [self.kwargs.get('pk')]}
         if review:
@@ -218,7 +226,7 @@ class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
             Task.prepared.get_queryset(
                 prepare_params=PrepareParams(project=project, selectedItems=selected, request=self.request), **kwargs
             )
-        )
+        ).filter(project__in=authorized_projects(self.request.user))
 
     def get_serializer_class(self):
         # GET => task + annotations + predictions + drafts
@@ -245,14 +253,17 @@ class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
         return Response(result)
 
     def patch(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         return super(TaskAPI, self).patch(request, *args, **kwargs)
 
     @api_webhook_for_delete(WebhookAction.TASKS_DELETED)
     def delete(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         return super(TaskAPI, self).delete(request, *args, **kwargs)
 
     @swagger_auto_schema(auto_schema=None)
     def put(self, request, *args, **kwargs):
+        assert_platform_managed_mutation(request.user)
         return super(TaskAPI, self).put(request, *args, **kwargs)
 
 
@@ -339,7 +350,11 @@ class AnnotationAPI(generics.RetrieveUpdateDestroyAPIView):
     )
 
     serializer_class = AnnotationSerializer
-    queryset = Annotation.objects.all()
+    def get_queryset(self):
+        queryset = Annotation.objects.filter(project__in=authorized_projects(self.request.user))
+        if self.request.method not in {'GET', 'HEAD', 'OPTIONS'} and is_sso_user(self.request.user):
+            queryset = queryset.filter(completed_by=self.request.user)
+        return queryset
 
     def perform_destroy(self, annotation):
         annotation.delete()
@@ -449,6 +464,10 @@ class AnnotationsListAPI(GetParentObjectMixin, generics.ListCreateAPIView):
 
     serializer_class = AnnotationSerializer
 
+    def get_parent_object(self):
+        self.parent_queryset = Task.objects.for_user(self.request.user)
+        return super().get_parent_object()
+
     def get(self, request, *args, **kwargs):
         return super(AnnotationsListAPI, self).get(request, *args, **kwargs)
 
@@ -550,7 +569,11 @@ class AnnotationDraftListAPI(generics.ListCreateAPIView):
 
     def filter_queryset(self, queryset):
         task_id = self.kwargs['pk']
-        return queryset.filter(task_id=task_id)
+        return queryset.filter(
+            task_id=task_id,
+            task__project__in=authorized_projects(self.request.user),
+            user=self.request.user,
+        )
 
     def perform_create(self, serializer):
         task_id = self.kwargs['pk']
@@ -564,7 +587,11 @@ class AnnotationDraftAPI(generics.RetrieveUpdateDestroyAPIView):
 
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     serializer_class = AnnotationDraftSerializer
-    queryset = AnnotationDraft.objects.all()
+    def get_queryset(self):
+        return AnnotationDraft.objects.filter(
+            task__project__in=authorized_projects(self.request.user),
+            user=self.request.user,
+        )
     permission_required = ViewClassPermission(
         GET=all_permissions.annotations_view,
         PUT=all_permissions.annotations_change,
@@ -646,9 +673,22 @@ class PredictionAPI(viewsets.ModelViewSet):
             'fflag_perf_back_lsdv_4695_update_prediction_query_to_use_direct_project_relation',
             user='auto',
         ):
-            return Prediction.objects.filter(project__organization=self.request.user.active_organization)
+            queryset = Prediction.objects.filter(project__in=authorized_projects(self.request.user))
         else:
-            return Prediction.objects.filter(task__project__organization=self.request.user.active_organization)
+            queryset = Prediction.objects.filter(task__project__in=authorized_projects(self.request.user))
+        return queryset
+
+    def perform_create(self, serializer):
+        assert_platform_managed_mutation(self.request.user)
+        return super().perform_create(serializer)
+
+    def perform_update(self, serializer):
+        assert_platform_managed_mutation(self.request.user)
+        return super().perform_update(serializer)
+
+    def perform_destroy(self, instance):
+        assert_platform_managed_mutation(self.request.user)
+        return super().perform_destroy(instance)
 
 
 @method_decorator(name='get', decorator=swagger_auto_schema(auto_schema=None))
@@ -662,7 +702,11 @@ class PredictionAPI(viewsets.ModelViewSet):
 )
 class AnnotationConvertAPI(generics.RetrieveAPIView):
     permission_required = ViewClassPermission(POST=all_permissions.annotations_change)
-    queryset = Annotation.objects.all()
+    def get_queryset(self):
+        return Annotation.objects.filter(
+            project__in=authorized_projects(self.request.user),
+            completed_by=self.request.user,
+        )
 
     def process_intermediate_state(self, annotation, draft):
         pass

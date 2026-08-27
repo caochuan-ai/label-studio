@@ -25,7 +25,7 @@ from drf_yasg.utils import swagger_auto_schema
 from projects.models import Project, ProjectImport, ProjectReimport
 from ranged_fileresponse import RangedFileResponse
 from rest_framework import generics, status
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -46,8 +46,16 @@ from .functions import (
 from .models import FileUpload
 from .serializers import FileUploadSerializer, ImportApiSerializer, PredictionSerializer
 from .uploader import create_file_uploads, load_tasks
+from platform_integration.access import enabled as platform_integration_enabled, is_sso_user
 
 logger = logging.getLogger(__name__)
+
+
+class PlatformImportServiceOnlyMixin:
+    def initial(self, request, *args, **kwargs):
+        if platform_integration_enabled() and is_sso_user(request.user):
+            raise PermissionDenied('任务导入只能在 ISP 平台中管理。')
+        return super().initial(request, *args, **kwargs)
 
 
 task_create_response_scheme = {
@@ -173,7 +181,7 @@ task_create_response_scheme = {
     ),
 )
 # Import
-class ImportAPI(generics.CreateAPIView):
+class ImportAPI(PlatformImportServiceOnlyMixin, generics.CreateAPIView):
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     serializer_class = ImportApiSerializer
@@ -328,7 +336,7 @@ class ImportAPI(generics.CreateAPIView):
 
 
 # Import
-class ImportPredictionsAPI(generics.CreateAPIView):
+class ImportPredictionsAPI(PlatformImportServiceOnlyMixin, generics.CreateAPIView):
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     serializer_class = PredictionSerializer
@@ -528,7 +536,7 @@ class ReImportAPI(ImportAPI):
         """,
     ),
 )
-class FileUploadListAPI(generics.mixins.ListModelMixin, generics.mixins.DestroyModelMixin, generics.GenericAPIView):
+class FileUploadListAPI(PlatformImportServiceOnlyMixin, generics.mixins.ListModelMixin, generics.mixins.DestroyModelMixin, generics.GenericAPIView):
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     serializer_class = FileUploadSerializer
     permission_required = ViewClassPermission(
@@ -589,7 +597,7 @@ class FileUploadListAPI(generics.mixins.ListModelMixin, generics.mixins.DestroyM
         operation_description='Delete a specific uploaded file.',
     ),
 )
-class FileUploadAPI(generics.RetrieveUpdateDestroyAPIView):
+class FileUploadAPI(PlatformImportServiceOnlyMixin, generics.RetrieveUpdateDestroyAPIView):
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     permission_classes = (IsAuthenticated,)
     serializer_class = FileUploadSerializer

@@ -40,6 +40,18 @@ class AllPermissions(BaseModel):
 all_permissions = AllPermissions()
 
 
+@rules.predicate
+def authenticated_and_platform_scoped(user, obj=None):
+    if not getattr(user, 'is_authenticated', False):
+        return False
+    from platform_integration.access import enabled, is_service_user, project_for_object, can_access_project
+
+    if not enabled() or is_service_user(user) or obj is None:
+        return True
+    project = project_for_object(obj)
+    return bool(project and can_access_project(user, project))
+
+
 class ViewClassPermission(BaseModel):
     GET: Optional[str] = None
     PATCH: Optional[str] = None
@@ -58,4 +70,4 @@ def make_perm(name, pred, overwrite=False):
 
 
 for _, permission_name in all_permissions:
-    make_perm(permission_name, rules.is_authenticated)
+    make_perm(permission_name, authenticated_and_platform_scoped)
