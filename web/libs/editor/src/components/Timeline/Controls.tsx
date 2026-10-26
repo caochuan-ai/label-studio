@@ -395,14 +395,14 @@ export const Controls: FC<TimelineControlsProps> = memo(({
       let totalRegionsAdded = 0;
 
       // 删除已有label
-      const toRemoveRegions: string[] = []
-      videoItem.regs.forEach(region => {
-        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
-          // label开始于当前帧之后，需要删除防止与sam结果冲突
-          toRemoveRegions.push(region.cleanId)
-        }
-      })
-      toRemoveRegions.forEach(id => videoItem.deleteRegion(id))
+      // const toRemoveRegions: string[] = []
+      // videoItem.regs.forEach(region => {
+      //   if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+      //     // label开始于当前帧之后，需要删除防止与sam结果冲突
+      //     toRemoveRegions.push(region.cleanId)
+      //   }
+      // })
+      // toRemoveRegions.forEach(id => videoItem.deleteRegion(id))
 
       // 循环处理每一帧
       for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
