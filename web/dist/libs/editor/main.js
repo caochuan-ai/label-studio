@@ -31580,7 +31580,7 @@ function _wrapNativeSuper(Class) {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}) && "development" !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING === 'undefined') {
       if (errors.every(function (e) {
@@ -118982,7 +118982,7 @@ function warnError(msg) {
  */
 function isTypeCheckingEnabled() {
     return (devMode() ||
-        (typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).ENABLE_TYPE_CHECK === "true"));
+        (typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}) && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}).ENABLE_TYPE_CHECK === "true"));
 }
 /**
  * @internal
@@ -122594,7 +122594,7 @@ function createDecoratorForEnhancer(enhancer) {
     });
     var res = 
     // Extra process checks, as this happens during module initialization
-    typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}) && "development" !== "production"
+    typeof process !== "undefined" && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}) && "development" !== "production"
         ? function observableDecorator() {
             // This wrapper function is just to detect illegal decorator invocations, deprecate in a next version
             // and simply return the created prop decorator
@@ -126811,7 +126811,7 @@ catch (e) {
     function testCodeMinification() { }
     if (testCodeMinification.name !== "testCodeMinification" &&
         "development" !== "production" &&
-        typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).IGNORE_MOBX_MINIFY_WARNING !== "true") {
+        typeof process !== 'undefined' && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}).IGNORE_MOBX_MINIFY_WARNING !== "true") {
         // trick so it doesn't get replaced
         var varName = ["process", "env", "NODE_ENV"].join(".");
         console.warn("[mobx] you are running a minified build, but '" + varName + "' was not set to 'production' in your bundler. This results in an unnecessarily large and slow bundle");
@@ -130602,7 +130602,7 @@ postcss.plugin = function plugin(name, initializer) {
           ': postcss.plugin was deprecated. Migration guide:\n' +
           'https://evilmartians.com/chronicles/postcss-8-plugin-migration'
       )
-      if (({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).LANG && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).LANG.startsWith('cn')) {
+      if (({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}).LANG && ({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}).LANG.startsWith('cn')) {
         /* c8 ignore next 7 */
         // eslint-disable-next-line no-console
         console.warn(
@@ -269160,14 +269160,14 @@ const Controls = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.memo)(({
       let totalRegionsAdded = 0;
 
       // 删除已有label
-      const toRemoveRegions = [];
-      videoItem.regs.forEach(region => {
-        if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
-          // label开始于当前帧之后，需要删除防止与sam结果冲突
-          toRemoveRegions.push(region.cleanId);
-        }
-      });
-      toRemoveRegions.forEach(id => videoItem.deleteRegion(id));
+      // const toRemoveRegions: string[] = []
+      // videoItem.regs.forEach(region => {
+      //   if (region.sequence.length > 0 && region.sequence[0].frame > startFrame) {
+      //     // label开始于当前帧之后，需要删除防止与sam结果冲突
+      //     toRemoveRegions.push(region.cleanId)
+      //   }
+      // })
+      // toRemoveRegions.forEach(id => videoItem.deleteRegion(id))
 
       // 循环处理每一帧
       for (let frameIndex = 0; frameIndex < totalFrames; frameIndex++) {
@@ -295247,7 +295247,7 @@ __webpack_require__.r(__webpack_exports__);
 // Get environment settings
 const getEnvironment = async () => {
   /* istanbul ignore next */
-  if ( true && !({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/17934799189459297887","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"17934799189459297887"}).BUILD_NO_SERVER) {
+  if ( true && !({"NX_CLI_SET":"true","NX_LOAD_DOT_ENV_FILES":"true","NX_WORKSPACE_ROOT":"/Users/wu/PycharmProjects/label-studio-ccai/web","NX_TERMINAL_OUTPUT_PATH":"/Users/wu/PycharmProjects/label-studio-ccai/web/.nx/cache/terminalOutputs/2365533972599511266","NX_STREAM_OUTPUT":"true","NX_TASK_TARGET_PROJECT":"editor","NX_TASK_TARGET_TARGET":"build","NX_TASK_TARGET_CONFIGURATION":"development","NX_TASK_HASH":"2365533972599511266"}).BUILD_NO_SERVER) {
     return (await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, "./src/env/development.js"))).default;
   }
   return (await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, "./src/env/production.js"))).default;
