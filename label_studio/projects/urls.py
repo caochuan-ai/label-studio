@@ -20,6 +20,7 @@ _api_urlpatterns = [
     # CRUD
     path('', api.ProjectListAPI.as_view(), name='project-list'),
     path('<int:pk>/', api.ProjectAPI.as_view(), name='project-detail'),
+    path('<int:pk>/copy/defaults/', copy_queue.ProjectCopyDefaultsAPI.as_view(), name='project-copy-defaults'),
     path('<int:pk>/copy/jobs/', copy_queue.ProjectCopyJobsAPI.as_view(), name='project-copy-jobs'),
     path('<int:pk>/copy/jobs/<uuid:job_id>/', copy_queue.ProjectCopyJobsAPI.as_view(), name='project-copy-job'),
     path('<int:pk>/copy/source/', copy_api.ProjectCopySourceAPI.as_view(), name='project-copy-source'),

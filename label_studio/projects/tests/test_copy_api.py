@@ -6,7 +6,7 @@ from uuid import uuid4
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework.authtoken.models import Token
-from io_storages.s3.models import S3ImportStorageLink
+from io_storages.s3.models import S3ImportStorage, S3ImportStorageLink
 from organizations.models import Organization
 from projects.copy_api import snapshot
 from projects.models import Project, ProjectCopySession, ProjectCopyJob, ProjectCopyWorker
@@ -42,10 +42,10 @@ class ProjectCopyBridgeTests(TestCase):
         self.session_url = self.base + f'sessions/{self.job}/'
         self.task_url = self.session_url + f'tasks/{self.task.id}/'
         self.config = {'new_project_name': 'Copied', 'crop': {'x0': 10, 'y0': 10, 'x1': 90, 'y1': 90},
-                       'label_config': CONFIG, 'source_storage': {'bucket': 'destination', 'prefix': 'copy-' + self.job}}
+                       'label_config': CONFIG, 'source_storage': {'bucket': 'destination', 'prefix': 'copy-' + self.job, 'aws_access_key_id': 'fixture-ak', 'aws_secret_access_key': 'fixture-secret'}}
 
     def enqueue(self, config=None):
-        body = config or dict(self.config, source_storage={'bucket': 'destination', 'prefix': ''})
+        body = config or dict(self.config, source_storage=dict(self.config['source_storage'], prefix=''))
         body = {key: value for key, value in body.items() if key != 'label_config'}
         response = self.client.post(self.base + 'jobs/', dict(body, idempotency_key=self.job), format='json')
         self.assertEqual(response.status_code, 202, response.content)
@@ -168,6 +168,11 @@ class ProjectCopyBridgeTests(TestCase):
         history = self.client.get(self.base + 'jobs/').json()
         self.assertEqual(history['jobs'][0]['status'], 'fail')
         self.assertNotIn('private-secret', str(history))
+        for _ in range(3):
+            self.assertIsNone(self.claim(report=report)['job'])
+        failed_job = ProjectCopyJob.objects.get(pk=self.job)
+        self.assertEqual(failed_job.status, 'fail')
+        self.assertEqual(failed_job.attempt, 1)
         retry = self.client.post(self.base + f'jobs/{self.job}/', {}, format='json')
         self.assertEqual(retry.json()['status'], 'waiting')
         assignment = self.claim()['job']
@@ -245,3 +250,57 @@ class ProjectCopyBridgeTests(TestCase):
             puller.current_id = self.job
             puller.tick(BridgeClient())
             self.assertEqual(self.client.get(self.base + f'jobs/{self.job}/').json()['status'], 'success')
+
+    def test_defaults_first_storage_credentials_and_change_validation(self):
+        original = S3ImportStorage.objects.create(project=self.project, title='First S3', bucket='source', prefix='media',
+            aws_access_key_id='original-ak', aws_secret_access_key='original-secret', aws_session_token='temporary-token')
+        S3ImportStorage.objects.create(project=self.project, title='Second S3', bucket='second')
+        response = self.client.get(self.base + 'defaults/')
+        self.assertEqual(response.status_code, 200, response.content)
+        defaults = response.json()
+        self.assertEqual(defaults['storage_id'], original.pk)
+        self.assertEqual(defaults['source_storage']['aws_secret_access_key'], 'original-secret')
+        self.assertEqual(defaults['source_storage']['aws_session_token'], 'temporary-token')
+        self.assertIn('no-store', response['Cache-Control'])
+        body = dict(self.config, source_storage=defaults['source_storage'], idempotency_key=self.job)
+        for prefix in ['media', ' /media/ ']:
+            body['source_storage']['prefix'] = prefix
+            result = self.client.post(self.base + 'jobs/', body, format='json')
+            self.assertEqual(result.status_code, 400, result.content)
+        body['source_storage']['prefix'] = 'cropped'
+        result = self.client.post(self.base + 'jobs/', body, format='json')
+        self.assertEqual(result.status_code, 202, result.content)
+        self.assertNotIn('original-secret', result.content.decode())
+        self.assertNotIn('original-ak', result.content.decode())
+        self.assertNotIn('temporary-token', self.client.get(self.base + 'jobs/').content.decode())
+        self.assertEqual(self.claim()['job']['request']['source_storage']['aws_secret_access_key'], 'original-secret')
+
+    def test_missing_credentials_rejected_and_defaults_require_project_access(self):
+        body = dict(self.config, source_storage={'bucket': 'destination'}, idempotency_key=self.job)
+        response = self.client.post(self.base + 'jobs/', body, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(ProjectCopyJob.objects.exists())
+        outsider = User.objects.create_user(email='outsider@example.com')
+        outsider.active_organization = Organization.create_organization(created_by=outsider)
+        outsider.save()
+        self.client.force_authenticate(outsider)
+        self.assertIn(self.client.get(self.base + 'defaults/').status_code, [403, 404])
+
+    def test_history_reverse_order_operator_and_read_only_other_users(self):
+        self.enqueue()
+        older = ProjectCopyJob.objects.get(pk=self.job)
+        ProjectCopyJob.objects.filter(pk=older.pk).update(created_at=timezone.now() - timedelta(hours=1))
+        colleague = User.objects.create_user(email='colleague@example.com', first_name='Copy Operator')
+        colleague.active_organization = self.org
+        colleague.save()
+        self.org.add_user(colleague)
+        newer = ProjectCopyJob.objects.create(id=uuid4(), source_project=self.project, created_by=colleague,
+            configuration=older.configuration, status='fail')
+        result = self.client.get(self.base + 'jobs/').json()['jobs']
+        self.assertEqual([job['id'] for job in result], [str(newer.pk), str(older.pk)])
+        self.assertEqual(result[0]['operator']['name'], 'Copy Operator')
+        self.assertFalse(result[0]['can_retry'])
+        self.assertTrue(result[1]['can_retry'])
+        self.assertEqual(self.client.get(self.base + f'jobs/{newer.pk}/').status_code, 200)
+        self.assertEqual(self.client.post(self.base + f'jobs/{newer.pk}/', {}, format='json').status_code, 404)
+        self.assertNotIn('fixture-secret', str(result))

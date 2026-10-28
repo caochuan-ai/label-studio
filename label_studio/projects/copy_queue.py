@@ -1,10 +1,12 @@
 """User-authenticated queue and heartbeat, with no app-side worker configuration."""
 from uuid import uuid4
 
+from core.permissions import all_permissions
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.utils import timezone
 from projects.copy_api import CopySessionSerializer, CopyStorageSerializer, media_key, source_project
+from io_storages.s3.models import S3ImportStorage
 from projects.models import Project, ProjectCopyJob, ProjectCopySession, ProjectCopyWorker
 from rest_framework import serializers
 from rest_framework.authentication import TokenAuthentication
@@ -31,11 +33,57 @@ def worker_status(user):
             'server_time': now.timestamp(), 'timeout': HEARTBEAT_TIMEOUT, 'interval': HEARTBEAT_INTERVAL}
 
 
-def public_job(job):
+STORAGE_FIELDS = tuple(CopyStorageSerializer().fields)
+
+
+def first_source_storage(project):
+    storages = project.get_all_storage_objects(type_='import')
+    return min(storages, key=lambda item: (item.created_at, item.pk, item._meta.label)) if storages else None
+
+
+def storage_values(storage):
+    return {key: (getattr(storage, key, '') or '') for key in STORAGE_FIELDS}
+
+
+def normalized_storage(values):
+    values = {key: str(values.get(key) or '').strip() for key in STORAGE_FIELDS}
+    values['prefix'] = values['prefix'].strip('/')
+    values['s3_endpoint'] = values['s3_endpoint'].rstrip('/')
+    return values
+
+
+def require_storage_credentials(storage):
+    if not storage.get('aws_access_key_id') or not storage.get('aws_secret_access_key'):
+        raise ValidationError('新 Source Storage 必须包含 Access key ID 和 Secret access key；请在复制配置中补齐凭证。')
+
+
+class ProjectCopyDefaultsAPI(APIView):
+    permission_required = all_permissions.projects_change
+
+    def get(self, request, pk):
+        project = source_project(request, pk)
+        self.check_object_permissions(request, project)
+        storage = first_source_storage(project)
+        supported = isinstance(storage, S3ImportStorage)
+        # This endpoint intentionally includes credentials for the editable copy form only.
+        response = Response({
+            'source_storage': storage_values(storage) if supported else storage_values(None),
+            'storage_id': storage.pk if supported else None,
+            'storage_title': (storage.title or 'Source Storage') if supported else None,
+            'message': '' if supported else ('第一个 Source Storage 不是 S3，请手动填写目标 S3 配置。' if storage else '项目尚无 Source Storage，请填写目标 S3 配置。'),
+        })
+        response['Cache-Control'] = 'no-store, private'
+        return response
+
+
+def public_job(job, user=None):
     progress = job.progress
     target = ProjectCopySession.objects.filter(pk=job.pk).values_list('target_project_id', flat=True).first()
     last_seen = job.worker.last_seen if job.worker_id else None
     return {
+        'operator': {'id': job.created_by_id, 'name': job.created_by.get_full_name() or job.created_by.username or job.created_by.email},
+        'can_retry': bool(user and user.pk == job.created_by_id),
+        'source_storage': {key: job.configuration['source_storage'].get(key, '') for key in ('bucket', 'prefix', 'region_name')},
         'id': str(job.pk), 'project': job.source_project_id, 'status': job.status, 'attempt': job.attempt,
         'new_project_name': job.configuration['new_project_name'], 'crop': job.configuration['crop'],
         'created': job.created_at.timestamp(), 'updated': job.updated_at.timestamp(), 'target_project': target,
@@ -60,14 +108,14 @@ class CopyJobSerializer(serializers.Serializer):
 class ProjectCopyJobsAPI(APIView):
     def get(self, request, pk, job_id=None):
         source_project(request, pk)
-        jobs = ProjectCopyJob.objects.filter(created_by=request.user, source_project_id=pk).select_related('worker')
+        jobs = ProjectCopyJob.objects.filter(source_project_id=pk).select_related('worker', 'created_by')
         if job_id:
-            return Response(public_job(get_object_or_404(jobs, pk=job_id)))
+            return Response(public_job(get_object_or_404(jobs, pk=job_id), request.user))
         try:
             offset = max(0, int(request.query_params.get('offset', 0)))
         except (TypeError, ValueError):
             raise ValidationError('Invalid history offset')
-        return Response({'jobs': [public_job(job) for job in jobs.order_by('-created_at')[offset:offset + 50]],
+        return Response({'jobs': [public_job(job, request.user) for job in jobs.order_by('-created_at', '-id')[offset:offset + 50]],
                          'worker': worker_status(request.user)})
 
     @transaction.atomic
@@ -79,6 +127,7 @@ class ProjectCopyJobsAPI(APIView):
                                     source_project=source, created_by=request.user)
             if job.status != 'fail':
                 raise ValidationError('Only failed copy jobs can be retried')
+            require_storage_credentials(job.configuration['source_storage'])
             job.attempt += 1
             job.status = 'waiting'
             job.worker = None
@@ -95,8 +144,12 @@ class ProjectCopyJobsAPI(APIView):
                 if job.created_by_id != request.user.pk or job.source_project_id != pk or job.configuration != config:
                     raise ValidationError('Idempotency key already used with different configuration')
             else:
+                require_storage_credentials(config['source_storage'])
+                original = first_source_storage(source)
+                if isinstance(original, S3ImportStorage) and normalized_storage(config['source_storage']) == normalized_storage(storage_values(original)):
+                    raise ValidationError('请至少修改一项新 Source Storage 配置后再开始复制。')
                 job = ProjectCopyJob.objects.create(id=key, source_project=source, created_by=request.user, configuration=config)
-        return Response(public_job(job), status=202)
+        return Response(public_job(job, request.user), status=202)
 
 
 class ItemErrorSerializer(serializers.Serializer):

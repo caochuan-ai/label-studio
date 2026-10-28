@@ -80,7 +80,7 @@ def test_reject_unsupported_annotations(result):
 
 def request_data():
     return dict(project_id=1, new_project_name='Cropped', crop=CROP,
-                source_storage={'bucket': 'test', 'prefix': 'media', 'region_name': 'us-east-1'},
+                source_storage={'bucket': 'test', 'prefix': 'media', 'region_name': 'us-east-1', 'aws_access_key_id': 'fixture-ak', 'aws_secret_access_key': 'fixture-secret'},
                 idempotency_key=str(uuid4()))
 
 
@@ -252,7 +252,11 @@ def test_config_rejects_multiple_media():
         media_field('<View><Video value="$a"/><Image value="$b"/></View>')
 
 
-def test_pipeline_retry_after_lost_commit_response_is_idempotent(tmp_path, monkeypatch):
+def test_pipeline_retry_after_lost_commit_response_is_idempotent(tmp_path, monkeypatch, caplog):
+    import logging
+    worker_logger = logging.getLogger('worker')
+    worker_logger.addHandler(caplog.handler)
+    caplog.set_level(logging.INFO, logger='worker')
     monkeypatch.setenv('LABEL_STUDIO_TOKEN', 'test-token')
     from worker.runner import Runner
     store = Store(tmp_path / 'state')
@@ -310,6 +314,16 @@ def test_pipeline_retry_after_lost_commit_response_is_idempotent(tmp_path, monke
     assert store.get(job_id)['status'] == 'completed'
     assert store.get(job_id)['completed'] == 2
     assert len(uploaded) == 2
+    worker_logger.removeHandler(caplog.handler)
+    messages = caplog.text
+    for event in ['job_start', 'storage_ready', 'project_ready', 'task_start', 'task_failed', 'task_finished', 'job_finished']:
+        assert f'event={event}' in messages
+    for phase in ['downloading', 'cropping', 'transforming', 'uploading', 'saving']:
+        assert f'phase={phase}' in messages
+    assert 'elapsed=' in messages
+    assert 'trace=' in messages
+    for secret in ['fixture-ak', 'fixture-secret', 'test-token', 'https://example.com/image.png']:
+        assert secret not in messages
 
 
 def test_heartbeat_continues_during_serial_copy_and_no_job_runs_before_claim(tmp_path):
@@ -345,3 +359,47 @@ def test_heartbeat_continues_during_serial_copy_and_no_job_runs_before_claim(tmp
     finally:
         release.set()
         runner.close()
+
+
+def test_missing_s3_credentials_have_actionable_errors_without_secrets():
+    from botocore.exceptions import NoCredentialsError, PartialCredentialsError
+    from worker.runner import safe_error
+    message = safe_error(NoCredentialsError())
+    assert message.startswith('NoCredentialsError:')
+    assert 'S3 credentials' in message
+    assert 'LABEL_STUDIO_TOKEN only authenticates Label Studio' in message
+    partial = safe_error(PartialCredentialsError(provider='private-provider', cred_var='private-value'))
+    assert partial.startswith('PartialCredentialsError:')
+    assert 'both AWS access key and secret key' in partial
+    assert 'private-provider' not in partial
+    assert 'private-value' not in partial
+
+
+def test_s3_failure_diagnostics_exclude_sdk_message_and_url():
+    from botocore.exceptions import ClientError
+    from worker.runner import safe_error
+    error = ClientError({'Error': {'Code': 'AccessDenied', 'Message': 'secret signed-url'},
+                         'ResponseMetadata': {'HTTPStatusCode': 403}}, 'HeadBucket')
+    message = safe_error(error)
+    assert 'AccessDenied' in message and '403' in message
+    assert 'secret' not in message and 'signed-url' not in message
+
+
+def test_worker_logger_emits_info_to_stdout_once(capsys):
+    import logging
+    from worker.logging_utils import configure_logging
+    logger = logging.getLogger('worker')
+    original = logger.handlers[:]
+    original_level, original_propagate = logger.level, logger.propagate
+    logger.handlers = []
+    try:
+        configure_logging()
+        configure_logging()
+        logging.getLogger('worker.runner').info('event=job_start job=fixture')
+        output = capsys.readouterr().out
+        assert output.count('event=job_start') == 1
+        assert 'INFO' in output
+    finally:
+        logger.handlers = original
+        logger.setLevel(original_level)
+        logger.propagate = original_propagate

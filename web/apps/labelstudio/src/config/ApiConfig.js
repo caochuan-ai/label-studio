@@ -17,6 +17,7 @@ export const API_CONFIG = {
     updateProject: "PATCH:/projects/:pk",
     createProject: "POST:/projects",
     deleteProject: "DELETE:/projects/:pk",
+    projectCopyDefaults: "/projects/:pk/copy/defaults",
     projectCopyJobs: "/projects/:pk/copy/jobs",
     projectCopyJob: "/projects/:pk/copy/jobs/:job_id",
     createProjectCopy: "POST:/projects/:pk/copy/jobs",

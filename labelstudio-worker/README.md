@@ -35,6 +35,12 @@
 
 ## 心跳、状态与恢复
 
+复制弹窗默认读取源项目最早创建的 Source Storage，包含 AK/SK、Session token、Region、Endpoint、Prefix 和 KMS 配置。第一个存储不是 S3 或没有存储时，需要手动填写目标 S3。只有具备项目配置权限的用户可读取默认凭证；响应禁止缓存，历史记录不返回密钥。
+
+**必须修改至少一项目标存储配置后才能开始复制**（例如修改 Prefix）。前端和后端都会校验；仅改项目名或裁剪区域、仅增加空格/首尾斜线不算修改。目标 AK/SK 必填，临时凭证还需要 Session token。worker 直接使用任务中的凭证，无需配置 `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`。新建的 Source Storage 也使用这组凭证。
+
+复制历史按创建时间倒序展示项目内有权限查看的记录，显示操作人、状态和进度。点击每行最后的“详情”查看进度、报错和新项目入口；仅提交者可以重试自己的失败任务。
+
 - 首次经过 API Token 验证的心跳自动注册 worker，无需手工配置 app。
 - 最近心跳距今不超过 30 秒时为 `Ready`，超过 30 秒为 `not Ready`。忙碌中的 worker 继续心跳，仍为 Ready。
 - app 默认使用 4 个 uWSGI 进程，因此注册/心跳使用 app 现有数据库共享，避免进程内存造成状态随机变化。不需要 Redis、额外端口或环境变量。
@@ -51,8 +57,9 @@
 | 接口 | 用途 |
 | --- | --- |
 | `POST /api/projects/copy/heartbeat/` | Token 鉴权、注册、心跳、上报进度并领取一个任务 |
+| `GET /api/projects/{project_id}/copy/defaults/` | 源项目第一个存储的默认配置（含凭证，需项目配置权限） |
 | `POST /api/projects/{project_id}/copy/jobs/` | 创建复制任务，返回 202 |
-| `GET /api/projects/{project_id}/copy/jobs/?offset=0` | 当前用户的项目历史（50 条/页）及 worker 状态 |
+| `GET /api/projects/{project_id}/copy/jobs/?offset=0` | 项目历史（时间倒序，50 条/页，含操作人）及当前用户的 worker 状态 |
 | `GET /api/projects/{project_id}/copy/jobs/{job_id}/` | 单个任务及文件阶段、失败详情 |
 | `POST /api/projects/{project_id}/copy/jobs/{job_id}/` | 重试 fail 任务 |
 | worker `GET /health` | 执行线程、心跳线程存活状态及最近连接是否 Ready |
@@ -81,7 +88,9 @@ Content-Type: application/json
   "source_storage": {
     "bucket": "destination-bucket",
     "prefix": "cropped-projects",
-    "region_name": "cn-northwest-1"
+    "region_name": "cn-northwest-1",
+    "aws_access_key_id": "<target-access-key>",
+    "aws_secret_access_key": "<target-secret-key>"
   }
 }
 ```
@@ -108,9 +117,51 @@ Content-Type: application/json
 - 仅处理无旋转的 `rectangle`、`rectanglelabels`、`videorectangle` 空间标注；保留附属 labels/choices 等非空间数据。旋转框、polygon、mask 等明确报错。框与裁剪区域求交，移除完全不可见的框和悬空关系，并更新百分比坐标和图像尺寸。
 - 视频轨迹在裁剪边界交叉处补充关键帧，保证逐帧插值等于裁剪后的原轨迹，避免只裁剪两端关键帧造成中间帧偏移。不会把长视频轨迹全部展开成逐帧 JSON。
 - 作业初始化时记录原项目的最大 task ID，之后新增的 task 不进入本次复制。每个 task 读取当时的标注数据，并在提交前检查版本；处理期间发生修改则该项失败，可重试。长任务运行期间尽量避免更改源项目标注配置。
-- 目标 S3 需要 List/Get/Put 权限；使用 KMS 时还需要对应密钥权限。密钥留空表示分别使用 worker 和 Label Studio 的 IAM 凭据链，二者都需要读目标 Bucket。浏览器播放仍需配置目标 Bucket 的 CORS。
+- 目标 S3 需要 List/Get/Put 权限；使用 KMS 时还需要对应密钥权限。目标凭证随任务传递给 worker，并保存到新项目的 Source Storage。浏览器播放仍需配置目标 Bucket 的 CORS。
+
+## 执行日志
+
+升级 worker 代码后，重新构建并创建容器（单纯 restart 不会更新镜像）：
+
+```sh
+cd labelstudio-worker
+docker compose -f compose.yml up -d --build labelstudio-worker
+docker compose -f compose.yml logs -f --tail=100 labelstudio-worker
+# 或使用现有容器名：
+sudo docker logs --tail=100 -f labelstudio-worker-labelstudio-worker-1
+```
+
+INFO 日志输出到标准输出，包含时间、worker/job/task ID、attempt、阶段和耗时：
+
+```text
+event=job_claimed job=<uuid> project=12 attempt=1 worker=<uuid>
+event=job_start job=<uuid> project=12 attempt=1
+event=storage_check job=<uuid>
+event=stage_start job=<uuid> task=123 phase=downloading
+event=stage_finished job=<uuid> task=123 phase=downloading elapsed=2.30s
+event=stage_start job=<uuid> task=123 phase=cropping
+event=stage_progress job=<uuid> task=123 phase=cropping progress=42% elapsed=10.20s
+event=stage_start job=<uuid> task=123 phase=transforming
+event=stage_start job=<uuid> task=123 phase=uploading
+event=stage_start job=<uuid> task=123 phase=saving
+event=task_finished job=<uuid> task=123 target_task=456 output_bytes=123456 elapsed=34.50s
+event=job_finished job=<uuid> status=success completed=1 failed=0 elapsed=36.00s
+```
+
+长步骤的进度日志最多每 10 秒输出一次，完成时补充 100%（下载/上传可用时）。成功心跳首次、恢复连接时及每 60 秒记录一次；实际心跳仍每 10 秒发送。连接失败输出 `heartbeat_failed`。文件失败输出 `task_failed`，整体初始化失败输出 `job_failed`，包含阶段、脱敏错误及代码位置；S3 错误包含服务错误码和 HTTP 状态。不会打印 AK/SK、Token、请求体或签名媒体 URL。
+
+`fail` 不会自动重新执行；需手动点击重试。心跳重传完成状态、页面轮询历史不等于重试。S3 SDK 在单次操作内仍有有限次数的网络重试。
 
 ## 资源参数
+
+### NoCredentialsError
+
+`LABEL_STUDIO_TOKEN` 只验证 Label Studio API 用户身份，不提供 AWS/S3 权限。如果复制任务出现 `NoCredentialsError`，说明 worker 没有取得目标 S3 凭证。可以：
+
+- 在复制弹窗的“新 Source Storage → 访问凭证与高级选项”中填写 Access key ID、Secret access key（临时凭证还需 Session token），然后重新提交复制。修改表单不会修改已经创建的历史任务。
+- 旧记录中缺少 AK/SK 的任务不能直接重试，请补齐配置后创建新任务。已经包含有效凭证的任务可以在排除故障后手动重试。
+
+这属于任务执行失败，应显示在 `fail` 任务详情中，不影响历史列表读取。
 
 | 环境变量 | 默认值 | 用途 |
 | --- | --- | --- |
