@@ -1,0 +1,589 @@
+.project-copy-modal
+  .modal__wrapper
+    padding 24px 0
+
+  .modal__content
+    border-radius 12px
+    overflow hidden
+    box-shadow 0 24px 80px rgba(19, 32, 53, 0.22)
+
+.project-copy
+  display flex
+  flex-direction column
+  max-height calc(100vh - 48px)
+  color #273449
+  font-size 14px
+  line-height 1.5
+  white-space normal
+
+  *, *:before, *:after
+    box-sizing border-box
+
+  h2, h3, p
+    margin 0
+
+  button, input
+    font-family inherit
+
+  button:focus-visible, summary:focus-visible, a:focus-visible
+    outline 2px solid #1890ff
+    outline-offset 3px
+
+  &__header
+    display flex
+    align-items center
+    gap 14px
+    padding 24px 28px 20px
+
+  &__icon, &__empty-icon
+    width 44px
+    height 44px
+    flex-shrink 0
+    border-radius 12px
+    display flex
+    align-items center
+    justify-content center
+    background #edf6ff
+    color #1681e5
+
+  &__title
+    min-width 0
+    flex 1
+
+    h2
+      font-size 21px
+      font-weight 600
+      line-height 1.4
+      letter-spacing 0.3px
+
+    p
+      color #8994a3
+      font-size 12px
+      margin-top 4px
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+
+    span
+      color #526176
+      margin-left 6px
+
+  &__close
+    width 32px
+    height 32px
+    padding 8px
+    display flex
+    align-items center
+    justify-content center
+    flex-shrink 0
+    border 0
+    background transparent
+    color #8692a3
+    cursor pointer
+
+    &:hover
+      background #f4f6f9
+
+  &__tabs
+    display flex
+    gap 28px
+    flex-shrink 0
+    padding 0 28px
+    border-bottom 1px solid #e9edf2
+
+    button
+      display flex
+      align-items center
+      gap 8px
+      padding 12px 0
+      border 0
+      border-bottom 2px solid transparent
+      background transparent
+      color #7a8799
+      font-size 14px
+      font-weight 500
+      cursor pointer
+
+      &[aria-pressed=true]
+        color #1681e5
+        border-bottom-color #1681e5
+
+      &:hover
+        color #1681e5
+
+    span
+      padding 0 6px
+      border-radius 5px
+      background #edf2f7
+      font-size 11px
+      color #65748a
+
+  &__body
+    flex 1
+    min-height 0
+    overflow-y auto
+    overscroll-behavior contain
+    padding 24px 28px
+    scrollbar-gutter stable
+
+  fieldset
+    min-width 0
+    border 0
+    margin 0
+    padding 0
+
+    &:disabled
+      opacity 0.65
+
+  &__section + &__section
+    margin-top 24px
+    padding-top 22px
+    border-top 1px solid #edf0f4
+
+  &__section-heading
+    display flex
+    align-items center
+    gap 10px
+    margin-bottom 16px
+
+    h3
+      font-size 14px
+      font-weight 600
+      color #273449
+
+  &__section-number
+    display inline-flex
+    width 24px
+    height 24px
+    align-items center
+    justify-content center
+    background #f0f3f8
+    color #8290a4
+    border-radius 6px
+    font-size 11px
+    font-weight 600
+    font-variant-numeric tabular-nums
+
+  &__tag
+    color #7b899c
+    font-size 11px
+    line-height 20px
+    padding 0 7px
+    border 1px solid #e5eaf0
+    border-radius 4px
+    margin-left auto
+
+  &__grid
+    display grid
+    grid-template-columns repeat(2, minmax(0, 1fr))
+    gap 16px 20px
+
+  &__field
+    display flex
+    flex-direction column
+    min-width 0
+    gap 7px
+    font-size 12px
+    color #526176
+
+    b
+      color #273449
+      font-weight 500
+      margin-left 3px
+
+    small
+      font-size 11px
+      line-height 1.5
+      color #8793a3
+
+    input
+      appearance none
+      width 100%
+      min-width 0
+      height 40px
+      padding 0 12px
+      color #273449
+      background #fff
+      border 1px solid #dce2e9
+      border-radius 6px
+      font-size 13px
+      line-height normal
+      transition border-color 120ms, box-shadow 120ms
+
+      &::placeholder
+        color #a0aaba
+        font-size 12px
+
+      &:hover
+        border-color #adbcd0
+
+      &:focus
+        outline none
+        border-color #1890ff
+        box-shadow 0 0 0 3px rgba(24, 144, 255, 0.10)
+
+  &__required
+    color #e68474
+
+  &__crop-panel
+    border 1px solid #e4ebf3
+    border-radius 8px
+    background #f7f9fc
+    padding 16px
+
+  &__coordinates
+    display grid
+    grid-template-columns repeat(4, minmax(0, 1fr))
+    gap 14px
+
+    input
+      font-variant-numeric tabular-nums
+
+  &__crop-summary
+    display flex
+    align-items center
+    justify-content space-between
+    gap 12px
+    padding-top 12px
+    color #7b899c
+    font-size 11px
+
+    strong
+      font-weight 500
+      color #617591
+      font-variant-numeric tabular-nums
+
+  &__hint
+    font-size 11px
+    color #8793a3
+    line-height 1.7
+    margin-top 10px !important
+
+  &__advanced
+    margin-top 16px
+    border 1px solid #e9edf2
+    border-radius 6px
+    font-size 12px
+
+    summary
+      padding 11px 12px
+      color #526176
+      cursor pointer
+      user-select none
+
+      span
+        float right
+        margin-left 8px
+        font-size 11px
+        color #96a1b1
+
+    &[open] summary
+      border-bottom 1px solid #edf0f4
+
+    .project-copy__grid
+      padding 16px
+
+  &__footer
+    flex-shrink 0
+    display flex
+    align-items center
+    justify-content space-between
+    gap 16px
+    padding 18px 28px
+    border-top 1px solid #e9edf2
+    background #fafbfd
+
+    p
+      display flex
+      align-items center
+      gap 7px
+      color #8793a3
+      font-size 11px
+
+    .button
+      height 36px
+      font-size 13px
+      min-width 72px
+
+  &__queue-dot
+    width 6px
+    height 6px
+    border-radius 50%
+    background #aab6c6
+    flex-shrink 0
+
+  &__actions
+    display flex
+    gap 10px
+    flex-shrink 0
+
+  &__history-panel
+    min-height 370px
+
+  &__history-heading, &__detail-heading, &__progress-label
+    display flex
+    align-items center
+    justify-content space-between
+    gap 16px
+
+    h3
+      font-size 14px
+      font-weight 600
+
+  &__history-heading
+    .project-copy__hint
+      margin-top 4px !important
+
+    .button
+      font-size 12px
+      white-space nowrap
+
+  &__source
+    display flex
+    align-items baseline
+    gap 12px
+    padding 10px 12px
+    margin-top 18px
+    border 1px solid #e9edf2
+    border-radius 6px
+    background #f7f9fc
+    font-size 12px
+    color #8793a3
+
+    code
+      min-width 0
+      color #617591
+      overflow-wrap anywhere
+      font-size 11px
+
+  &__empty
+    display flex
+    flex-direction column
+    align-items center
+    padding 52px 16px
+    text-align center
+
+    h3
+      margin-top 16px
+      font-size 14px
+      font-weight 500
+      color #617591
+
+    p
+      margin-top 8px
+      font-size 12px
+      color #96a1b1
+
+  &__empty-icon
+    background #f1f4f8
+    color #96a1b1
+
+  &__notice
+    padding 16px
+    margin-top 20px
+    border 1px solid #f0dfbd
+    background #fffbf3
+    border-radius 8px
+    color #876b35
+    font-size 12px
+    overflow-wrap anywhere
+
+    strong
+      font-weight 500
+
+    p
+      margin-top 6px
+      color #a08c65
+
+  &__error
+    margin-top 14px !important
+    padding 12px
+    border-radius 6px
+    background #fff3f2
+    color #b34e48
+    font-size 12px
+    white-space pre-wrap
+    overflow-wrap anywhere
+
+  &__history
+    list-style none
+    padding 0
+    margin 18px 0 0
+
+    button
+      display grid
+      grid-template-columns minmax(0, 1fr) auto
+      gap 8px 16px
+      width 100%
+      text-align left
+      cursor pointer
+      padding 14px 16px
+      margin-bottom 8px
+      background #fff
+      border 1px solid #e5eaf0
+      border-radius 8px
+      font inherit
+      color #526176
+
+      &:hover
+        border-color #bbd9f5
+
+      &[aria-pressed=true]
+        border-color #8cc4f5
+        background #f5faff
+
+    strong
+      font-size 13px
+      font-weight 500
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+
+    small
+      font-size 11px
+      color #96a1b1
+
+  &__status
+    align-self center
+    padding 2px 7px
+    border-radius 4px
+    font-size 11px
+    color #72839b
+    background #edf1f6
+
+    &[data-status=copying]
+      color #1681e5
+      background #e7f3ff
+
+    &[data-status=success]
+      color #388867
+      background #eaf6ef
+
+    &[data-status=fail]
+      color #b67930
+      background #fff2dd
+
+  &__count
+    color #8793a3
+    font-size 11px
+    text-align right
+
+  &__pagination
+    display flex
+    justify-content flex-end
+    gap 8px
+
+  &__detail
+    padding 18px
+    margin-top 20px
+    border 1px solid #e4ebf3
+    background #f7f9fc
+    border-radius 8px
+    overflow-wrap anywhere
+    font-size 12px
+
+    progress
+      display block
+      appearance none
+      width 100%
+      height 6px
+      border 0
+      border-radius 10px
+      overflow hidden
+      background #e4ebf3
+      accent-color #1890ff
+      margin-top 8px
+
+      &::-webkit-progress-bar
+        background #e4ebf3
+
+      &::-webkit-progress-value
+        background #1890ff
+        border-radius 10px
+
+      &::-moz-progress-bar
+        background #1890ff
+        border-radius 10px
+
+  &__progress-label
+    margin-top 20px
+    color #617591
+    font-size 12px
+
+  &__project-link
+    display inline-block
+    color #1681e5
+    margin-top 14px
+    margin-right 16px
+    text-decoration none
+    font-size 12px
+
+  @media (max-width 620px)
+    &__header, &__body
+      padding 20px
+
+    &__tabs
+      padding 0 20px
+
+    &__grid
+      grid-template-columns 1fr
+
+    &__coordinates
+      grid-template-columns repeat(2, minmax(0, 1fr))
+
+    &__footer
+      padding 16px 20px
+      flex-wrap wrap
+
+    &__actions
+      margin-left auto
+
+    &__advanced summary span
+      display none
+
+    &__history-heading
+      align-items flex-start
+      flex-wrap wrap
+
+.project-copy
+  &__worker
+    display flex
+    flex-direction column
+    gap 7px
+    font-size 12px
+    color #526176
+
+    small
+      font-size 11px
+      color #8793a3
+
+  &__worker-state
+    display flex
+    align-items center
+    gap 8px
+    color #9b7443
+    font-size 13px
+    font-weight 500
+
+    &[data-ready=true]
+      color #388867
+
+  &__worker &__worker-state
+    height 40px
+    padding 0 12px
+    border 1px solid #eee5d7
+    border-radius 6px
+    background #fffbf4
+
+    &[data-ready=true]
+      background #f1faf5
+      border-color #d9ecdf
+
+  &__worker-dot
+    width 7px
+    height 7px
+    border-radius 50%
+    background currentColor
+
+  &__source
+    flex-wrap wrap

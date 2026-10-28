@@ -929,8 +929,9 @@ def remove_data_columns(sender, instance, **kwargs):
 
 
 def _task_data_is_not_updated(update_fields):
-    if update_fields and list(update_fields) == ['is_labeled']:
-        return True
+    # Annotation/prediction saves update counters and timestamps, not task data.
+    # Recounting data columns here can reuse a cached summary and count a task twice.
+    return update_fields is not None and 'data' not in update_fields
 
 
 @receiver(pre_save, sender=Task)

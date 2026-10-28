@@ -2,7 +2,7 @@
 """
 from django.urls import include, path
 
-from . import api, views
+from . import api, copy_api, copy_queue, views
 
 app_name = 'projects'
 
@@ -16,9 +16,16 @@ _urlpatterns = [
 
 # reverse for projects:api:name
 _api_urlpatterns = [
+    path('copy/heartbeat/', copy_queue.ProjectCopyHeartbeatAPI.as_view(), name='project-copy-heartbeat'),
     # CRUD
     path('', api.ProjectListAPI.as_view(), name='project-list'),
     path('<int:pk>/', api.ProjectAPI.as_view(), name='project-detail'),
+    path('<int:pk>/copy/jobs/', copy_queue.ProjectCopyJobsAPI.as_view(), name='project-copy-jobs'),
+    path('<int:pk>/copy/jobs/<uuid:job_id>/', copy_queue.ProjectCopyJobsAPI.as_view(), name='project-copy-job'),
+    path('<int:pk>/copy/source/', copy_api.ProjectCopySourceAPI.as_view(), name='project-copy-source'),
+    path('<int:pk>/copy/sessions/<uuid:job_id>/', copy_api.ProjectCopySessionAPI.as_view(), name='project-copy-session'),
+    path('<int:pk>/copy/sessions/<uuid:job_id>/tasks/', copy_api.ProjectCopyTasksAPI.as_view(), name='project-copy-tasks'),
+    path('<int:pk>/copy/sessions/<uuid:job_id>/tasks/<int:task_id>/', copy_api.ProjectCopyTaskAPI.as_view(), name='project-copy-task'),
     # Get next task
     path('<int:pk>/next/', api.ProjectNextTaskAPI.as_view(), name='project-next'),
     # Label stream history

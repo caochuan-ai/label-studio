@@ -1,0 +1,20 @@
+services:
+  labelstudio-worker:
+    build: .
+    ports:
+      - "8079:8079"
+    environment:
+      LABEL_STUDIO_URL: ${LABEL_STUDIO_URL:?Set the Label Studio URL reachable from this container}
+      LABEL_STUDIO_TOKEN: ${LABEL_STUDIO_TOKEN:?Set the Label Studio user API token}
+      MAX_MEDIA_BYTES: ${MAX_MEDIA_BYTES:-21474836480}
+      MEDIA_TIMEOUT_SECONDS: ${MEDIA_TIMEOUT_SECONDS:-21600}
+      MIN_FREE_BYTES: ${MIN_FREE_BYTES:-1073741824}
+      MAX_FRAME_PIXELS: ${MAX_FRAME_PIXELS:-16777216}
+    volumes:
+      - copy-worker-data:/data
+    restart: unless-stopped
+    stop_grace_period: 90s
+    cpus: 1.0
+    mem_limit: 2g
+volumes:
+  copy-worker-data:

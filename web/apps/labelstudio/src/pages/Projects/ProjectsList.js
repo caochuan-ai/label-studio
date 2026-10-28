@@ -1,20 +1,24 @@
 import chr from 'chroma-js';
 import { format } from 'date-fns';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LsBulb, LsCheck, LsEllipsis, LsMinus } from '../../assets/icons';
 import { Button, Dropdown, Menu, Pagination, Userpic } from '../../components';
 import { Block, Elem } from '../../utils/bem';
 import { absoluteURL } from '../../utils/helpers';
+import { ProjectCopyModal } from './ProjectCopyModal';
 
 export const ProjectsList = ({ projects, currentPage, totalItems, loadNextPage, pageSize }) => {
+  const [copyProject, setCopyProject] = useState(null);
+
   return (
     <>
       <Elem name="list">
         {projects.map(project => (
-          <ProjectCard key={project.id} project={project}/>
+          <ProjectCard key={project.id} project={project} onCopy={() => setCopyProject(project)}/>
         ))}
       </Elem>
+      {copyProject && <ProjectCopyModal project={copyProject} onClose={() => setCopyProject(null)} />}
       <Elem name="pages">
         <Pagination
           name="projects-list"
@@ -42,7 +46,7 @@ export const EmptyProjectsList = ({ openModal }) => {
   );
 };
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, onCopy }) => {
   const color = useMemo(() => {
     return project.color === '#FFFFFF' ? null : project.color;
   }, [project]);
@@ -71,6 +75,12 @@ const ProjectCard = ({ project }) => {
                 <Menu>
                   <Menu.Item href={`/projects/${project.id}/settings`}>Settings</Menu.Item>
                   <Menu.Item href={`/projects/${project.id}/data?labeling=1`}>Label</Menu.Item>
+                  <Menu.Item role="button" tabIndex={0} onClick={onCopy} onKeyDown={event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      onCopy();
+                    }
+                  }}>Copy</Menu.Item>
                 </Menu>
               )}>
                 <Button size="small" type="text" icon={<LsEllipsis/>}/>

@@ -1336,3 +1336,51 @@ class ProjectReimport(models.Model):
 
     def has_permission(self, user):
         return self.project.has_permission(user)
+
+
+class ProjectCopySession(models.Model):
+    """Idempotent destination creation for the independent copy worker."""
+
+    id = models.UUIDField(primary_key=True, editable=False)
+    source_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='copy_sessions')
+    target_project = models.ForeignKey(Project, null=True, on_delete=models.SET_NULL, related_name='copied_from_sessions')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    source_max_task_id = models.BigIntegerField(default=0)
+    configuration = models.JSONField(default=dict)
+    storage_id = models.IntegerField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class ProjectCopyTask(models.Model):
+    session = models.ForeignKey(ProjectCopySession, on_delete=models.CASCADE, related_name='copied_tasks')
+    source_task_id = models.BigIntegerField()
+    target_task = models.ForeignKey('tasks.Task', null=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['session', 'source_task_id'], name='unique_project_copy_task')]
+
+
+class ProjectCopyWorker(models.Model):
+    """Registration shared by all app processes; liveness expires after 30 seconds."""
+
+    id = models.UUIDField(primary_key=True, editable=False)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    last_seen = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class ProjectCopyJob(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False)
+    source_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='copy_jobs')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    worker = models.ForeignKey(ProjectCopyWorker, null=True, on_delete=models.SET_NULL, related_name='jobs')
+    configuration = models.JSONField(default=dict)
+    status = models.CharField(max_length=16, default='waiting', choices=[
+        ('waiting', 'waiting'), ('copying', 'copying'), ('success', 'success'), ('fail', 'fail')])
+    attempt = models.PositiveIntegerField(default=1)
+    progress = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [models.Index(fields=['created_by', 'status', 'created_at'], name='copy_job_owner_status')]

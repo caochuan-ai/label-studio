@@ -1,0 +1,5 @@
+*
+!requirements.txt
+!worker/
+!worker/*.py
+**/__pycache__
